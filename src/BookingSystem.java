@@ -23,6 +23,7 @@ public class BookingSystem {
         movies = new ArrayList<>();
         reservations = new ArrayList<>();
         sc = new Scanner(System.in);
+        int choice;
 
         //title screen
         System.out.println("***************NOW SHOWING*****************");
@@ -30,11 +31,45 @@ public class BookingSystem {
         System.out.println("*\t  [2] Kim Possible The Movie      *");
         System.out.println("*\t  [3] Fantastic 4                 *");
         System.out.println("*\t  [4] A Man Called Otto           *");
+        System.out.println("*\t  [5] Cancel Reservation          *");
+        System.out.println("*\t  [0] Exit                        *");
         System.out.println("*******************************************");
 
         //enter movie choice
         System.out.print("Choose Movie: ");
-        getIntInput();
+        choice = getIntInput();
+
+        //process after choosing Movie
+        switch (choice) {
+            case 1:
+                
+            break;
+            
+            case 2:
+
+            break;
+
+            case 3:
+
+            break;
+
+            case 4:
+
+            break;
+
+            case 5:
+            
+            break;
+
+            case 0:
+            System.exit(0);
+            break;
+
+            default:
+            System.out.println("\nINVALID INPUT");
+            System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY");
+
+        }
 
         // test cancel reservation
         reservations.add(new Reservation(1231231));
