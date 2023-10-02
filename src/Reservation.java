@@ -15,6 +15,11 @@ public class Reservation {
         this.movieId = movieId;
     }
 
+    // for testing
+    public Reservation(long ticketNum) {
+        this.reserTicketNum = ticketNum;
+    }
+
     public double getPrice() {
         return this.price;
     }

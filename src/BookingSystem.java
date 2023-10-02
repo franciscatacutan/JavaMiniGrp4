@@ -22,6 +22,22 @@ public class BookingSystem {
     public void startProgram() {
         movies = new ArrayList<>();
         reservations = new ArrayList<>();
+        sc = new Scanner(System.in);
+
+
+
+        
+
+
+        // test cancel reservation
+        reservations.add(new Reservation(1231231));
+        System.out.println("Enter ticket num");
+        long t = sc.nextLong();
+        sc.nextLine();
+        cancelReservation(t);
+
+        System.out.println(reservations.isEmpty());
+
 
 
     }
