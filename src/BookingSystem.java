@@ -33,8 +33,17 @@ public class BookingSystem {
 
     public void cancelReservation(){}
 
-    public double calculateAmount(int seatNums, int senior) {
-        double price = 0;
+    public double calculateAmount(int seatNums, int senior, boolean isPremier) {
+        double price;
+        // double premierPrice;
+
+        if (isPremier) {
+            price = seatNums * 500;
+
+        } else {
+            price = (seatNums - senior) * 350 + ((senior * 350) * 0.20);
+        }
+
         return price;
     }
 
