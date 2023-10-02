@@ -1,5 +1,10 @@
+import java.util.ArrayList;
 
 public class BookingSystem {
+    private ArrayList<Movie> movies;
+    private double DISCOUNT = 0.20;
+    private ArrayList<Reservation> reservations;
+
 
     public static void main(String[] args) {
         BookingSystem bs;
@@ -11,14 +16,22 @@ public class BookingSystem {
         }
     }
 
+    // Main method
     public void startProgram() {
-        System.out.println("Elijah");
+        movies = new ArrayList<>();
+        reservations = new ArrayList<>();
+
 
     }
 
     public String reserveSeat(String seatNum, Movie movie) {
+
+
+
         return "reserve";
     }
+
+    public void cancelReservation(){}
 
     public double calculateAmount(int seatNums, int senior) {
         double price = 0;
