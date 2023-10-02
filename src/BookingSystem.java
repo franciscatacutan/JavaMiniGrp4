@@ -87,7 +87,7 @@ public class BookingSystem {
         // call is seat available method
 
         // get new ticket number
-        long tNum = reservations.get(reservations.size() - 1).getReserTicketNum() + 1;
+        long tNum = reservations.get(reservations.size() - 1).getReserveTicketNum() + 1;
         // test reservation add
         reservations.add(new Reservation(calculateAmount(0, 0, false), tNum, new ArrayList<String>(), movie.getId()));
 
@@ -97,20 +97,28 @@ public class BookingSystem {
     }
 
     public void cancelReservation(long ticketNum) {
+        reservations.add(new Reservation(1));
+        reservations.add(new Reservation(2));
+        reservations.add(new Reservation(3));
+        reservations.add(new Reservation(4));
+        reservations.add(new Reservation(5));
+
         Iterator<Reservation> iterator = reservations.iterator();
         while (iterator.hasNext()) {
-            Reservation element = iterator.next();
-            if (element.equals(ticketNum)) {
+            Reservation reservation = iterator.next();
+            if (reservation.getReserveTicketNum() == ticketNum) {
                 iterator.remove();
             }
+
         }
+        System.out.println(reservations);
 
     }
 
     public double calculateAmount(int seatNums, int senior, boolean isPremier) {
         double price;
-        // double premierPrice;
 
+        // Calculate price if premier or not
         if (isPremier) {
             price = seatNums * 500;
 
