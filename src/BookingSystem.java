@@ -23,8 +23,9 @@ public class BookingSystem {
         movies = new ArrayList<>();
         reservations = new ArrayList<>();
         sc = new Scanner(System.in);
-        int choice;
+        int choice = 0;
 
+        do {
         //title screen
         System.out.println("***************NOW SHOWING*****************");
         System.out.println("*\t  [1] Shrek                       *");
@@ -67,9 +68,11 @@ public class BookingSystem {
 
             default:
             System.out.println("\nINVALID INPUT");
-            System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY");
+            System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
 
         }
+
+        } while (choice != 0);
 
         // test cancel reservation
         reservations.add(new Reservation(1231231));
