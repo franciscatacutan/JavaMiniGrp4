@@ -1,26 +1,27 @@
 import java.time.LocalDateTime;
-import java.util.Scanner;
 
 public class Movie {
-    int seatNum;
-    boolean isSeatOccupied;
-    LocalDateTime ShowingDate;
-    boolean isPremier;
-    LocalDateTime timeStart;
-    String movieTitle;
-    double movieTimeDuration;
-    int seats[][];
+    private int seatNum;
+    private boolean isSeatOccupied;
+    private LocalDateTime ShowingDate;
+    private boolean isPremier;
+    private LocalDateTime timeStart;
+    private String movieTitle;
+    private double movieTimeDuration;
+    private int seatRow = 8;
+    private int seatCols = 5;
+    private  boolean [][] seats;
 
 
     public Movie(int seatNum, boolean isSeatOccupied, LocalDateTime ShowingDate, boolean isPremier, LocalDateTime timeStart, String movieTitle, double movieTimeDuration, int seats[][]) {
-        this.seatNum = seatNum;
-        this.isSeatOccupied = isSeatOccupied;
+       // this.seatNum = seatNum;
+        //this.isSeatOccupied = isSeatOccupied;
         this.ShowingDate = ShowingDate;
         this.isPremier = isPremier;
         this.timeStart = timeStart;
         this.movieTitle = movieTitle;
         this.movieTimeDuration = movieTimeDuration;
-        this.seats = seats;
+        this.seats = new boolean[seatRow][seatCols];
     }
 
 
@@ -36,12 +37,27 @@ public class Movie {
         this.seatNum = seatNum;
     }
 
-    public boolean isSeatOccupied() {
-        return isSeatOccupied;
+    public boolean isSeatOccupied(int row, int col) {
+        if (row >= 0 && row < seatRow && col >= 0 && col < seatCols) {
+            return seats[row][col];
+        } else {
+            return false; // Invalid seat position
+        }
     }
 
-    public void setSeatOccupied(boolean isSeatOccupied) {
-        this.isSeatOccupied = isSeatOccupied;
+    public void setSeatOccupied(int row, int col, boolean isOccupied) {
+        if (row >= 0 && row < seatRow && col >= 0 && col < seatCols) {
+            seats[row][col] = isOccupied;
+            for (row = 0; row < seatRow; row++) {
+                for (col = 0; col < seatCols; col++) {
+                    if (seats[row][col]) {
+                        System.out.print(" "); // "O" for available
+                    } else {
+                        System.out.print("X "); // "X" for occupied
+                    }
+                }
+                System.out.println(); // Move to the next row
+        }
     }
 
     public LocalDateTime getShowingDate() {
@@ -84,11 +100,11 @@ public class Movie {
         this.movieTimeDuration = movieTimeDuration;
     }
 
-    public int[][] getSeats() {
+    public boolean[][] getSeats() {
         return seats;
     }
 
-    public void setSeats(int[][] seats) {
+    public void setSeats(boolean[][] seats) {
         this.seats = seats;
     }
 
