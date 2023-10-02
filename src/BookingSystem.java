@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class BookingSystem {
+    private Scanner sc;
     private ArrayList<Movie> movies;
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
@@ -20,6 +22,16 @@ public class BookingSystem {
     public void startProgram() {
         movies = new ArrayList<>();
         reservations = new ArrayList<>();
+        sc = new Scanner(System.in);
+        
+        // Test price
+        System.out.println("Seat nums: ");
+        int sNums = getIntInput();
+        System.out.println("Num of Seniors:");
+        int sen = getIntInput();
+        System.out.println("Is premier y/n: ");
+        String isPrem = sc.nextLine();
+        System.out.println(calculateAmount(sNums, sen, isPrem.equals("y") ? true : false));      
         
     }
 
@@ -46,12 +58,18 @@ public class BookingSystem {
             price = seatNums * 500;
 
         } else {
-            price = (seatNums - senior) * 350 + ((senior * 350) * 0.20);
+            price = (seatNums - senior) * 350 + ((350 - (350 * DISCOUNT)) * senior);
         }
 
         return price;
     }
 
     public void seatAvailable(Movie movie) {
+    }
+
+    public int getIntInput() {
+        int num = sc.nextInt();
+        sc.nextLine();
+        return num;
     }
 }
