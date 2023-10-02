@@ -16,6 +16,19 @@ public class Movie {
     public Movie(int seatNum, boolean isSeatOccupied, LocalDateTime ShowingDate, boolean isPremier, LocalDateTime timeStart, String movieTitle, double movieTimeDuration, int seats[][]) {
        // this.seatNum = seatNum;
         //this.isSeatOccupied = isSeatOccupied;
+    int id;
+    int cinemaNum;
+    boolean isSeatOccupied;
+    LocalDateTime ShowingDate;
+    boolean isPremier;
+    LocalDateTime timeStart;
+    String movieTitle;
+    double movieTimeDuration;
+    int seats[][];
+
+    public Movie(int id, int cinemaNum, boolean isSeatOccupied, LocalDateTime ShowingDate, boolean isPremier,
+            LocalDateTime timeStart, String movieTitle, double movieTimeDuration, int seats[][]) {
+        this.isSeatOccupied = isSeatOccupied;
         this.ShowingDate = ShowingDate;
         this.isPremier = isPremier;
         this.timeStart = timeStart;
@@ -24,17 +37,16 @@ public class Movie {
         this.seats = new boolean[seatRow][seatCols];
     }
 
-
-    public Movie(boolean isSeatOccupied) {
-        this.isSeatOccupied = isSeatOccupied;
+    public int getId() {
+        return id;
     }
 
-    public int getSeatNum() {
-        return seatNum;
+    public void setCinemaNum(int cinemaNum) {
+        this.cinemaNum = cinemaNum;
     }
 
-    public void setSeatNum(int seatNum) {
-        this.seatNum = seatNum;
+    public int getCinemaNum() {
+        return cinemaNum;
     }
 
     public boolean isSeatOccupied(int row, int col) {
