@@ -32,7 +32,7 @@ public class BookingSystem {
                     break;
                 case 2:
                     // Implement reserve seat option
-                    reserveSeats();
+                    //reserveSeats();
                     break;
                 case 3:
                     // Implement movie schedule option
