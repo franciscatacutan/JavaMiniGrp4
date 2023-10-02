@@ -2,22 +2,22 @@ import java.util.ArrayList;
 
 public class Reservation {
     private double price;
-    private long reserTicketNum;
+    private long reserveTicketNum;
     private ArrayList<String> seats;
     private int movieId;
 
 
 
-    public Reservation(double price, long reserTicketNum, ArrayList<String> seats, int movieId) {
+    public Reservation(double price, long reserveTicketNum, ArrayList<String> seats, int movieId) {
         this.price = price;
-        this.reserTicketNum = reserTicketNum;
+        this.reserveTicketNum = reserveTicketNum;
         this.seats = seats;
         this.movieId = movieId;
     }
 
     // for testing
     public Reservation(long ticketNum) {
-        this.reserTicketNum = ticketNum;
+        this.reserveTicketNum = ticketNum;
     }
 
     public double getPrice() {
@@ -28,12 +28,12 @@ public class Reservation {
         this.price = price;
     }
 
-    public long getReserTicketNum() {
-        return this.reserTicketNum;
+    public long getReserveTicketNum() {
+        return this.reserveTicketNum;
     }
 
-    public void setReserTicketNum(long reserTicketNum) {
-        this.reserTicketNum = reserTicketNum;
+    public void setReserveTicketNum(long reserveTicketNum) {
+        this.reserveTicketNum = reserveTicketNum;
     }
 
     public ArrayList<String> getSeats() {
@@ -53,6 +53,8 @@ public class Reservation {
         this.movieId = movieId;
     }
 
-
     
+    public String toString() {
+        return reserveTicketNum + "";
+    }   
 }
