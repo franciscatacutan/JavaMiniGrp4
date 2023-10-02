@@ -24,6 +24,18 @@ public class BookingSystem {
         reservations = new ArrayList<>();
         sc = new Scanner(System.in);
 
+        //title screen
+        System.out.println("***************NOW SHOWING*****************");
+        System.out.println("*\t  [1] Shrek                       *");
+        System.out.println("*\t  [2] Kim Possible The Movie      *");
+        System.out.println("*\t  [3] Fantastic 4                 *");
+        System.out.println("*\t  [4] A Man Called Otto           *");
+        System.out.println("*******************************************");
+
+        //enter movie choice
+        System.out.print("Choose Movie: ");
+        getIntInput();
+
         // test cancel reservation
         reservations.add(new Reservation(1231231));
         System.out.println("Enter ticket num");
