@@ -1,7 +1,8 @@
 import java.time.LocalDateTime;
 
 public class Movie {
-    private int seatNum;
+    private int id;
+    private int cinemaNum;
     private boolean isSeatOccupied;
     private LocalDateTime ShowingDate;
     private boolean isPremier;
@@ -16,19 +17,6 @@ public class Movie {
     public Movie(int seatNum, boolean isSeatOccupied, LocalDateTime ShowingDate, boolean isPremier, LocalDateTime timeStart, String movieTitle, double movieTimeDuration, int seats[][]) {
        // this.seatNum = seatNum;
         //this.isSeatOccupied = isSeatOccupied;
-    int id;
-    int cinemaNum;
-    boolean isSeatOccupied;
-    LocalDateTime ShowingDate;
-    boolean isPremier;
-    LocalDateTime timeStart;
-    String movieTitle;
-    double movieTimeDuration;
-    int seats[][];
-
-    public Movie(int id, int cinemaNum, boolean isSeatOccupied, LocalDateTime ShowingDate, boolean isPremier,
-            LocalDateTime timeStart, String movieTitle, double movieTimeDuration, int seats[][]) {
-        this.isSeatOccupied = isSeatOccupied;
         this.ShowingDate = ShowingDate;
         this.isPremier = isPremier;
         this.timeStart = timeStart;
