@@ -6,8 +6,14 @@ public class BookingSystem {
     }
 
     public String reserveSeat(String seatNum, Movie movie) {
-        
-        return "you";
+        return "reserve";
     }
 
+    public double calculateAmount(int seatNums, int senior) {
+        double price = 0;
+        return price;
+    }
+
+    public void seatAvailable(Movie movie) {
+    }
 }
