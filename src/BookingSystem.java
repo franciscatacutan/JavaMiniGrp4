@@ -24,11 +24,6 @@ public class BookingSystem {
         reservations = new ArrayList<>();
         sc = new Scanner(System.in);
 
-
-
-        
-
-
         // test cancel reservation
         reservations.add(new Reservation(1231231));
         System.out.println("Enter ticket num");
@@ -38,15 +33,20 @@ public class BookingSystem {
 
         System.out.println(reservations.isEmpty());
 
-
-
     }
 
-    public String reserveSeat(String seatNum, Movie movie) {
+    public boolean reserveSeat(String seatNum, Movie movie) {
 
+        // call is seat available method
 
+        // get new ticket number
+        long tNum = reservations.get(reservations.size() - 1).getReserTicketNum() + 1;
+        // test reservation add
+        reservations.add(new Reservation(calculateAmount(0, 0, false), tNum, new ArrayList<String>(), movie.getId()));
 
-        return "reserve";
+        // write to reservation.csv
+
+        return true;
     }
 
     public void cancelReservation(long ticketNum) {
