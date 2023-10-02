@@ -1,8 +1,8 @@
 import java.time.LocalDateTime;
-import java.util.Scanner;
 
 public class Movie {
-    int seatNum;
+    int id;
+    int cinemaNum;
     boolean isSeatOccupied;
     LocalDateTime ShowingDate;
     boolean isPremier;
@@ -11,9 +11,8 @@ public class Movie {
     double movieTimeDuration;
     int seats[][];
 
-
-    public Movie(int seatNum, boolean isSeatOccupied, LocalDateTime ShowingDate, boolean isPremier, LocalDateTime timeStart, String movieTitle, double movieTimeDuration, int seats[][]) {
-        this.seatNum = seatNum;
+    public Movie(int id, int cinemaNum, boolean isSeatOccupied, LocalDateTime ShowingDate, boolean isPremier,
+            LocalDateTime timeStart, String movieTitle, double movieTimeDuration, int seats[][]) {
         this.isSeatOccupied = isSeatOccupied;
         this.ShowingDate = ShowingDate;
         this.isPremier = isPremier;
@@ -23,17 +22,16 @@ public class Movie {
         this.seats = seats;
     }
 
-
-    public Movie(boolean isSeatOccupied) {
-        this.isSeatOccupied = isSeatOccupied;
+    public int getId() {
+        return id;
     }
 
-    public int getSeatNum() {
-        return seatNum;
+    public void setCinemaNum(int cinemaNum) {
+        this.cinemaNum = cinemaNum;
     }
 
-    public void setSeatNum(int seatNum) {
-        this.seatNum = seatNum;
+    public int getCinemaNum() {
+        return cinemaNum;
     }
 
     public boolean isSeatOccupied() {

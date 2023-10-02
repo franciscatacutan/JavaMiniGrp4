@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Iterator;
 
 public class BookingSystem {
+    private Scanner sc;
     private ArrayList<Movie> movies;
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
@@ -20,9 +22,13 @@ public class BookingSystem {
     public void startProgram() {
         movies = new ArrayList<>();
         reservations = new ArrayList<>();
+
+
     }
 
     public String reserveSeat(String seatNum, Movie movie) {
+
+
 
         return "reserve";
     }
@@ -46,12 +52,18 @@ public class BookingSystem {
             price = seatNums * 500;
 
         } else {
-            price = (seatNums - senior) * 350 + ((senior * 350) * 0.20);
+            price = (seatNums - senior) * 350 + ((350 - (350 * DISCOUNT)) * senior);
         }
 
         return price;
     }
 
     public void seatAvailable(Movie movie) {
+    }
+
+    public int getIntInput() {
+        int num = sc.nextInt();
+        sc.nextLine();
+        return num;
     }
 }
