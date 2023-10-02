@@ -5,6 +5,12 @@ public class Cinema {
     private ArrayList<Movie> movies;
 
 
+    
+    public Cinema(int cinemaNum) {
+        this.cinemaNum = cinemaNum;
+    }
+
+
     public int getCinemaNum() {
         return this.cinemaNum;
     }
