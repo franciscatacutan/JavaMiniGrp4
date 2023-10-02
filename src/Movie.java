@@ -14,11 +14,12 @@ public class Movie {
     private  boolean [][] seats;
 
 
-    public Movie(int seatNum, boolean isSeatOccupied, LocalDateTime ShowingDate, boolean isPremier, LocalDateTime timeStart, String movieTitle, double movieTimeDuration, int seats[][]) {
+    public Movie(LocalDateTime ShowingDate, int cinemaNum, LocalDateTime timeStart, boolean isPremier, String movieTitle, double movieTimeDuration, int seats[][]) {
        // this.seatNum = seatNum;
         //this.isSeatOccupied = isSeatOccupied;
         this.ShowingDate = ShowingDate;
         this.isPremier = isPremier;
+        this.cinemaNum = cinemaNum;
         this.timeStart = timeStart;
         this.movieTitle = movieTitle;
         this.movieTimeDuration = movieTimeDuration;
@@ -57,6 +58,7 @@ public class Movie {
                     }
                 }
                 System.out.println(); // Move to the next row
+            }
         }
     }
 
