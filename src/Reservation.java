@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Reservation {
     double price;
-    long reserTicketNum;
+    long reserveTicketNum;
     ArrayList<String> seats;
 
     

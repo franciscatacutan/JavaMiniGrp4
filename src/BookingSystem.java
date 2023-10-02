@@ -1,10 +1,10 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class BookingSystem {
     private ArrayList<Movie> movies;
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
-
 
     public static void main(String[] args) {
         BookingSystem bs;
@@ -20,18 +20,23 @@ public class BookingSystem {
     public void startProgram() {
         movies = new ArrayList<>();
         reservations = new ArrayList<>();
-
-
     }
 
     public String reserveSeat(String seatNum, Movie movie) {
 
-
-
         return "reserve";
     }
 
-    public void cancelReservation(){}
+    public void cancelReservation(long ticketNum) {
+        Iterator<Reservation> iterator = reservations.iterator();
+        while (iterator.hasNext()) {
+            Reservation element = iterator.next();
+            if (element.equals(ticketNum)) {
+                iterator.remove();
+            }
+        }
+
+    }
 
     public double calculateAmount(int seatNums, int senior, boolean isPremier) {
         double price;
