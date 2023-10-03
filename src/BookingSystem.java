@@ -20,57 +20,61 @@ public class BookingSystem {
 
     // Main method
     public void startProgram() {
-        movies = new ArrayList<>();
-        reservations = new ArrayList<>();
+        FileContentHandler fHandler = new FileContentHandler();
+        reservations = fHandler.readReservationFile();
         sc = new Scanner(System.in);
         int choice = 0;
 
+        // read movies.csv
+        // movies = fHandler.readMovieFile();
+
+
         do {
-        //title screen
-        System.out.println("***************NOW SHOWING*****************");
-        System.out.println("*\t  [1] Shrek                       *");
-        System.out.println("*\t  [2] Kim Possible The Movie      *");
-        System.out.println("*\t  [3] Fantastic 4                 *");
-        System.out.println("*\t  [4] A Man Called Otto           *");
-        System.out.println("*\t  [5] Cancel Reservation          *");
-        System.out.println("*\t  [0] Exit                        *");
-        System.out.println("*******************************************");
+            // title screen
+            System.out.println("***************NOW SHOWING*****************");
+            System.out.println("*\t  [1] Shrek                       *");
+            System.out.println("*\t  [2] Kim Possible The Movie      *");
+            System.out.println("*\t  [3] Fantastic 4                 *");
+            System.out.println("*\t  [4] A Man Called Otto           *");
+            System.out.println("*\t  [5] Cancel Reservation          *");
+            System.out.println("*\t  [0] Exit                        *");
+            System.out.println("*******************************************");
 
-        //enter movie choice
-        System.out.print("Choose Movie: ");
-        choice = getIntInput();
+            // enter movie choice
+            System.out.print("Choose Movie: ");
+            choice = getIntInput();
 
-        //process after choosing Movie
-        switch (choice) {
-            case 1:
-                
-            break;
-            
-            case 2:
+            // process after choosing Movie
+            switch (choice) {
+                case 1:
 
-            break;
+                    break;
 
-            case 3:
+                case 2:
 
-            break;
+                    break;
 
-            case 4:
+                case 3:
 
-            break;
+                    break;
 
-            case 5:
-            
-            break;
+                case 4:
 
-            case 0:
-            System.exit(0);
-            break;
+                    break;
 
-            default:
-            System.out.println("\nINVALID INPUT");
-            System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
+                case 5:
 
-        }
+                    break;
+
+                case 0:
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("\nINVALID INPUT");
+                    System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
+
+            }
 
         } while (choice != 0);
 
@@ -92,7 +96,6 @@ public class BookingSystem {
         // get new ticket number
         long tNum = reservations.get(reservations.size() - 1).getReserveTicketNum() + 1;
         // test reservation add
-        reservations.add(new Reservation(calculateAmount(0, 0, false), tNum, new ArrayList<String>(), movie.getId()));
 
         // write to reservation.csv
 
