@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BookingSystem {
-    private ArrayList<Movie> movies;
+    private static ArrayList<Movie> movies;
+    private static Scanner scanner = new Scanner(System.in);
 
     public BookingSystem() {
         this.movies = new ArrayList<>();
@@ -51,8 +52,7 @@ public class BookingSystem {
             System.out.println("*******************************************");
 
             // enter movie choice
-            System.out.print("Choose Movie: ");
-            choice = getUserChoice();
+            reserveSeat();
 
             // process after choosing Movie
             switch (choice) {
@@ -78,6 +78,7 @@ public class BookingSystem {
 
                 case 0:
                     System.exit(0);
+                    System.out.println("Thank you come again!");
                     break;
 
                 default:
@@ -94,32 +95,15 @@ public class BookingSystem {
         return scanner.nextInt();
     }
 
-    private void reserveSeat() {
-        Scanner scanner = new Scanner(System.in);
+    public static void reserveSeat() {
     
-        // Display the ongoing/showing movies and their showtimes
-        System.out.println("\nTitle Screen (Screen 1)");
-        System.out.println("***********NOW SHOWING*************");
-    
-        // Iterate through the available movies and show their titles and showtimes
-        int movieChoice = 1;
-        for (Movie movie : movies) {
-            System.out.println("[" + movieChoice + "] " + movie.getMovieInfo());
-            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-            for (Date showtime : movie.getShowtimes()) {
-                System.out.print("{" + timeFormat.format(showtime) + "} ");
-            }
-            System.out.println();
-            movieChoice++;
-        }
-    
-        System.out.print("\nChoose Movie: ");
+        System.out.print("Choose Movie: ");
         int selectedMovieIndex = scanner.nextInt();
         if (selectedMovieIndex >= 1 && selectedMovieIndex <= movies.size()) {
             Movie selectedMovie = movies.get(selectedMovieIndex - 1);
     
             // Display the selected movie title and cinema number
-            System.out.println("\n*******" + selectedMovie.getMovieInfo() + "*******");
+            System.out.println("\n" + selectedMovie.getMovieInfo());
             System.out.println("Cinema Number: " + selectedMovie.getCinemaNum());
     
             // Display available showtimes for the selected movie
