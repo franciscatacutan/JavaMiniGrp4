@@ -1,48 +1,49 @@
-import java.io.BufferedReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.FileReader;
-import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class FileContentHandler {
 
     public ArrayList<Movie> readMovieFile() {
         ArrayList<Movie> movieList = new ArrayList<>();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
         try {
             Scanner file = new Scanner(new FileReader("Resources/Movies.csv"));
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             while (file.hasNextLine()) {
                 String line = file.nextLine();
                 String[] movieData = line.split(",");
-                if (movieData != null && movieData.length == 6) {
-                    LocalDateTime showingDate = LocalDate.parse(movieData[1].replace("\"", ""), formatter)
-                            .atStartOfDay();
+                if (movieData.length == 6 && !containsNull(movieData)) {
+                    Date showingDate = dateFormatter.parse(movieData[0].replace("\"", ""));
                     int cinemaNum = Integer.parseInt(movieData[1].replace("\"", ""));
-                    LocalDateTime timeStart = LocalDateTime.parse(movieData[2]);
-                    boolean isPremier = Boolean.parseBoolean(movieData[3]);
-                    String movieTitle = movieData[4];
-                    double movieTimeDuration = Double.parseDouble(movieData[5]);
-                    int[][] seats = new int[4][4];
+                    Date timeStart = dateFormatter.parse(movieData[2].replace("\"", ""));
+                    boolean isPremier = Boolean.parseBoolean(movieData[3].replace("\"", ""));
+                    String movieTitle = movieData[4].replace("\"", "");
+                    double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
 
-                    Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration,
-                            seats);
-                } else {
-                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if
-                                                                                                // have time
+                    Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration);
+                    movieList.add(movie);
+                } else { // Null Value
+                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if still have time
                 }
             }
             file.close();
         } catch (IOException e) {
             System.out.println("File can't be read: " + e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return movieList;
     }
+
 
     public ArrayList<Reservation> readReservationFile() {
         ArrayList<Reservation> resList = new ArrayList<>();
@@ -56,7 +57,7 @@ public class FileContentHandler {
                 String[] resData = line.split("\",");
 
                 if (resData != null && resData.length == 6) {
-                    
+
                     long ticketNum = Long.parseLong(resData[0].replace("\"", ""));
                     LocalDate date = LocalDate.parse(resData[1].replace("\"", ""));
                     int cinemaNum = Integer.parseInt(resData[2].replace("\"", ""));
@@ -75,7 +76,7 @@ public class FileContentHandler {
 
                 } else {
                     System.out.println("Data has invalid/null value, Please try another file"); // To add additional if
-                                                                                                // have time
+                    // have time
                 }
             }
             file.close();
@@ -83,9 +84,16 @@ public class FileContentHandler {
         } catch (Exception e) {
             System.out.println("File can't be read: " + e);
         }
-
         return resList;
+    }
 
+    private boolean containsNull(String[] array) {
+        for (String value : array) {
+            if (value == null || value.trim().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

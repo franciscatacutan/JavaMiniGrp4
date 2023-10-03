@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,7 @@ public class Movie {
         this.showtimes.add(new Date(timeStart.getTime() + 2 * 60 * 60 * 1000)); // 2 hours later
         this.showtimes.add(new Date(timeStart.getTime() + 4 * 60 * 60 * 1000)); // 4 hours later
         this.showtimes.add(new Date(timeStart.getTime() + 6 * 60 * 60 * 1000)); // 6 hours later
+
 
         // Adjust showtimes to avoid conflicts with other movies
         for (Movie movie : movies) {
