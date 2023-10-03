@@ -171,4 +171,11 @@ public class Movie {
                 "\nMovie Length: " + movieTimeDuration + " hours";
     }
 
+
+
+    public boolean isMovie(LocalDate date, LocalTime time, int cinemaNum2) {
+        
+        return false;
+    }
+
 }

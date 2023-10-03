@@ -6,14 +6,19 @@ public class Reservation {
     private long reserveTicketNum;
     private ArrayList<String> seats;
     private int movieId;
+    private LocalDate date;
+    private int cinemaNum;
+    private LocalTime time;
 
-
-
-    public Reservation(long reserveTicketNum, LocalDate date, int cinemaNum, LocalTime time, ArrayList<String> seats, double price) {
-        this.price = price;
+    public Reservation(long reserveTicketNum, LocalDate date, int cinemaNum, LocalTime time, ArrayList<String> seats,
+            double price) {
         this.reserveTicketNum = reserveTicketNum;
+        this.date = date;
+        this.cinemaNum = cinemaNum;
+        this.time = time;
+        this.price = price;
         this.seats = seats;
-        
+
     }
 
     // for testing
@@ -44,7 +49,6 @@ public class Reservation {
     public void setSeats(ArrayList<String> seats) {
         this.seats = seats;
     }
-    
 
     public int getMovieId() {
         return this.movieId;
@@ -54,8 +58,33 @@ public class Reservation {
         this.movieId = movieId;
     }
 
-    
     public String toString() {
         return reserveTicketNum + "";
-    }   
+    }
+
+
+    public LocalDate getDate() {
+        return this.date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public int getCinemaNum() {
+        return this.cinemaNum;
+    }
+
+    public void setCinemaNum(int cinemaNum) {
+        this.cinemaNum = cinemaNum;
+    }
+
+    public LocalTime getTime() {
+        return this.time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
 }

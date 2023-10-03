@@ -87,7 +87,11 @@ public class BookingSystem {
     }
 
     public void setReservationMovieId(Reservation reservation) {
-        
+        for (Movie m : movies.values()) {
+            if (m.isMovie(reservation.getDate(), reservation.getTime(), reservation.getCinemaNum())) {
+                
+            }
+        }
     }
 
     public boolean reserveSeat(String seatNum, Movie movie) {
