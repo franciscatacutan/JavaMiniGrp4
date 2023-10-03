@@ -15,46 +15,78 @@ public class BookingSystem {
 
     public static void main(String[] args) {
         BookingSystem bookingSystem = new BookingSystem();
-
         // Sample movie data
-        Date showingDate = parseDate("2023-06-01 12:45");
-        Movie movie1 = new Movie(showingDate, 1, showingDate, false, "Kung Fu Panda 2", 1.75);
-        Movie movie2 = new Movie(showingDate, 2, showingDate, true, "Avengers: Endgame", 3.0);
-
-        bookingSystem.movies.add(movie1);
-        bookingSystem.movies.add(movie2);
 
         while (true) {
             displayMainMenu();
             int choice = getUserChoice();
-
-            switch (choice) {
-                case 1:
-                    bookingSystem.reserveSeat();
-                    break;
-                case 2:
-                    // Implement Cancel Seat function here
-                    break;
-                case 3:
-                    // Implement View Schedule function here
-                    break;
-                case 4:
-                    System.out.println("Exiting the booking system. Goodbye!");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.");
-            }
         }
     }
 
     private static void displayMainMenu() {
-        System.out.println("\n********** Main Menu **********");
-        System.out.println("1. Reserve Seat");
-        System.out.println("2. Cancel Seat");
-        System.out.println("3. View Schedule");
-        System.out.println("4. Exit");
-        System.out.print("Select an option: ");
+        //variables
+        BookingSystem bookingSystem = new BookingSystem();
+
+        int choice = 0;
+        Date showingDate = parseDate("2023-06-01 12:45");
+        Movie movie1 = new Movie(showingDate, 1, showingDate, false, "Kung Fu Panda 2", 1.75);
+        Movie movie2 = new Movie(showingDate, 2, showingDate, true, "Avengers: Endgame", 3.0);
+        Movie movie3 = new Movie(showingDate, 1, showingDate, true, "Avatar: The Way of Water", 3.15);
+        Movie movie4 = new Movie(showingDate, 2, showingDate, false, "Pirates of the Caribbean: Dead Men Tell No Tales", 2.10);
+
+        bookingSystem.movies.add(movie1);
+        bookingSystem.movies.add(movie2);
+        bookingSystem.movies.add(movie3);
+        bookingSystem.movies.add(movie4);
+
+        do {
+            // title screen
+            System.out.println("***************NOW SHOWING*****************");
+            System.out.println("\t  [1] " + movie1.getMovieInfo());
+            System.out.println("\t  [2] " + movie2);
+            System.out.println("\t  [3] " + movie3);
+            System.out.println("\t  [4] " + movie4);
+            System.out.println("\t  [5] Cancel Reservation          ");
+            System.out.println("\t  [0] Exit                        ");
+            System.out.println("*******************************************");
+
+            // enter movie choice
+            System.out.print("Choose Movie: ");
+            choice = getUserChoice();
+
+            // process after choosing Movie
+            switch (choice) {
+                case 1:
+
+                    break;
+
+                case 2:
+
+                    break;
+
+                case 3:
+
+                    break;
+
+                case 4:
+
+                    break;
+
+                case 5:
+
+                    break;
+
+                case 0:
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("\nINVALID INPUT");
+                    System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
+
+            }
+
+        } while (choice != 0);
     }
 
     private static int getUserChoice() {
