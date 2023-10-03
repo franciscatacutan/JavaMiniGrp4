@@ -22,12 +22,14 @@ public class BookingSystem {
     public void startProgram() {
         FileContentHandler fHandler = new FileContentHandler();
         reservations = fHandler.readReservationFile();
+        // movies = fHandler.readMovieFile();
         sc = new Scanner(System.in);
         int choice = 0;
 
-        // read movies.csv
-        // movies = fHandler.readMovieFile();
-
+        // test read movies
+        for (Movie m : movies) {
+            System.out.println(m.getMovieInfo());
+        }
 
         do {
             // title screen
