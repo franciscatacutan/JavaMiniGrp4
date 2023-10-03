@@ -109,16 +109,18 @@ public class BookingSystem {
         reservations.add(new Reservation(4));
         reservations.add(new Reservation(5));
 
+        // create iterator to check reservations
         Iterator<Reservation> iterator = reservations.iterator();
         while (iterator.hasNext()) {
             Reservation reservation = iterator.next();
+
+            // if inputed ticket is found in the reservations it is deleted in the array
             if (reservation.getReserveTicketNum() == ticketNum) {
                 iterator.remove();
             }
-
         }
-        System.out.println(reservations);
 
+        System.out.println(reservations);
     }
 
     public double calculateAmount(int seatNums, int senior, boolean isPremier) {
