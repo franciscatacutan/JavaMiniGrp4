@@ -103,23 +103,23 @@ public class BookingSystem {
             Movie selectedMovie = movies.get(selectedMovieIndex - 1);
     
             // Display the selected movie title and cinema number
-            System.out.println("\n" + selectedMovie.getMovieInfo());
-            System.out.println("Cinema Number: " + selectedMovie.getCinemaNum());
+            System.out.println("\nChosen Movie: " + selectedMovie.getMovieTitle());
     
             // Display available showtimes for the selected movie
             ArrayList<Date> showtimes = selectedMovie.getShowtimes();
             for (int i = 0; i < showtimes.size(); i++) {
-                System.out.println("[" + (i + 1) + "] " + new SimpleDateFormat("h:mm a").format(showtimes.get(i)));
+                System.out.println("\t      [" + (i + 1) + "] " + new SimpleDateFormat("h:mm a").format(showtimes.get(i)));
             }
     
-            System.out.print("Choose Time Slot: ");
+            System.out.print("\nChoose Time Slot: ");
             int selectedTimeSlot = scanner.nextInt();
     
             if (selectedTimeSlot >= 1 && selectedTimeSlot <= showtimes.size()) {
                 Date selectedShowtime = showtimes.get(selectedTimeSlot - 1);
     
                 // Display the selected time slot
-                System.out.println("Time Slot: " + new SimpleDateFormat("h:mm a").format(selectedShowtime));
+                System.out.println("\n*******************************************");
+                System.out.println("Movie Time: " + new SimpleDateFormat("h:mm a").format(selectedShowtime));
     
                 // Display seat availability and occupancy for the selected movie and time slot
                 selectedMovie.displaySeatAvailability(selectedShowtime);
