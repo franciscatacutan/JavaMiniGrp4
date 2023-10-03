@@ -3,14 +3,14 @@ import java.util.ArrayList;
 
 public class Reservation {
     private double price;
-    private long reserveTicketNum;
+    private int reserveTicketNum;
     private ArrayList<String> seats;
     private int movieId;
     private LocalDate date;
     private int cinemaNum;
     private LocalTime time;
 
-    public Reservation(long reserveTicketNum, LocalDate date, int cinemaNum, LocalTime time, ArrayList<String> seats,
+    public Reservation(int reserveTicketNum, LocalDate date, int cinemaNum, LocalTime time, ArrayList<String> seats,
             double price) {
         this.reserveTicketNum = reserveTicketNum;
         this.date = date;
@@ -22,7 +22,7 @@ public class Reservation {
     }
 
     // for testing
-    public Reservation(long ticketNum) {
+    public Reservation(int ticketNum) {
         this.reserveTicketNum = ticketNum;
     }
 
@@ -34,11 +34,11 @@ public class Reservation {
         this.price = price;
     }
 
-    public long getReserveTicketNum() {
+    public int getReserveTicketNum() {
         return this.reserveTicketNum;
     }
 
-    public void setReserveTicketNum(long reserveTicketNum) {
+    public void setReserveTicketNum(int reserveTicketNum) {
         this.reserveTicketNum = reserveTicketNum;
     }
 
@@ -58,21 +58,18 @@ public class Reservation {
         this.movieId = movieId;
     }
 
-
     @Override
     public String toString() {
         return "{" +
-            " price='" + getPrice() + "'" +
-            ", reserveTicketNum='" + getReserveTicketNum() + "'" +
-            ", seats='" + getSeats() + "'" +
-            ", movieId='" + getMovieId() + "'" +
-            ", date='" + getDate() + "'" +
-            ", cinemaNum='" + getCinemaNum() + "'" +
-            ", time='" + getTime() + "'" +
-            "}";
+                " price='" + getPrice() + "'" +
+                ", reserveTicketNum='" + getReserveTicketNum() + "'" +
+                ", seats='" + getSeats() + "'" +
+                ", movieId='" + getMovieId() + "'" +
+                ", date='" + getDate() + "'" +
+                ", cinemaNum='" + getCinemaNum() + "'" +
+                ", time='" + getTime() + "'" +
+                "}";
     }
-
-
 
     public LocalDate getDate() {
         return this.date;

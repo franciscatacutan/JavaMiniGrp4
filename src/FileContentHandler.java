@@ -28,11 +28,13 @@ public class FileContentHandler {
                     String movieTitle = movieData[4].replace("\"", "");
                     double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
 
-                        Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration);
-                        movieList.put(idCounter, movie);
-                        idCounter++;
+                    Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle,
+                            movieTimeDuration);
+                    movieList.put(idCounter, movie);
+                    idCounter++;
                 } else { // Null Value
-                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if still have time
+                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if
+                                                                                                // still have time
                 }
             }
             file.close();
@@ -41,7 +43,6 @@ public class FileContentHandler {
         }
         return movieList;
     }
-
 
     public ArrayList<Reservation> readReservationFile() {
         ArrayList<Reservation> resList = new ArrayList<>();
@@ -56,7 +57,7 @@ public class FileContentHandler {
 
                 if (resData != null && resData.length == 6) {
 
-                    long ticketNum = Long.parseLong(resData[0].replace("\"", ""));
+                    int ticketNum = Integer.parseInt(resData[0].replace("\"", ""));
                     LocalDate date = LocalDate.parse(resData[1].replace("\"", ""));
                     int cinemaNum = Integer.parseInt(resData[2].replace("\"", ""));
                     LocalTime time = LocalTime.parse(resData[3].replace("\"", ""));
@@ -85,7 +86,6 @@ public class FileContentHandler {
         return resList;
     }
 
-
     private boolean containsNull(String[] array) {
         for (String value : array) {
             if (value == null || value.trim().isEmpty()) {
@@ -94,7 +94,6 @@ public class FileContentHandler {
         }
         return false;
     }
-
 
     public void reservationFileWrite_toCSV(Reservation reservation) {
         File filePath = new File("Resources/Reservations.csv");
