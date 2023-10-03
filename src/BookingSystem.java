@@ -21,6 +21,39 @@ public class BookingSystem {
         while (true) {
             displayMainMenu();
             int choice = getUserChoice();
+
+            switch (choice) {
+                case 1:
+                bookingSystem.reserveSeat();
+                    break;
+
+                case 2:
+
+                    break;
+
+                case 3:
+
+                    break;
+
+                case 4:
+
+                    break;
+
+                case 5:
+
+                    break;
+
+                case 0:
+                    System.exit(0);
+                    System.out.println("Thank you come again!");
+                    break;
+
+                default:
+                    System.out.println("\nINVALID INPUT");
+                    System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
+
+            }
+            
         }
     }
 
@@ -55,37 +88,7 @@ public class BookingSystem {
             reserveSeat();
 
             // process after choosing Movie
-            switch (choice) {
-                case 1:
-                    
-                    break;
-
-                case 2:
-
-                    break;
-
-                case 3:
-
-                    break;
-
-                case 4:
-
-                    break;
-
-                case 5:
-
-                    break;
-
-                case 0:
-                    System.exit(0);
-                    System.out.println("Thank you come again!");
-                    break;
-
-                default:
-                    System.out.println("\nINVALID INPUT");
-                    System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
-
-            }
+            
 
         } while (choice != 0);
     }
