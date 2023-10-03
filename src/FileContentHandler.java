@@ -86,6 +86,28 @@ public class FileContentHandler {
         return resList;
     }
 
+    // Add a method to write the reservation to a CSV file
+    public void reservationFileWrite_toCSV() {
+        File filePath = new File("Resources/Reservations.csv");
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
+            writer.write(toCSVString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String toCSVString(Reservation reservation, Movie movie) {
+
+        StringBuilder csvContent = new StringBuilder();
+        csvContent.append(reservation.getReserveTicketNum()).append(",");
+        csvContent.append(movie.getShowingDate()).append(",");
+        csvContent.append(movie.getCinemaNum()).append(",");
+        csvContent.append(movie.getTimeStart()).append(",");
+        csvContent.append(String.join(",", reservation.getSeats())).append(",");
+        csvContent.append(reservation.getPrice()).append("\n");
+        return csvContent.toString();
+    }
+
     private boolean containsNull(String[] array) {
         for (String value : array) {
             if (value == null || value.trim().isEmpty()) {
