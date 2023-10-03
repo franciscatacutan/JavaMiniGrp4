@@ -20,10 +20,14 @@ public class BookingSystem {
 
     // Main method
     public void startProgram() {
-        movies = new ArrayList<>();
-        reservations = new ArrayList<>();
+        FileContentHandler fHandler = new FileContentHandler();
+        reservations = fHandler.readReservationFile();
         sc = new Scanner(System.in);
         int choice = 0;
+
+        // read movies.csv
+        // movies = fHandler.readMovieFile();
+
 
         do {
             // title screen
@@ -92,7 +96,6 @@ public class BookingSystem {
         // get new ticket number
         long tNum = reservations.get(reservations.size() - 1).getReserveTicketNum() + 1;
         // test reservation add
-        reservations.add(new Reservation(calculateAmount(0, 0, false), tNum, new ArrayList<String>(), movie.getId()));
 
         // write to reservation.csv
 

@@ -1,3 +1,4 @@
+import java.time.*;
 import java.util.ArrayList;
 
 public class Reservation {
@@ -8,11 +9,11 @@ public class Reservation {
 
 
 
-    public Reservation(double price, long reserveTicketNum, ArrayList<String> seats, int movieId) {
+    public Reservation(long reserveTicketNum, LocalDate date, int cinemaNum, LocalTime time, ArrayList<String> seats, double price) {
         this.price = price;
         this.reserveTicketNum = reserveTicketNum;
         this.seats = seats;
-        this.movieId = movieId;
+        
     }
 
     // for testing
