@@ -28,26 +28,28 @@ public class BookingSystem {
         movies = fHandler.readMovieFile();
         sc = new Scanner(System.in);
 
-         //  set up reservations
-        for (Reservation r: reservations) {
+        // set up reservations
+        for (Reservation r : reservations) {
             prepareReservationsFromCSV(r);
             System.out.println(r);
         }
-
-
-
 
         int choice = 0;
 
         // for testing
         movies.get(1).displaySeatAvailability();
-        movies.get(1).setSeatOccupied(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")));
+        reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), movies.get(1));
         movies.get(1).displaySeatAvailability();
         System.out.println(movies.get(1).isSeatOccupied("A1"));
         System.out.println(movies.get(1).isSeatOccupied("A2"));
 
-        reserveSeat(new ArrayList<String>(Arrays.asList("A2")), movies.get(0));
-        movies.get(0).displaySeatAvailability();
+        reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), movies.get(1));
+        movies.get(1).displaySeatAvailability();
+        System.out.println("--------------------------------------");
+
+        reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), movies.get(1));
+
+        movies.get(1).displaySeatAvailability();
 
         // do {
         // // title screen
@@ -100,8 +102,6 @@ public class BookingSystem {
 
     }
 
-
-
     // set the movieId field of Reservation objects retrieved from the csv file
     // also set occupied seats on related Movie object
     public void prepareReservationsFromCSV(Reservation reservation) {
@@ -117,21 +117,13 @@ public class BookingSystem {
     public boolean reserveSeat(ArrayList<String> seatNums, Movie movie) {
         for (String seat : seatNums) {
             if (movie.isSeatOccupied(seat)) {
-                System.out.println("Seat " + " is already Occupied");
+                System.out.println("Seat " + seat + " is already Occupied");
                 return false;
             }
         }
         movie.setSeatOccupied(seatNums);
 
-        // movies.get(0).displaySeatAvailability();
-
-        // call is seat available method
-
-        // get new ticket number
         long tNum = reservations.get(reservations.size() - 1).getReserveTicketNum() + 1;
-        // test reservation add
-
-        // write to reservation.csv
 
         return true;
     }
@@ -145,8 +137,6 @@ public class BookingSystem {
 
             // if inputed ticket is found in the reservations it is deleted in the array
             if (reservation.getReserveTicketNum() == ticketNum) {
-
-
 
                 iterator.remove();
 
