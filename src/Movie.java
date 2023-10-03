@@ -131,7 +131,7 @@ public class Movie {
             System.out.println();
         }
 
-        System.out.println("\nLegend: [LN] = Available Seat  ,  [X] = Seat Occupied");
+        System.out.println("\nLegend: [SN] = Available Seat  ,  [X] = Seat Occupied");
     }
 
     // Getters and setters for showtimes
