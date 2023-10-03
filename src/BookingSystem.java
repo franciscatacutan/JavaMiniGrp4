@@ -32,7 +32,7 @@ public class BookingSystem {
         Movie movie1 = new Movie(showingDate, 1, showingDate, false, "Kung Fu Panda 2", 1.75);
         Movie movie2 = new Movie(showingDate, 2, showingDate, true, "Avengers: Endgame", 3.0);
         Movie movie3 = new Movie(showingDate, 1, showingDate, true, "Avatar: The Way of Water", 3.15);
-        Movie movie4 = new Movie(showingDate, 2, showingDate, false, "Pirates of the Caribbean: Dead Men Tell No Tales", 2.10);
+        Movie movie4 = new Movie(showingDate, 2, showingDate, false, "A Quiet Place", 1.30);
 
         bookingSystem.movies.add(movie1);
         bookingSystem.movies.add(movie2);
@@ -42,12 +42,12 @@ public class BookingSystem {
         do {
             // title screen
             System.out.println("***************NOW SHOWING*****************");
-            System.out.println("\t  [1] " + movie1.getMovieInfo());
-            System.out.println("\t  [2] " + movie2);
-            System.out.println("\t  [3] " + movie3);
-            System.out.println("\t  [4] " + movie4);
-            System.out.println("\t  [5] Cancel Reservation          ");
-            System.out.println("\t  [0] Exit                        ");
+            System.out.println("\t [1] " + movie1.getMovieTitle());
+            System.out.println("\t [2] " + movie2.getMovieTitle());
+            System.out.println("\t [3] " + movie3.getMovieTitle());
+            System.out.println("\t [4] " + movie4.getMovieTitle());
+            System.out.println("\t [5] Cancel Reservation          ");
+            System.out.println("\t [0] Exit                        ");
             System.out.println("*******************************************");
 
             // enter movie choice
@@ -57,7 +57,7 @@ public class BookingSystem {
             // process after choosing Movie
             switch (choice) {
                 case 1:
-
+                    
                     break;
 
                 case 2:

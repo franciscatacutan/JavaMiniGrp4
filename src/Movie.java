@@ -74,6 +74,10 @@ public class Movie {
                "\nMovie Length: " + movieLength + " hours";
     }
 
+    public String getMovieTitle() {
+        return this.movieTitle;
+    }
+
     public boolean isPremiere() {
         return isPremiere;
     }
