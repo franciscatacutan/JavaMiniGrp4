@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Iterator;
 
 public class BookingSystem {
     private Scanner sc;
-    private ArrayList<Movie> movies;
+    private HashMap<Integer, Movie> movies;
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
 
@@ -28,11 +29,11 @@ public class BookingSystem {
         int choice = 0;
 
         // for testing
-        movies.get(0).displaySeatAvailability();
-        movies.get(0).setSeatOccupied(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")));
-        movies.get(0).displaySeatAvailability();
-        System.out.println(movies.get(0).isSeatOccupied("A1"));
-        System.out.println(movies.get(0).isSeatOccupied("A2"));
+        movies.get(1).displaySeatAvailability();
+        movies.get(1).setSeatOccupied(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")));
+        movies.get(1).displaySeatAvailability();
+        System.out.println(movies.get(1).isSeatOccupied("A1"));
+        System.out.println(movies.get(1).isSeatOccupied("A2"));
 
         reserveSeat(new ArrayList<String>(Arrays.asList("A2")), movies.get(0));
         movies.get(0).displaySeatAvailability();
@@ -86,15 +87,10 @@ public class BookingSystem {
 
         // } while (choice != 0);
 
-        // test cancel reservation
-        reservations.add(new Reservation(1231231));
-        System.out.println("Enter ticket num");
-        long t = sc.nextLong();
-        sc.nextLine();
-        cancelReservation(t);
+    }
 
-        System.out.println(reservations.isEmpty());
-
+    public void setReservationMovieId(Reservation reservation) {
+        
     }
 
     public boolean reserveSeat(ArrayList<String> seatNums, Movie movie) {
@@ -120,11 +116,6 @@ public class BookingSystem {
     }
 
     public void cancelReservation(long ticketNum) {
-        reservations.add(new Reservation(1));
-        reservations.add(new Reservation(2));
-        reservations.add(new Reservation(3));
-        reservations.add(new Reservation(4));
-        reservations.add(new Reservation(5));
 
         // create iterator to check reservations
         Iterator<Reservation> iterator = reservations.iterator();
