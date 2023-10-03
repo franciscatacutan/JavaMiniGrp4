@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Iterator;
+import java.util.Map;
 
 public class BookingSystem {
     private Scanner sc;
@@ -26,6 +27,16 @@ public class BookingSystem {
         reservations = fHandler.readReservationFile();
         movies = fHandler.readMovieFile();
         sc = new Scanner(System.in);
+
+         //  set up reservations
+        for (Reservation r: reservations) {
+            prepareReservationsFromCSV(r);
+            System.out.println(r);
+        }
+
+
+
+
         int choice = 0;
 
         // for testing
@@ -89,10 +100,16 @@ public class BookingSystem {
 
     }
 
-    public void setReservationMovieId(Reservation reservation) {
-        for (Movie m : movies.values()) {
-            if (m.isMovie(reservation.getDate(), reservation.getTime(), reservation.getCinemaNum())) {
-                
+
+
+    // set the movieId field of Reservation objects retrieved from the csv file
+    // also set occupied seats on related Movie object
+    public void prepareReservationsFromCSV(Reservation reservation) {
+        for (Map.Entry<Integer, Movie> m : movies.entrySet()) {
+            if (m.getValue().isMovie(reservation.getDate(), reservation.getTime(), reservation.getCinemaNum())) {
+                reservation.setMovieId(m.getKey());
+                m.getValue().setSeatOccupied(reservation.getSeats());
+                return;
             }
         }
     }
@@ -128,7 +145,11 @@ public class BookingSystem {
 
             // if inputed ticket is found in the reservations it is deleted in the array
             if (reservation.getReserveTicketNum() == ticketNum) {
+
+
+
                 iterator.remove();
+
             }
         }
 

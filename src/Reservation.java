@@ -58,9 +58,20 @@ public class Reservation {
         this.movieId = movieId;
     }
 
+
+    @Override
     public String toString() {
-        return reserveTicketNum + "";
+        return "{" +
+            " price='" + getPrice() + "'" +
+            ", reserveTicketNum='" + getReserveTicketNum() + "'" +
+            ", seats='" + getSeats() + "'" +
+            ", movieId='" + getMovieId() + "'" +
+            ", date='" + getDate() + "'" +
+            ", cinemaNum='" + getCinemaNum() + "'" +
+            ", time='" + getTime() + "'" +
+            "}";
     }
+
 
 
     public LocalDate getDate() {

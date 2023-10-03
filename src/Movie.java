@@ -85,6 +85,15 @@ public class Movie {
         }
     }
 
+    public int[] seatCodeToIndexes(String s) {
+        char code = s.charAt(0);
+        int col = Integer.parseInt(s.substring(1));
+
+        return new int[] {code - 'A', col - 1};
+    }
+
+
+
     public LocalDate getShowingDate() {
         return showingDate;
     }
@@ -173,8 +182,12 @@ public class Movie {
 
 
 
-    public boolean isMovie(LocalDate date, LocalTime time, int cinemaNum2) {
+    public boolean isMovie(LocalDate date, LocalTime time, int cinemaNum) {
         
+        if (showingDate.equals(date) && timeStart.equals(time) && this.cinemaNum == cinemaNum) {
+            return true;
+        }
+
         return false;
     }
 
