@@ -1,11 +1,10 @@
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.IOException;
-import java.io.FileReader;
 import java.util.Scanner;
 
 public class FileContentHandler {
@@ -86,6 +85,7 @@ public class FileContentHandler {
         return resList;
     }
 
+
     private boolean containsNull(String[] array) {
         for (String value : array) {
             if (value == null || value.trim().isEmpty()) {
@@ -95,4 +95,28 @@ public class FileContentHandler {
         return false;
     }
 
+
+    public void reservationFileWrite_toCSV(Reservation reservation) {
+        File filePath = new File("Resources/Reservations.csv");
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
+            writer.write(toCSVString(reservation));
+        } catch (IOException e) {
+            System.out.println("File Print Output Error: " + e);
+        }
+    }
+
+    public String toCSVString(Reservation reservation) {
+        StringBuilder csvContent = new StringBuilder();
+        csvContent.append("=============================================\n")
+                .append("Reservation Details:\n")
+                .append("=============================================\n")
+                .append("Ticket Number: ").append(reservation.getReserveTicketNum()).append("\n")
+                .append("Date: ").append(reservation.getDate()).append("\n")
+                .append("Cinema Number: ").append(reservation.getCinemaNum()).append("\n")
+                .append("Time: ").append(reservation.getTime()).append("\n")
+                .append("Seats: ").append(String.join(", ", reservation.getSeats())).append("\n")
+                .append("Price: Php").append(String.format("%.2f", reservation.getPrice()))
+                .append("\n=============================================\n");
+        return csvContent.toString();
+    }
 }
