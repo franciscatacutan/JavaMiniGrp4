@@ -1,5 +1,4 @@
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -11,7 +10,6 @@ public class FileContentHandler {
 
     public HashMap<Integer, Movie> readMovieFile() {
         HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         int idCounter = 1;
 
         try {
@@ -115,6 +113,40 @@ public class FileContentHandler {
 
         } catch (IOException e) {
             System.err.println("Error creating the CSV file: " + e.getMessage());
+        }
+    }
+    public void deleteReservation(int ticketNumber) {
+        File inputFile = new File("Resources/Reservations.csv");
+        File tempFile = new File("Resources/TempReservations.csv");
+        String line;
+        boolean isFound = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             PrintWriter writer = new PrintWriter(new FileWriter(tempFile, true))) {
+            while ((line = reader.readLine()) != null) {
+                String[] resData = line.split("\",");
+                if (resData != null && resData.length == 6) {
+                    int currentTicketNum = Integer.parseInt(resData[0].replace("\"", ""));
+                    if (currentTicketNum == ticketNumber) {
+                        isFound = true;
+                    } else {
+                        writer.println(line);
+                    }
+                }
+            }
+
+            if (!isFound) {
+                System.err.println("Reservation with ticket number " + ticketNumber + " not isFound.");
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error deleting reservation from CSV file: " + e.getMessage());
+        }
+
+        if (isFound && tempFile.renameTo(inputFile)) {
+            System.out.println("Reservation with ticket number " + ticketNumber + " deleted successfully.");
+        } else {
+            System.err.println("Unable to update CSV file.");
         }
     }
 
