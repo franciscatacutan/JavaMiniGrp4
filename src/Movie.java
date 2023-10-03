@@ -156,6 +156,7 @@ public class Movie {
         this.seats = seats;
     }
 
+
     public String getMovieInfo() {
         return "Movie Title: " + movieTitle +
                 "\nShowing Date: " + showingDate +

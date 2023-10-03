@@ -21,6 +21,19 @@ public class Reservation {
 
     }
 
+    public Reservation(long reserveTicketNum, LocalDate date, int cinemaNum, LocalTime time, ArrayList<String> seats,
+            double price, int movieId) {
+        this.reserveTicketNum = reserveTicketNum;
+        this.date = date;
+        this.cinemaNum = cinemaNum;
+        this.time = time;
+        this.price = price;
+        this.seats = seats;
+        this.movieId = movieId;
+
+    }
+
+
     // for testing
     public Reservation(long ticketNum) {
         this.reserveTicketNum = ticketNum;

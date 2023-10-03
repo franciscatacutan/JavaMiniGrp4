@@ -1,5 +1,7 @@
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Iterator;
@@ -37,17 +39,17 @@ public class BookingSystem {
         int choice = 0;
 
         // for testing
-        movies.get(1).displaySeatAvailability();
-        reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), movies.get(1));
-        movies.get(1).displaySeatAvailability();
+        // movies.get(1).displaySeatAvailability();
+        reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), 1, 0);
+        // movies.get(1).displaySeatAvailability();
         System.out.println(movies.get(1).isSeatOccupied("A1"));
         System.out.println(movies.get(1).isSeatOccupied("A2"));
 
-        reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), movies.get(1));
-        movies.get(1).displaySeatAvailability();
-        System.out.println("--------------------------------------");
+        reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), 1, 0);
+        // movies.get(1).displaySeatAvailability();
 
-        reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), movies.get(1));
+        reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
+        System.out.println("--------------------------------------");
 
         movies.get(1).displaySeatAvailability();
 
@@ -114,7 +116,8 @@ public class BookingSystem {
         }
     }
 
-    public boolean reserveSeat(ArrayList<String> seatNums, Movie movie) {
+    public boolean reserveSeat(ArrayList<String> seatNums, int movieId, int seniorCount) {
+        Movie movie = movies.get(movieId);
         for (String seat : seatNums) {
             if (movie.isSeatOccupied(seat)) {
                 System.out.println("Seat " + seat + " is already Occupied");
@@ -123,10 +126,23 @@ public class BookingSystem {
         }
         movie.setSeatOccupied(seatNums);
 
-        long tNum = reservations.get(reservations.size() - 1).getReserveTicketNum() + 1;
+        long reserveTicketNum = reservations.get(reservations.size() - 1).getReserveTicketNum() + 1;
+        LocalDate date = movie.getShowingDate();
+        int cinemaNum = movie.getCinemaNum();
+        LocalTime timeStart = movie.getTimeStart();
+        double price = calculateAmount(seatNums.size(), seniorCount, movie.getIsPremiere());
+
+        Reservation newRes = new Reservation(reserveTicketNum, date, cinemaNum, timeStart, seatNums, price, movieId);
+        System.out.println(newRes);
+
+        //WRITE CSV
 
         return true;
     }
+
+    // public Reservation createReservation(Movie movie) {
+
+    // }
 
     public void cancelReservation(long ticketNum) {
 
@@ -152,9 +168,12 @@ public class BookingSystem {
         // Calculate price if premier or not
         if (isPremier) {
             price = seatNums * 500;
+            System.out.println(price);
 
         } else {
             price = (seatNums - senior) * 350 + ((350 - (350 * DISCOUNT)) * senior);
+            System.out.println(price);
+
         }
 
         return price;
