@@ -1,11 +1,10 @@
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.IOException;
-import java.io.FileReader;
 import java.util.Scanner;
 
 public class FileContentHandler {
@@ -29,11 +28,13 @@ public class FileContentHandler {
                     String movieTitle = movieData[4].replace("\"", "");
                     double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
 
-                        Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration);
-                        movieList.put(idCounter, movie);
-                        idCounter++;
+                    Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle,
+                            movieTimeDuration);
+                    movieList.put(idCounter, movie);
+                    idCounter++;
                 } else { // Null Value
-                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if still have time
+                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if
+                                                                                                // still have time
                 }
             }
             file.close();
@@ -42,7 +43,6 @@ public class FileContentHandler {
         }
         return movieList;
     }
-
 
     public ArrayList<Reservation> readReservationFile() {
         ArrayList<Reservation> resList = new ArrayList<>();
@@ -57,7 +57,7 @@ public class FileContentHandler {
 
                 if (resData != null && resData.length == 6) {
 
-                    long ticketNum = Long.parseLong(resData[0].replace("\"", ""));
+                    int ticketNum = Integer.parseInt(resData[0].replace("\"", ""));
                     LocalDate date = LocalDate.parse(resData[1].replace("\"", ""));
                     int cinemaNum = Integer.parseInt(resData[2].replace("\"", ""));
                     LocalTime time = LocalTime.parse(resData[3].replace("\"", ""));
@@ -95,4 +95,27 @@ public class FileContentHandler {
         return false;
     }
 
+    public void reservationFileWrite_toCSV(Reservation reservation) {
+        File filePath = new File("Resources/Reservations.csv");
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
+            writer.write(toCSVString(reservation));
+        } catch (IOException e) {
+            System.out.println("File Print Output Error: " + e);
+        }
+    }
+
+    public String toCSVString(Reservation reservation) {
+        StringBuilder csvContent = new StringBuilder();
+        csvContent.append("=============================================\n")
+                .append("Reservation Details:\n")
+                .append("=============================================\n")
+                .append("Ticket Number: ").append(reservation.getReserveTicketNum()).append("\n")
+                .append("Date: ").append(reservation.getDate()).append("\n")
+                .append("Cinema Number: ").append(reservation.getCinemaNum()).append("\n")
+                .append("Time: ").append(reservation.getTime()).append("\n")
+                .append("Seats: ").append(String.join(", ", reservation.getSeats())).append("\n")
+                .append("Price: Php").append(String.format("%.2f", reservation.getPrice()))
+                .append("\n=============================================\n");
+        return csvContent.toString();
+    }
 }

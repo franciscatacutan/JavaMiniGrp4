@@ -1,6 +1,5 @@
 import java.time.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Movie {
     private int cinemaNum;
@@ -9,8 +8,8 @@ public class Movie {
     private LocalTime timeStart;
     private String movieTitle;
     private double movieTimeDuration;
-    private int seatRows = 8;
-    private int seatCols = 5;
+    private int SEAT_ROWS = 8;
+    private int SEAT_COLS = 5;
     private String[][] seats;
 
     // based on csv
@@ -26,11 +25,10 @@ public class Movie {
 
     }
 
-    // fix this function so that it does not go through all array elements
     private String[][] initializezSeats() {
-        String[][] seatPlan = new String[seatRows][seatCols];
-        for (int i = 0; i < seatRows; i++) {
-            for (int j = 0; j < seatCols; j++) {
+        String[][] seatPlan = new String[SEAT_ROWS][SEAT_COLS];
+        for (int i = 0; i < SEAT_ROWS; i++) {
+            for (int j = 0; j < SEAT_COLS; j++) {
                 String seatCode = String.format("%c%d", 'A' + i, j + 1);
                 seatPlan[i][j] = "[" + seatCode + "]";
             }
@@ -40,23 +38,14 @@ public class Movie {
     }
 
     public void displaySeatAvailability() {
-        for (int i = 0; i < seatRows; i++) {
-            for (int j = 0; j < seatCols; j++) {
+        for (int i = 0; i < SEAT_ROWS; i++) {
+            for (int j = 0; j < SEAT_COLS; j++) {
                 System.out.print(seats[i][j] + " ");
             }
             System.out.println(); // Move to the next line after each row
         }
     }
 
-    public void setCinemaNum(int cinemaNum) {
-        this.cinemaNum = cinemaNum;
-    }
-
-    public int getCinemaNum() {
-        return cinemaNum;
-    }
-
-    // fix this function so that it does not go through all array elements
     public boolean isSeatOccupied(String seatCode) {
         int[] i = seatCodeToIndexes(seatCode);
 
@@ -73,6 +62,13 @@ public class Movie {
         }
     }
 
+    public void setSeatAvailable(ArrayList<String> list) {
+        for (String s : list) {
+            int[] i = seatCodeToIndexes(s);
+            seats[i[0]][i[1]] = "[" + s + "]";
+        }
+    }
+
     public int[] seatCodeToIndexes(String s) {
         char code = s.charAt(0);
         int col = Integer.parseInt(s.substring(1));
@@ -80,12 +76,29 @@ public class Movie {
         return new int[] { code - 'A', col - 1 };
     }
 
+    public boolean isMovie(LocalDate date, LocalTime time, int cinemaNum) {
+
+        if (showingDate.equals(date) && timeStart.equals(time) && this.cinemaNum == cinemaNum) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void setCinemaNum(int cinemaNum) {
+        this.cinemaNum = cinemaNum;
+    }
+
+    public int getCinemaNum() {
+        return cinemaNum;
+    }
+
     public LocalDate getShowingDate() {
         return showingDate;
     }
 
     public void setShowingDate(LocalDate showingDate) {
-        showingDate = showingDate;
+        this.showingDate = showingDate;
     }
 
     public boolean isPremiere() {
@@ -132,20 +145,20 @@ public class Movie {
         this.isPremiere = isPremiere;
     }
 
-    public int getSeatRows() {
-        return this.seatRows;
+    public int getSEAT_ROWS() {
+        return this.SEAT_ROWS;
     }
 
-    public void setSeatRows(int seatRows) {
-        this.seatRows = seatRows;
+    public void setSEAT_ROWS(int seatRows) {
+        this.SEAT_ROWS = seatRows;
     }
 
-    public int getSeatCols() {
-        return this.seatCols;
+    public int getSEAT_COLS() {
+        return this.SEAT_COLS;
     }
 
-    public void setSeatCols(int seatCols) {
-        this.seatCols = seatCols;
+    public void setSEAT_COLS(int seatCols) {
+        this.SEAT_COLS = seatCols;
     }
 
     public String[][] getSeats() {
@@ -164,15 +177,6 @@ public class Movie {
                 "\nStart Time: " + timeStart +
                 "\nIs Premiere: " + isPremiere +
                 "\nMovie Length: " + movieTimeDuration + " hours";
-    }
-
-    public boolean isMovie(LocalDate date, LocalTime time, int cinemaNum) {
-
-        if (showingDate.equals(date) && timeStart.equals(time) && this.cinemaNum == cinemaNum) {
-            return true;
-        }
-
-        return false;
     }
 
 }
