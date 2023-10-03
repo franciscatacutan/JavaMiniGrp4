@@ -26,8 +26,6 @@ public class Movie {
 
     }
 
-   
-
     // fix this function so that it does not go through all array elements
     private String[][] initializezSeats() {
         String[][] seatPlan = new String[seatRows][seatCols];
@@ -50,7 +48,6 @@ public class Movie {
         }
     }
 
-
     public void setCinemaNum(int cinemaNum) {
         this.cinemaNum = cinemaNum;
     }
@@ -61,28 +58,33 @@ public class Movie {
 
     // fix this function so that it does not go through all array elements
     public boolean isSeatOccupied(String seatCode) {
-        for (int i = 0; i < seatRows; i++) {
-            for (int j = 0; j < seatCols; j++) {
-                if (seats[i][j].equals("[" + seatCode + "]")) {
-                    return false;
-                }
-            }
-        }
+        int[] i = seatCodeToIndexes(seatCode);
 
-        return true;
+        if (seats[i[0]][i[1]].equals("[X]")) {
+            return true;
+        }
+        return false;
     }
 
     public void setSeatOccupied(ArrayList<String> list) {
-        for (int i = 0; i < seatRows; i++) {
-            for (int j = 0; j < seatCols; j++) {
-                String seatCode = String.format("%c%d", 'A' + i, j + 1);
-                if (list.contains(seatCode)) {
-                    seats[i][j] = "[X]"; // Seat is occupied
-                } else {
-                    seats[i][j] = "[" + seatCode + "]"; // Seat label with seat code
-                }
-            }
+        for (String s : list) {
+            int[] i = seatCodeToIndexes(s);
+            seats[i[0]][i[1]] = "[X]";
         }
+    }
+
+    public void setSeatAvailable(ArrayList<String> list) {
+        for (String s: list){
+            int[] i = seatCodeToIndexes(s);
+            seats[i[0]][i[1]] = "[" + s + "]";
+        }        
+    }
+
+    public int[] seatCodeToIndexes(String s) {
+        char code = s.charAt(0);
+        int col = Integer.parseInt(s.substring(1));
+
+        return new int[] { code - 'A', col - 1 };
     }
 
     public LocalDate getShowingDate() {
@@ -124,7 +126,6 @@ public class Movie {
     public void setMovieTimeDuration(double movieTimeDuration) {
         this.movieTimeDuration = movieTimeDuration;
     }
-
 
     public boolean isIsPremiere() {
         return this.isPremiere;
@@ -171,10 +172,12 @@ public class Movie {
                 "\nMovie Length: " + movieTimeDuration + " hours";
     }
 
+    public boolean isMovie(LocalDate date, LocalTime time, int cinemaNum) {
 
+        if (showingDate.equals(date) && timeStart.equals(time) && this.cinemaNum == cinemaNum) {
+            return true;
+        }
 
-    public boolean isMovie(LocalDate date, LocalTime time, int cinemaNum2) {
-        
         return false;
     }
 
