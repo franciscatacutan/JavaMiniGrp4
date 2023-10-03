@@ -4,7 +4,6 @@ import java.util.List;
 public class Movie {
     private int id;
     private int cinemaNum;
-    private boolean isSeatOccupied;
     private LocalDate showingDate;
     private boolean isPremiere;
     private LocalTime timeStart;
@@ -12,11 +11,11 @@ public class Movie {
     private double movieTimeDuration;
     private int seatRows = 8;
     private int seatCols = 5;
-    private String [][] seats;
-
+    private String[][] seats;
 
     // based on csv
-    public Movie(int id, LocalDate ShowingDate, int cinemaNum, LocalTime timeStart, boolean isPremier, String movieTitle, double movieTimeDuration) {
+    public Movie(int id, LocalDate ShowingDate, int cinemaNum, LocalTime timeStart, boolean isPremier,
+            String movieTitle, double movieTimeDuration) {
         this.id = id;
         this.showingDate = ShowingDate;
         this.isPremiere = isPremier;
@@ -24,7 +23,21 @@ public class Movie {
         this.timeStart = timeStart;
         this.movieTitle = movieTitle;
         this.movieTimeDuration = movieTimeDuration;
-        
+        seats = initializezSeats();
+
+    }
+
+    // fix this function so that it does not go through all array elements
+    private String[][] initializezSeats() {
+        String[][] seatPlan = new String[seatRows][seatCols];
+        for (int i = 0; i < seatRows; i++) {
+            for (int j = 0; j < seatCols; j++) {
+                String seatCode = String.format("%c%d", 'A' + i, j + 1);
+                seatPlan[i][j] = seatCode;
+            }
+        }
+        return seatPlan;
+
     }
 
     public int getId() {
@@ -39,12 +52,17 @@ public class Movie {
         return cinemaNum;
     }
 
-    public boolean isSeatOccupied(int row, int col) {
-        if (row >= 0 && row < seatRows && col >= 0 && col < seatCols) {
-            return seats[row][col];
-        } else {
-            return false; // Invalid seat position
+    // fix this function so that it does not go through all array elements
+    public boolean isSeatOccupied(String seatCode) {
+        for (int i = 0; i < seatRows; i++) {
+            for (int j = 0; j < seatCols; j++) {
+                if (seats[i][j].equals(seatCode)) {
+                    return false;
+                }
+            }
         }
+
+        return true;
     }
 
     public void setSeatOccupied(List<String> list) {
@@ -100,21 +118,53 @@ public class Movie {
         this.movieTimeDuration = movieTimeDuration;
     }
 
-    public boolean[][] getSeats() {
-        return seats;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSeats(boolean[][] seats) {
+    public boolean isIsPremiere() {
+        return this.isPremiere;
+    }
+
+    public boolean getIsPremiere() {
+        return this.isPremiere;
+    }
+
+    public void setIsPremiere(boolean isPremiere) {
+        this.isPremiere = isPremiere;
+    }
+
+    public int getSeatRows() {
+        return this.seatRows;
+    }
+
+    public void setSeatRows(int seatRows) {
+        this.seatRows = seatRows;
+    }
+
+    public int getSeatCols() {
+        return this.seatCols;
+    }
+
+    public void setSeatCols(int seatCols) {
+        this.seatCols = seatCols;
+    }
+
+    public String[][] getSeats() {
+        return this.seats;
+    }
+
+    public void setSeats(String[][] seats) {
         this.seats = seats;
     }
-
+    
     public String getMovieInfo() {
         return "Movie Title: " + movieTitle +
-               "\nShowing Date: " + showingDate +
-               "\nCinema Number: " + cinemaNum +
-               "\nStart Time: " + timeStart +
-               "\nIs Premiere: " + isPremiere +
-               "\nMovie Length: " + movieTimeDuration + " hours";
+                "\nShowing Date: " + showingDate +
+                "\nCinema Number: " + cinemaNum +
+                "\nStart Time: " + timeStart +
+                "\nIs Premiere: " + isPremiere +
+                "\nMovie Length: " + movieTimeDuration + " hours";
     }
 
 }
