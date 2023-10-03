@@ -85,6 +85,13 @@ public class Movie {
         }
     }
 
+    public void setSeatAvailable(ArrayList<String> list) {
+        for (String s: list){
+            int[] i = seatCodeToIndexes(s);
+            seats[i[0]][i[1]] = "[" + s + "]";
+        }        
+    }
+
     public int[] seatCodeToIndexes(String s) {
         char code = s.charAt(0);
         int col = Integer.parseInt(s.substring(1));
