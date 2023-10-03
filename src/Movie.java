@@ -1,4 +1,5 @@
 import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
@@ -27,17 +28,28 @@ public class Movie {
 
     }
 
+   
+
     // fix this function so that it does not go through all array elements
     private String[][] initializezSeats() {
         String[][] seatPlan = new String[seatRows][seatCols];
         for (int i = 0; i < seatRows; i++) {
             for (int j = 0; j < seatCols; j++) {
                 String seatCode = String.format("%c%d", 'A' + i, j + 1);
-                seatPlan[i][j] = seatCode;
+                seatPlan[i][j] = "[" + seatCode + "]";
             }
         }
         return seatPlan;
 
+    }
+
+    public void displaySeatAvailability() {
+        for (int i = 0; i < seatRows; i++) {
+            for (int j = 0; j < seatCols; j++) {
+                System.out.print(seats[i][j] + " ");
+            }
+            System.out.println(); // Move to the next line after each row
+        }
     }
 
     public int getId() {
@@ -56,7 +68,7 @@ public class Movie {
     public boolean isSeatOccupied(String seatCode) {
         for (int i = 0; i < seatRows; i++) {
             for (int j = 0; j < seatCols; j++) {
-                if (seats[i][j].equals(seatCode)) {
+                if (seats[i][j].equals("[" + seatCode + "]")) {
                     return false;
                 }
             }
@@ -65,7 +77,7 @@ public class Movie {
         return true;
     }
 
-    public void setSeatOccupied(List<String> list) {
+    public void setSeatOccupied(ArrayList<String> list) {
         for (int i = 0; i < seatRows; i++) {
             for (int j = 0; j < seatCols; j++) {
                 String seatCode = String.format("%c%d", 'A' + i, j + 1);
@@ -157,7 +169,7 @@ public class Movie {
     public void setSeats(String[][] seats) {
         this.seats = seats;
     }
-    
+
     public String getMovieInfo() {
         return "Movie Title: " + movieTitle +
                 "\nShowing Date: " + showingDate +

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Iterator;
 
@@ -26,6 +27,12 @@ public class BookingSystem {
         sc = new Scanner(System.in);
         int choice = 0;
 
+        // for testing
+        movies.get(0).displaySeatAvailability();
+        movies.get(0).setSeatOccupied(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")));
+        movies.get(0).displaySeatAvailability();
+        System.out.println(movies.get(0).isSeatOccupied("A1"));
+        System.out.println(movies.get(0).isSeatOccupied("A2"));
 
         do {
             // title screen
