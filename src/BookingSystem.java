@@ -1,176 +1,171 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class BookingSystem {
-    private static ArrayList<Movie> cinemaList = new ArrayList<>();
-    private static final double DISCOUNT = 0.2; // 20% discount for senior citizens
-    private static ArrayList<Reservation> reservations = new ArrayList<>();
-    private static long reservationTicketCounter = 1000; // Initial reservation ticket number
-    private static String selectedTimeSlot; // Added to store the selected time slot
+    private ArrayList<Movie> movies;
+
+    public BookingSystem() {
+        this.movies = new ArrayList<>();
+    }
 
     public static void main(String[] args) {
-        // Initialize cinemaList with movies
-        initializeMovies();
+        BookingSystem bookingSystem = new BookingSystem();
 
-        Scanner scanner = new Scanner(System.in);
-        int choice;
+        // Sample movie data
+        Date showingDate = parseDate("2023-06-01 12:45");
+        Movie movie1 = new Movie(showingDate, 1, showingDate, false, "Kung Fu Panda 2", 1.75);
+        Movie movie2 = new Movie(showingDate, 2, showingDate, true, "Avengers: Endgame", 3.0);
+
+        bookingSystem.movies.add(movie1);
+        bookingSystem.movies.add(movie2);
 
         while (true) {
-            System.out.println("***********NOW SHOWING*************\n");
-            displayMovieSchedule();
-            System.out.println("[1] Display Seat");
-            System.out.println("[2] Reserve Seat");
-            System.out.println("[3] Movie Schedule");
-            System.out.println("[4] Exit");
-            System.out.print("Choose Option: ");
-            choice = scanner.nextInt();
+            displayMainMenu();
+            int choice = getUserChoice();
 
             switch (choice) {
                 case 1:
-                    // Implement display seat option
-                    displaySeatAvailability();
+                    bookingSystem.reserveSeat();
                     break;
                 case 2:
-                    // Implement reserve seat option
-                    //reserveSeats();
+                    // Implement Cancel Seat function here
                     break;
                 case 3:
-                    // Implement movie schedule option
-                    displayMovieSchedule();
+                    // Implement View Schedule function here
                     break;
                 case 4:
-                    System.out.println("Goodbye!");
+                    System.out.println("Exiting the booking system. Goodbye!");
                     System.exit(0);
+                    break;
                 default:
-                    System.out.println("Invalid choice. Please choose a valid option.");
+                    System.out.println("Invalid choice. Please select a valid option.");
             }
         }
     }
 
-    private static void initializeMovies() {
-        // Sample movie 1
-        String[][] seats1 = new String[8][5]; // 8 rows with 5 seats per row for cinema 1
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 5; col++) {
-                char seatLetter = (char) ('A' + row);
-                String seatCode = seatLetter + String.valueOf(col + 1);
-                seats1[row][col] = seatCode;
-            }
-        }
-        ArrayList<String> showtimes1 = new ArrayList<>();
-        showtimes1.add("12:30");
-        showtimes1.add("15:00");
-        showtimes1.add("17:30");
-
-        Movie movie1 = new Movie("2021-06-01", 1, showtimes1, false, "Movie 1", 2.0, seats1);
-
-        // Sample movie 2
-        String[][] seats2 = new String[8][5]; // 8 rows with 5 seats per row for cinema 2
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 5; col++) {
-                char seatLetter = (char) ('A' + row);
-                String seatCode = seatLetter + String.valueOf(col + 1);
-                seats2[row][col] = seatCode;
-            }
-        }
-        ArrayList<String> showtimes2 = new ArrayList<>();
-        showtimes2.add("13:00");
-        showtimes2.add("15:30");
-        showtimes2.add("18:00");
-
-        Movie movie2 = new Movie("2021-06-01", 2, showtimes2, true, "Movie 2 (Premiere)", 2.5, seats2);
-
-        cinemaList.add(movie1);
-        cinemaList.add(movie2);
+    private static void displayMainMenu() {
+        System.out.println("\n********** Main Menu **********");
+        System.out.println("1. Reserve Seat");
+        System.out.println("2. Cancel Seat");
+        System.out.println("3. View Schedule");
+        System.out.println("4. Exit");
+        System.out.print("Select an option: ");
     }
 
-    private static void displayMovieSchedule() {
-        // Display available movies and showtimes
-        System.out.println("***********NOW SHOWING*************\n");
-        for (int i = 0; i < cinemaList.size(); i++) {
-            Movie movie = cinemaList.get(i);
-            System.out.println("[" + (i + 1) + "] " + movie.getMovieTitle());
-            ArrayList<String> showtimes = movie.getShowtimes();
-            System.out.println(showtimes);
-        }
-        System.out.println();
-    }
-
-    private static void displaySeatAvailability() {
+    private static int getUserChoice() {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Choose a movie (1-" + cinemaList.size() + "): ");
-        int movieChoice = scanner.nextInt();
-
-        if (movieChoice >= 1 && movieChoice <= cinemaList.size()) {
-            Movie selectedMovie = cinemaList.get(movieChoice - 1);
-            selectedTimeSlot = displayTimeSlots(selectedMovie);
-
-            // Display seat availability for the selected movie and time slot
-            displaySeats(selectedMovie);
-        } else {
-            System.out.println("Invalid movie choice.");
-        }
+        return scanner.nextInt();
     }
 
-    private static String displayTimeSlots(Movie movie) {
-        ArrayList<String> showtimes = movie.getShowtimes();
-        System.out.println("Choose a time slot:");
-
-        for (int i = 0; i < showtimes.size(); i++) {
-            System.out.println("[" + (i + 1) + "] " + showtimes.get(i));
-        }
-
+    private void reserveSeat() {
         Scanner scanner = new Scanner(System.in);
-        int timeChoice = scanner.nextInt();
-
-        if (timeChoice >= 1 && timeChoice <= showtimes.size()) {
-            return showtimes.get(timeChoice - 1);
-        } else {
-            System.out.println("Invalid time slot choice.");
-            return null;
-        }
-    }
-
-    private static void displaySeats(Movie movie) {
-        String[][] seats = movie.getSeats();
-
-        // Display seat availability and occupancy
-        System.out.println("Cinema Number: " + movie.getCinemaNum());
-        System.out.println("Date and Time of Screening: " + movie.getShowingDate());
-        System.out.println("Time Slot: " + selectedTimeSlot);
-        System.out.println("Seat Availability and Occupancy:");
-        System.out.println("                        SCREEN");
-
-        for (int row = 0; row < seats.length; row++) {
-            System.out.print("|");
-            for (int col = 0; col < seats[row].length; col++) {
-                if (seats[row][col].equals("LN")) {
-                    // Available seat
-                    System.out.print("\t[" + (char) ('A' + row) + (col + 1) + "]");
-                } else if (seats[row][col].equals("X")) {
-                    // Seat occupied
-                    System.out.print("\t[X]");
-                } else {
-                    // Other (e.g., aisle)
-                    System.out.print("\t" + seats[row][col]);
-                }
+    
+        // Display the ongoing/showing movies and their showtimes
+        System.out.println("\nTitle Screen (Screen 1)");
+        System.out.println("***********NOW SHOWING*************");
+    
+        // Iterate through the available movies and show their titles and showtimes
+        int movieChoice = 1;
+        for (Movie movie : movies) {
+            System.out.println("[" + movieChoice + "] " + movie.getMovieInfo());
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+            for (Date showtime : movie.getShowtimes()) {
+                System.out.print("{" + timeFormat.format(showtime) + "} ");
             }
             System.out.println();
+            movieChoice++;
         }
-
+    
+        System.out.print("\nChoose Movie: ");
+        int selectedMovieIndex = scanner.nextInt();
+        if (selectedMovieIndex >= 1 && selectedMovieIndex <= movies.size()) {
+            Movie selectedMovie = movies.get(selectedMovieIndex - 1);
+    
+            // Display the selected movie title and cinema number
+            System.out.println("\n*******" + selectedMovie.getMovieInfo() + "*******");
+            System.out.println("Cinema Number: " + selectedMovie.getCinemaNum());
+    
+            // Display available showtimes for the selected movie
+            ArrayList<Date> showtimes = selectedMovie.getShowtimes();
+            for (int i = 0; i < showtimes.size(); i++) {
+                System.out.println("[" + (i + 1) + "] " + new SimpleDateFormat("h:mm a").format(showtimes.get(i)));
+            }
+    
+            System.out.print("Choose Time Slot: ");
+            int selectedTimeSlot = scanner.nextInt();
+    
+            if (selectedTimeSlot >= 1 && selectedTimeSlot <= showtimes.size()) {
+                Date selectedShowtime = showtimes.get(selectedTimeSlot - 1);
+    
+                // Display the selected time slot
+                System.out.println("Time Slot: " + new SimpleDateFormat("h:mm a").format(selectedShowtime));
+    
+                // Display seat availability and occupancy for the selected movie and time slot
+                selectedMovie.displaySeatAvailability(selectedShowtime);
+    
+                // Prompt staff to input seats to reserve
+                System.out.print("\nInput Seats to Reserve for this Transaction (e.g., A1, A2, A3): ");
+                scanner.nextLine(); // Consume the newline
+                String selectedSeatsInput = scanner.nextLine().trim();
+                String[] selectedSeats = selectedSeatsInput.split(", ");
+    
+                // Update seat occupancy for the selected time slot
+                selectedMovie.setSeatOccupancy((List<String>) Arrays.asList(selectedSeats));
+    
+                // Ask if they have a Senior Citizen or PWD Card
+                System.out.print("Do you have a Senior Citizen or PWD Card? (Yes/No): ");
+                String hasCard = scanner.nextLine().trim();
+    
+                if (hasCard.equalsIgnoreCase("yes")) {
+                    // If they have a card, prompt for the quantity and card ID
+                    System.out.print("Quantity Senior Citizens / PWDs: ");
+                    int quantity = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline
+                    System.out.print("Please input Senior Citizen Card / PWD Card ID Number: ");
+                    String cardId = scanner.nextLine().trim();
+    
+                    // Proceed to checkout or cancel
+                    System.out.print("[1] Proceed to Checkout>>> ");
+                    int checkoutChoice = scanner.nextInt();
+                    if (checkoutChoice == 1) {
+                        // Implement checkout logic here
+                        // You have all the necessary information to complete the reservation
+                    } else {
+                        System.out.println("Transaction canceled.");
+                    }
+                } else {
+                    // Proceed to checkout or cancel without a card
+                    System.out.print("[1] Proceed to Checkout>>> ");
+                    int checkoutChoice = scanner.nextInt();
+                    if (checkoutChoice == 1) {
+                        // Implement checkout logic here
+                        // You have all the necessary information to complete the reservation
+                    } else {
+                        System.out.println("Transaction canceled.");
+                    }
+                }
+            } else {
+                System.out.println("Invalid time slot choice. Please select a valid option.");
+            }
+        } else {
+            System.out.println("Invalid movie choice. Please select a valid option.");
+        }
     }
+    
 
-    // Implement other methods here
-
-    private static double calculateAmount(int numSeats, int seniorCount) {
-        // Calculate the total reservation amount based on seat count and senior count
-        // Implement according to your project requirements
-        return 0.0; // Placeholder value, replace with actual calculation
-    }
-
-    private static void cancelSeatReservation(long ticketNum) {
-        // Cancel a reservation based on the ticket number
-        // Implement according to your project requirements
+    // Helper method to parse dates
+    private static Date parseDate(String dateStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            return dateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
