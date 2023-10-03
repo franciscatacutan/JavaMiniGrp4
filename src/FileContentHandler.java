@@ -44,6 +44,7 @@ public class FileContentHandler {
         return movieList;
     }
 
+
     public ArrayList<Reservation> readReservationFile() {
         ArrayList<Reservation> resList = new ArrayList<>();
 
@@ -86,6 +87,7 @@ public class FileContentHandler {
         return resList;
     }
 
+
     private boolean containsNull(String[] array) {
         for (String value : array) {
             if (value == null || value.trim().isEmpty()) {
@@ -97,10 +99,22 @@ public class FileContentHandler {
 
     public void reservationFileWrite_toCSV(Reservation reservation) {
         File filePath = new File("Resources/Reservations.csv");
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-            writer.write(toCSVString(reservation));
+
+        try {
+            if (!filePath.exists()) {
+                if (filePath.createNewFile()) {
+                    try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
+                        writer.write(toCSVString(reservation));
+                    } catch (IOException e) {
+                        System.err.println("Error writing reservation details to CSV file: " + e.getMessage());
+                    }
+                } else {
+                    System.err.println("Unable to create the CSV file.");
+                }
+            }
+
         } catch (IOException e) {
-            System.out.println("File Print Output Error: " + e);
+            System.err.println("Error creating the CSV file: " + e.getMessage());
         }
     }
 
