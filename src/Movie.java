@@ -1,133 +1,156 @@
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
 
-public class Reservation {
-    private double pricePerSeat; // Price per seat based on movie type
-    private ArrayList<String> seats;
-    private String movieTitle;
-    private int cinemaNumber;
+public class Movie {
     private Date showingDate;
-    private String time;
-    private int numberOfTickets;
-    private int numberOfDiscountedTickets;
-    private boolean isPremiere; // Add this field
+    private int cinemaNum;
+    private Date timeStart;
+    private boolean isPremiere;
+    private String movieTitle;
+    private double movieLength;
+    private String[][] seats; // 2D array to represent seats
+    private static final int ROWS = 8;
+    private static final int SEATS_PER_ROW = 5;
+    private ArrayList<Date> showtimes; // List to store movie showtimes
+    private Map<Date, List<String>> seatReservations = new HashMap<>();
 
-    public Reservation(String movieTitle, int cinemaNumber, Date showtime, boolean isPremiere) {
-        this.movieTitle = movieTitle;
-        this.cinemaNumber = cinemaNumber;
-        this.showingDate = showtime;
-        this.time = new SimpleDateFormat("h:mm a").format(showtime);
-        this.seats = new ArrayList<>();
-        this.isPremiere = isPremiere; // Set the isPremiere field
+    // Static list to store all movies to adjust showtimes
+    private static ArrayList<Movie> movies = new ArrayList<>();
 
-        // Set the price per seat based on whether it's a premiere movie
-        if (isPremiere) {
-            this.pricePerSeat = 500.0;
-        } else {
-            this.pricePerSeat = 350.0;
-        }
-    }
-
-    public Reservation(String movieTitle2, int cinemaNum, Date showtime) {
-    }
-
-    public void setMovieTitle(String movieTitle) {
-        this.movieTitle = movieTitle;
-    }
-
-    public void setCinemaNumber(int cinemaNumber) {
-        this.cinemaNumber = cinemaNumber;
-    }
-
-    public void setShowingDate(Date showingDate) {
+    public Movie(Date showingDate, int cinemaNum, Date timeStart, boolean isPremiere, String movieTitle, double movieLength) {
         this.showingDate = showingDate;
-    }
+        this.cinemaNum = cinemaNum;
+        this.timeStart = timeStart;
+        this.isPremiere = isPremiere;
+        this.movieTitle = movieTitle;
+        this.movieLength = movieLength;
+        this.seats = new String[ROWS][SEATS_PER_ROW];
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public void setNumberOfTickets(int numberOfTickets) {
-        this.numberOfTickets = numberOfTickets;
-    }
-
-    public void setNumberOfDiscountedTickets(int numberOfDiscountedTickets) {
-        this.numberOfDiscountedTickets = numberOfDiscountedTickets;
-    }
-
-    public void reserveSeats(ArrayList<String> seats) {
-        // Perform seat reservation logic here
-        this.seats.addAll(seats);
-    }
-
-    public double calculateSubtotal() {
-        // Calculate the subtotal based on the number of reserved seats
-        return pricePerSeat * seats.size();
-    }
-
-    public double calculateDiscountAmount() {
-        // Calculate the discount amount based on the number of discounted tickets (20% for senior citizens)
-        if (numberOfDiscountedTickets > 0) {
-            double discount = 0.20; // 20% discount
-            return discount * pricePerSeat * numberOfDiscountedTickets;
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < SEATS_PER_ROW; j++) {
+                seats[i][j] = String.format("[%c%d]", 'A' + i, j + 1);
+            }
         }
-        return 0.0;
+
+        this.showtimes = new ArrayList<>();
+        // Adding default showtimes (you can modify these as needed)
+        this.showtimes.add(timeStart);
+        this.showtimes.add(new Date(timeStart.getTime() + 2 * 60 * 60 * 1000)); // 2 hours later
+        this.showtimes.add(new Date(timeStart.getTime() + 4 * 60 * 60 * 1000)); // 4 hours later
+        this.showtimes.add(new Date(timeStart.getTime() + 6 * 60 * 60 * 1000)); // 6 hours later
+
+        // Adjust showtimes to avoid conflicts with other movies
+        for (Movie movie : movies) {
+            if (movie != this) {
+                adjustShowtimes(movie.getShowtimes());
+            }
+        }
+
+        // Add this movie to the static list of movies
+        movies.add(this);
     }
 
-    public double calculateTotalAmount() {
-        // Calculate the total amount considering the discount
-        double subtotal = calculateSubtotal();
-        double discountAmount = calculateDiscountAmount();
-        return subtotal - discountAmount;
+    // Adjust showtimes to avoid conflicts with other movies
+    private void adjustShowtimes(ArrayList<Date> otherShowtimes) {
+        for (Date otherShowtime : otherShowtimes) {
+            long timeDifference = otherShowtime.getTime() - timeStart.getTime();
+            if (timeDifference > 0) {
+                // Adjust the showtime to be later than the other movie
+                Date adjustedShowtime = new Date(otherShowtime.getTime() + 60 * 1000); // 1 minute later
+                showtimes.add(adjustedShowtime);
+            }
+        }
     }
 
-    public String generateTransactionReferenceNumber() {
-        // Generate a random transaction reference number
-        Random random = new Random();
-        int referenceNumber = random.nextInt(1000000); // Adjust as needed
-        return String.format("%06d", referenceNumber); // Format as a 6-digit string
+    public String getMovieInfo() {
+        return "Movie Title: " + movieTitle +
+               "\nShowing Date: " + showingDate +
+               "\nCinema Number: " + cinemaNum +
+               "\nStart Time: " + timeStart +
+               "\nIs Premiere: " + isPremiere +
+               "\nMovie Length: " + movieLength + " hours";
     }
 
-    public String generateSummary() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
-        StringBuilder summary = new StringBuilder();
-
-        summary.append("*****************SUMMARY*****************\n");
-        summary.append("Movie Title:\n").append(movieTitle).append("\n");
-        summary.append("Cinema Number:\n").append(cinemaNumber).append("\n");
-        summary.append("Date:\n").append(dateFormat.format(showingDate)).append("\n");
-        summary.append("Time:\n").append(time).append("\n");
-        summary.append("Number of Ticket/s:\n").append(numberOfTickets).append("\n");
-        summary.append("Seats Reserved:\n").append(seats).append("\n");
-        summary.append("Subtotal:\n₱").append(String.format("%.2f", calculateSubtotal())).append("\n");
-        summary.append("Discount Amount:\n₱").append(String.format("%.2f", calculateDiscountAmount())).append("\n");
-        summary.append("Total Amount:\n₱").append(String.format("%.2f", calculateTotalAmount())).append("\n");
-
-        return summary.toString();
+    public boolean isPremiere() {
+        return isPremiere;
     }
 
-    public String generateReceipt() {
-        StringBuilder receipt = new StringBuilder();
+    public String[][] getSeats() {
+        return seats;
+    }
 
-        receipt.append("Receipt for ").append(isPremiere ? "Premiere" : "Regular").append(" Movie (").append(cinemaNumber).append(")\n\n");
-        receipt.append("Cinema World\n");
-        receipt.append("Transaction Reference Number:\n").append(generateTransactionReferenceNumber()).append("\n");
-        receipt.append("Movie Title:\n").append(movieTitle).append("\n");
-        receipt.append("Cinema Number:\n").append(cinemaNumber).append("\n");
-        receipt.append("Date:\n").append(showingDate).append("\n");
-        receipt.append("Time:\n").append(time).append("\n");
-        receipt.append("Number of Ticket/s:\n").append(numberOfTickets).append("\n");
-        receipt.append("Number of Discounted Tickets:\n").append(numberOfDiscountedTickets).append("\n");
-        receipt.append("Seats Reserved:\n").append(seats).append("\n");
-        receipt.append("Subtotal:\n₱").append(String.format("%.2f", calculateSubtotal())).append("\n");
-        receipt.append("Discount Amount:\n₱").append(String.format("%.2f", calculateDiscountAmount())).append("\n");
-        receipt.append("Total Amount:\n₱").append(String.format("%.2f", calculateTotalAmount())).append("\n\n");
-        receipt.append("**END\n\n");
-        receipt.append("[1] <<<Make Another Transaction?\n");
-        receipt.append("[2] Exit >>>");
+    public void setSeats(String[][] seats) {
+        this.seats = seats;
+    }
 
-        return receipt.toString();
+    public void setSeatOccupancy(List<String> list) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < SEATS_PER_ROW; j++) {
+                String seatCode = String.format("%c%d", 'A' + i, j + 1);
+                if (list.contains(seatCode)) {
+                    seats[i][j] = "[X]"; // Seat is occupied
+                } else {
+                    seats[i][j] = "[" + seatCode + "]"; // Seat label with seat code
+                }
+            }
+        }
+    }
+
+    public void reserveSeats(Date selectedShowtime, List<String> seatsToReserve) {
+        // Add the reserved seats to the corresponding time slot in the map
+        if (!seatReservations.containsKey(selectedShowtime)) {
+            seatReservations.put(selectedShowtime, new ArrayList<>());
+        }
+        seatReservations.get(selectedShowtime).addAll(seatsToReserve);
+    }
+
+    public void displaySeatAvailability(Date selectedShowtime) {
+        // Display seat availability for the selected time slot
+
+        List<String> reservedSeats = seatReservations.getOrDefault(selectedShowtime, new ArrayList<>());
+
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\tSCREEN");
+
+        for (int i = 0; i < ROWS; i++) {
+            System.out.print("|");
+            for (int j = 0; j < SEATS_PER_ROW; j++) {
+                String seatCode = String.format("[%c%d]", 'A' + i, j + 1);
+                if (reservedSeats.contains(seatCode)) {
+                    System.out.print("\t[X]"); // Seat is occupied
+                } else {
+                    System.out.print("\t[" + seats[i][j] + "]");
+                }
+            }
+            System.out.println();
+        }
+
+        System.out.println("\nLegend: [LN] = Available Seat  ,  [X] = Seat Occupied");
+    }
+
+    // Getters and setters for showtimes
+    public ArrayList<Date> getShowtimes() {
+        return showtimes;
+    }
+
+    public void setShowtimes(ArrayList<Date> showtimes) {
+        this.showtimes = showtimes;
+    }
+
+    public int getCinemaNum() {
+        return cinemaNum;
+    }
+
+    public Date getShowingDate() {
+        return showingDate;
+    }
+
+    public double getMovieLength() {
+        return movieLength;
+    }
+
+    public void addShowtime(Date showingDate2) {
     }
 }
