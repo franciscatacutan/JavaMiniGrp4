@@ -12,6 +12,7 @@ public class FileContentHandler {
     public ArrayList<Movie> readMovieFile() {
         ArrayList<Movie> movieList = new ArrayList<>();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        int idCounter = 1;
 
         try {
             Scanner file = new Scanner(new FileReader("Resources/Movies.csv"));
@@ -27,8 +28,9 @@ public class FileContentHandler {
                     String movieTitle = movieData[4].replace("\"", "");
                     double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
 
-                    Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration);
-                    movieList.add(movie);
+                        Movie movie = new Movie(idCounter, showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration);
+                        movieList.add(movie);
+                        idCounter++;
                 } else { // Null Value
                     System.out.println("Data has invalid/null value, Please try another file"); // To add additional if still have time
                 }
