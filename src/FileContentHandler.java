@@ -1,4 +1,3 @@
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -6,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.FileReader;
-import java.util.Date;
 import java.util.Scanner;
 
 public class FileContentHandler {
@@ -22,9 +20,9 @@ public class FileContentHandler {
                 String line = file.nextLine();
                 String[] movieData = line.split(",");
                 if (movieData.length == 6 && !containsNull(movieData)) {
-                    Date showingDate = dateFormatter.parse(movieData[0].replace("\"", ""));
+                    LocalDate showingDate = LocalDate.parse(movieData[0].replace("\"", ""));
                     int cinemaNum = Integer.parseInt(movieData[1].replace("\"", ""));
-                    Date timeStart = dateFormatter.parse(movieData[2].replace("\"", ""));
+                    LocalTime timeStart = LocalTime.parse(movieData[2].replace("\"", ""));
                     boolean isPremier = Boolean.parseBoolean(movieData[3].replace("\"", ""));
                     String movieTitle = movieData[4].replace("\"", "");
                     double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
@@ -38,8 +36,6 @@ public class FileContentHandler {
             file.close();
         } catch (IOException e) {
             System.out.println("File can't be read: " + e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         }
         return movieList;
     }

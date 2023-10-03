@@ -63,7 +63,7 @@ public class Movie {
         }
     }
 
-    public LocalDateTime getShowingDate() {
+    public LocalDate getShowingDate() {
         return showingDate;
     }
 
@@ -79,11 +79,11 @@ public class Movie {
         this.isPremier = isPremier;
     }
 
-    public LocalDateTime getTimeStart() {
+    public LocalTime getTimeStart() {
         return timeStart;
     }
 
-    public void setTimeStart(LocalDateTime timeStart) {
+    public void setTimeStart(LocalTime timeStart) {
         this.timeStart = timeStart;
     }
 
