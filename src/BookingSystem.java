@@ -35,54 +35,57 @@ public class BookingSystem {
         System.out.println(movies.get(1).isSeatOccupied("A1"));
         System.out.println(movies.get(1).isSeatOccupied("A2"));
 
-        do {
-            // title screen
-            System.out.println("***************NOW SHOWING*****************");
-            System.out.println("*\t  [1] Shrek                       *");
-            System.out.println("*\t  [2] Kim Possible The Movie      *");
-            System.out.println("*\t  [3] Fantastic 4                 *");
-            System.out.println("*\t  [4] A Man Called Otto           *");
-            System.out.println("*\t  [5] Cancel Reservation          *");
-            System.out.println("*\t  [0] Exit                        *");
-            System.out.println("*******************************************");
+        reserveSeat(new ArrayList<String>(Arrays.asList("A2")), movies.get(0));
+        movies.get(0).displaySeatAvailability();
 
-            // enter movie choice
-            System.out.print("Choose Movie: ");
-            choice = getIntInput();
+        // do {
+        // // title screen
+        // System.out.println("***************NOW SHOWING*****************");
+        // System.out.println("*\t [1] Shrek *");
+        // System.out.println("*\t [2] Kim Possible The Movie *");
+        // System.out.println("*\t [3] Fantastic 4 *");
+        // System.out.println("*\t [4] A Man Called Otto *");
+        // System.out.println("*\t [5] Cancel Reservation *");
+        // System.out.println("*\t [0] Exit *");
+        // System.out.println("*******************************************");
 
-            // process after choosing Movie
-            switch (choice) {
-                case 1:
+        // // enter movie choice
+        // System.out.print("Choose Movie: ");
+        // choice = getIntInput();
 
-                    break;
+        // // process after choosing Movie
+        // switch (choice) {
+        // case 1:
 
-                case 2:
+        // break;
 
-                    break;
+        // case 2:
 
-                case 3:
+        // break;
 
-                    break;
+        // case 3:
 
-                case 4:
+        // break;
 
-                    break;
+        // case 4:
 
-                case 5:
+        // break;
 
-                    break;
+        // case 5:
 
-                case 0:
-                    System.exit(0);
-                    break;
+        // break;
 
-                default:
-                    System.out.println("\nINVALID INPUT");
-                    System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
+        // case 0:
+        // System.exit(0);
+        // break;
 
-            }
+        // default:
+        // System.out.println("\nINVALID INPUT");
+        // System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
 
-        } while (choice != 0);
+        // }
+
+        // } while (choice != 0);
 
     }
 
@@ -94,7 +97,16 @@ public class BookingSystem {
         }
     }
 
-    public boolean reserveSeat(String seatNum, Movie movie) {
+    public boolean reserveSeat(ArrayList<String> seatNums, Movie movie) {
+        for (String seat : seatNums) {
+            if (movie.isSeatOccupied(seat)) {
+                System.out.println("Seat " + " is already Occupied");
+                return false;
+            }
+        }
+        movie.setSeatOccupied(seatNums);
+
+        // movies.get(0).displaySeatAvailability();
 
         // call is seat available method
 
