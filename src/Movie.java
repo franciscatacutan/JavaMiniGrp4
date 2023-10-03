@@ -1,12 +1,12 @@
-import java.time.LocalDateTime;
+import java.time.*;
 
 public class Movie {
     private int id;
     private int cinemaNum;
     private boolean isSeatOccupied;
-    private LocalDateTime ShowingDate;
+    private LocalDate showingDate;
     private boolean isPremier;
-    private LocalDateTime timeStart;
+    private LocalTime timeStart;
     private String movieTitle;
     private double movieTimeDuration;
     private int seatRow = 8;
@@ -14,16 +14,17 @@ public class Movie {
     private  boolean [][] seats;
 
 
-    public Movie(LocalDateTime ShowingDate, int cinemaNum, LocalDateTime timeStart, boolean isPremier, String movieTitle, double movieTimeDuration, int seats[][]) {
+    // based on csv
+    public Movie(LocalDate ShowingDate, int cinemaNum, LocalTime timeStart, boolean isPremier, String movieTitle, double movieTimeDuration) {
        // this.seatNum = seatNum;
         //this.isSeatOccupied = isSeatOccupied;
-        this.ShowingDate = ShowingDate;
+        this.showingDate = ShowingDate;
         this.isPremier = isPremier;
         this.cinemaNum = cinemaNum;
         this.timeStart = timeStart;
         this.movieTitle = movieTitle;
         this.movieTimeDuration = movieTimeDuration;
-        this.seats = new boolean[seatRow][seatCols];
+        
     }
 
     public int getId() {
@@ -63,11 +64,11 @@ public class Movie {
     }
 
     public LocalDateTime getShowingDate() {
-        return ShowingDate;
+        return showingDate;
     }
 
     public void setShowingDate(LocalDateTime showingDate) {
-        ShowingDate = showingDate;
+        showingDate = showingDate;
     }
 
     public boolean isPremier() {
