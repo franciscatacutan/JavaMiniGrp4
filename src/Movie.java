@@ -92,7 +92,7 @@ public class Movie {
     }
 
     public void setShowingDate(LocalDate showingDate) {
-        showingDate = showingDate;
+        this.showingDate = showingDate;
     }
 
     public boolean isPremiere() {

@@ -51,6 +51,11 @@ public class BookingSystem {
 
         movies.get(1).displaySeatAvailability();
 
+        cancelReservation(1234820);
+
+        movies.get(1).displaySeatAvailability();
+
+
         // do {
         // // title screen
         // System.out.println("***************NOW SHOWING*****************");
@@ -137,13 +142,10 @@ public class BookingSystem {
 
             // if inputed ticket is found in the reservations it is deleted in the array
             if (reservation.getReserveTicketNum() == ticketNum) {
-
+                movies.get(reservation.getMovieId()).setSeatAvailable(reservation.getSeats());
                 iterator.remove();
-
             }
         }
-
-        System.out.println(reservations);
     }
 
     public double calculateAmount(int seatNums, int senior, boolean isPremier) {
@@ -158,9 +160,6 @@ public class BookingSystem {
         }
 
         return price;
-    }
-
-    public void seatAvailable(Movie movie) {
     }
 
     public int getIntInput() {
