@@ -3,14 +3,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.IOException;
 import java.io.FileReader;
 import java.util.Scanner;
 
 public class FileContentHandler {
 
-    public ArrayList<Movie> readMovieFile() {
-        ArrayList<Movie> movieList = new ArrayList<>();
+    public HashMap<Integer, Movie> readMovieFile() {
+        HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         int idCounter = 1;
 
@@ -28,8 +29,8 @@ public class FileContentHandler {
                     String movieTitle = movieData[4].replace("\"", "");
                     double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
 
-                        Movie movie = new Movie(idCounter, showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration);
-                        movieList.add(movie);
+                        Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration);
+                        movieList.put(idCounter, movie);
                         idCounter++;
                 } else { // Null Value
                     System.out.println("Data has invalid/null value, Please try another file"); // To add additional if still have time

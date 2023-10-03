@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
-    private int id;
     private int cinemaNum;
     private LocalDate showingDate;
     private boolean isPremiere;
@@ -15,9 +14,8 @@ public class Movie {
     private String[][] seats;
 
     // based on csv
-    public Movie(int id, LocalDate ShowingDate, int cinemaNum, LocalTime timeStart, boolean isPremier,
+    public Movie(LocalDate ShowingDate, int cinemaNum, LocalTime timeStart, boolean isPremier,
             String movieTitle, double movieTimeDuration) {
-        this.id = id;
         this.showingDate = ShowingDate;
         this.isPremiere = isPremier;
         this.cinemaNum = cinemaNum;
@@ -52,9 +50,6 @@ public class Movie {
         }
     }
 
-    public int getId() {
-        return id;
-    }
 
     public void setCinemaNum(int cinemaNum) {
         this.cinemaNum = cinemaNum;
@@ -130,9 +125,6 @@ public class Movie {
         this.movieTimeDuration = movieTimeDuration;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public boolean isIsPremiere() {
         return this.isPremiere;
