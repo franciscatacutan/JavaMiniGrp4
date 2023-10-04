@@ -12,7 +12,7 @@ public class BookingSystem {
     private HashMap<Integer, Movie> movies;
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
-    private FileContentHandler fHandler; 
+    private FileContentHandler fHandler;
 
     public static void main(String[] args) {
         BookingSystem bs;
@@ -37,7 +37,7 @@ public class BookingSystem {
             System.out.println(r);
         }
 
-        fHandler.deleteReservation(1234820);
+        // fHandler.deleteReservation(1234820);
 
         int choice = 0;
 
@@ -59,6 +59,7 @@ public class BookingSystem {
         cancelReservation(1234820);
 
         movies.get(1).displaySeatAvailability();
+        cancelReservation(1234829);
 
         // do {
         // // title screen
@@ -133,7 +134,8 @@ public class BookingSystem {
         }
         movie.setSeatOccupied(seatNums);
 
-        int reserveTicketNum = (reservations.size() == 0) ? 1234820 : (reservations.get(reservations.size() - 1).getReserveTicketNum() + 1);
+        int reserveTicketNum = (reservations.size() == 0) ? 1234820
+                : (reservations.get(reservations.size() - 1).getReserveTicketNum() + 1);
         LocalDate date = movie.getShowingDate();
         int cinemaNum = movie.getCinemaNum();
         LocalTime timeStart = movie.getTimeStart();
@@ -153,7 +155,7 @@ public class BookingSystem {
     // }
 
     public void cancelReservation(int ticketNum) {
-
+        boolean isExist = false;
         // create iterator to check reservations
         Iterator<Reservation> iterator = reservations.iterator();
         while (iterator.hasNext()) {
@@ -161,12 +163,16 @@ public class BookingSystem {
 
             // if inputed ticket is found in the reservations it is deleted in the array
             if (reservation.getReserveTicketNum() == ticketNum) {
+                isExist = true;
                 movies.get(reservation.getMovieId()).setSeatsAvailable(reservation.getSeats());
                 fHandler.deleteReservation(reservation.getReserveTicketNum());
                 iterator.remove();
             }
         }
 
+        if (!isExist) {
+            System.out.println("Ticket number " + ticketNum + " does not exist.");
+        }
         // update Reservations.csv
     }
 

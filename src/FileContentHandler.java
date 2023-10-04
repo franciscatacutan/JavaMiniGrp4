@@ -135,6 +135,7 @@ public class FileContentHandler {
                     int currentTicketNum = Integer.parseInt(resData[0].replace("\"", ""));
                     if (currentTicketNum == ticketNumber) {
                         isFound = true;
+                        
                     } else {
                         writer.println(line);
                     }
@@ -143,6 +144,7 @@ public class FileContentHandler {
 
             if (!isFound) {
                 System.err.println("Reservation with ticket number " + ticketNumber + " not isFound.");
+                tempFile.delete();
                 return;
             }
 
@@ -150,6 +152,10 @@ public class FileContentHandler {
             System.err.println("Error deleting reservation from CSV file: " + e.getMessage());
         }
 
+        if (!inputFile.delete()) {
+            System.out.println("Could not delete file: " + inputFile);
+            return;
+        }
         if (isFound && tempFile.renameTo(inputFile)) {
             System.out.println("Reservation with ticket number " + ticketNumber + " deleted successfully.");
         } else {
