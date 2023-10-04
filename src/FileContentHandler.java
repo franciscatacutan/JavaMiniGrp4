@@ -158,16 +158,12 @@ public class FileContentHandler {
 
     public String toCSVString(Reservation reservation) {
         StringBuilder csvContent = new StringBuilder();
-        csvContent.append("=============================================\n")
-                .append("Reservation Details:\n")
-                .append("=============================================\n")
-                .append("Ticket Number: ").append(reservation.getReserveTicketNum()).append("\n")
-                .append("Date: ").append(reservation.getDate()).append("\n")
-                .append("Cinema Number: ").append(reservation.getCinemaNum()).append("\n")
-                .append("Time: ").append(reservation.getTime()).append("\n")
-                .append("Seats: ").append(String.join(", ", reservation.getSeats())).append("\n")
-                .append("Price: Php").append(String.format("%.2f", reservation.getPrice()))
-                .append("\n=============================================\n");
+        csvContent.append('"' + reservation.getReserveTicketNum() + '"').append(",")
+                .append('"').append(reservation.getDate()).append('"').append(",")
+                .append('"' + reservation.getCinemaNum() + '"').append(",")
+                .append('"').append(reservation.getTime()).append('"').append(",")
+                .append('"').append(String.join(", ", reservation.getSeats())).append('"').append(",")
+                .append('"').append(String.format("%.2f", reservation.getPrice())).append('"');
         return csvContent.toString();
     }
 }
