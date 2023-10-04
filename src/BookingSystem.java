@@ -92,16 +92,16 @@ public class BookingSystem {
                             break;
                         }
 
-                        // if a movie is primier the program won't proceed with the senior discount
+                        // Prompt for senior/PWD input and calculate totalAmount
                         int sCount = 0;
                         if (!movie.isPremiere()) {
                             sCount = scInput();
                         }
 
                         if (sCount != -999) {
-                            reserveSeat(seats, movieId, sCount);
+                            double totalAmount = calculateAmount(seats.size(), sCount, movie.isPremiere());
+                            processCustomerCheckout(sCount, movie.isPremiere(), totalAmount);
                         }
-
                     }
 
                     break;
@@ -345,6 +345,23 @@ public class BookingSystem {
         System.out.println("*\t Date:                                         *");
         System.out.println("*\t Time:                                         *");
         System.out.println("*\t Number of Ticket/s:                           *");
+        System.out.println("*\t Seats Reserved:                               *");
+        System.out.println("*\t Subtotal:                                     *");
+        System.out.println("*\t Total Amount:                                 *");
+        System.out.println("\n\n [1] Make Another Transaction?");
+        System.out.println("[2] Exit");
+        // insert scanner to scan value for whether customer wants to make another
+        // transaction or to exit the whole transaction.
+
+    }
+    public void displayDiscountedReceipt() {
+        System.out.println("***************Cinema World***************");
+        System.out.println("*\t Transaction Reference Number:                 *");
+        System.out.println("*\t Movie Title:                                  *");
+        System.out.println("*\t Cinema Number:                                *");
+        System.out.println("*\t Date:                                         *");
+        System.out.println("*\t Time:                                         *");
+        System.out.println("*\t Number of Ticket/s:                           *");
         System.out.println("*\t Number of Discounted Tickets:                 *");
         System.out.println("*\t Seats Reserved:                               *");
         System.out.println("*\t Subtotal:                                     *");
@@ -379,30 +396,88 @@ public class BookingSystem {
         System.out.print("Do you have a Senior Citizen or PWD Card? (Yes/No): ");
         String hasCard = sc.nextLine().trim();
         int quantity = 0;
-
+    
         if (hasCard.equalsIgnoreCase("yes")) {
-
             // If they have a card, prompt for the quantity and card ID
             System.out.print("Quantity Senior Citizens / PWDs: ");
             quantity = getIntInput();
-
+    
             System.out.print("Please input Senior Citizen Card / PWD Card ID Number: ");
             String cardId = sc.nextLine().trim();
-        }
-
-        // Proceed to checkout or cancel without a card
-        System.out.println("[1] Proceed to Checkout>>> ");
-        System.out.println("PADAGDAG");
-        System.out.println("----------------------------------------");
-        int checkoutChoice = getIntInput();
-        if (checkoutChoice == 1) {
-            return quantity;
-            // Implement checkout logic here
-            // You have all the necessary information to complete the reservation
+    
+            // Proceed to checkout for senior citizens/PWDs
+            System.out.println("[1] Proceed to Checkout>>> ");
+            System.out.println("PADAGDAG");
+            System.out.println("----------------------------------------");
+            int checkoutChoice = getIntInput();
+            if (checkoutChoice == 1) {
+                return quantity;
+                // Implement checkout logic for senior citizens/PWDs here
+                // You have all the necessary information to complete the reservation
+            } else {
+                System.out.println("Transaction canceled.");
+                return -999;
+            }
         } else {
-            System.out.println("Transaction canceled.");
-            return -999;
+            // Proceed to checkout for regular customers
+            System.out.println("[1] Proceed to Checkout>>> ");
+            System.out.println("PADAGDAG");
+            System.out.println("----------------------------------------");
+            int checkoutChoice = getIntInput();
+            if (checkoutChoice == 1) {
+                return 0; // No senior citizens/PWDs
+                // Implement checkout logic for regular customers here
+                // You have all the necessary information to complete the reservation
+            } else {
+                System.out.println("Transaction canceled.");
+                return -999;
+            }
         }
+    }
+    
+
+    public void checkoutScreen(int seniorCount, double totalAmount, boolean isPremier) {
+        // Display checkout options
+        System.out.println("***************CHECKOUT***************");
+        System.out.println("*\t Total Amount: $" + totalAmount);
+        System.out.println("*\t [1] Confirm and Pay");
+        System.out.println("*\t [2] Cancel Transaction");
+        System.out.println("***************************************");
+
+        // Prompt for checkout choice
+        System.out.print("Enter choice: ");
+        int checkoutChoice = getIntInput();
+
+        switch (checkoutChoice) {
+            case 1:
+                // Implement payment processing logic here
+                // You can add payment processing, receipt generation, etc.
+                System.out.println("Payment successful!");
+                
+                if (seniorCount > 0) {
+                    displayDiscountedReceipt(); // Display the receipt for senior/PWD customers
+                } else if (isPremier) {
+                    displayPremierReceipt(); // Display the receipt for premier customers
+                } else {
+                    displayRegularReceipt(); // Display the receipt for regular customers
+                }
+                break;
+    
+            case 2:
+                System.out.println("Transaction canceled.");
+                break;
+    
+            default:
+                System.out.println("Invalid choice. Please select a valid option.");
+                break;
+        }
+    }
+
+    public void processCustomerCheckout(int seniorCount, boolean isPremier, double totalAmount) {
+        // Display checkout screen
+        checkoutScreen(seniorCount, totalAmount, isPremier);
+
+        // You can add more logic here, such as updating reservation records, etc.
     }
 
 }
