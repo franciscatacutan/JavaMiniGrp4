@@ -57,27 +57,12 @@ public class BookingSystem {
             // process after choosing Movie
             switch (choice) {
                 case 1:
-                    movies.get(1).displaySeatAvailability();
-                    // transition to time slot method
-                    selectTimeSlot();
-                    break;
-
                 case 2:
-                    movies.get(2).displaySeatAvailability();
-                    // transition to time slot method
-                    selectTimeSlot();
-                    break;
-
                 case 3:
-                    movies.get(3).displaySeatAvailability();
-                    // transition to time slot method
-                    selectTimeSlot();
-                    break;
-
                 case 4:
-                    movies.get(4).displaySeatAvailability();
+                    // movies.get(4).displaySeatAvailability();
                     // transition to time slot method
-                    selectTimeSlot();
+                    selectTimeSlot(showing.get(choice - 1));
                     break;
 
                 case 5:
@@ -257,15 +242,16 @@ public class BookingSystem {
         return num;
     }
 
-    //2nd screen for choosing time slots
-    public void selectTimeSlot() {
+    // 2nd screen for choosing time slots
+    public void selectTimeSlot(ArrayList<Integer> ids) {
+        Movie mInfo = movies.get(ids.get(0));
         int time_slot;
-        
-        //display movie title
-        System.out.println("\t\n*************** <INSERT MOVIE TITLE HERE>" /* insert movie title object here */ + " ***************\n");
 
-        //display cinema number
-        System.out.println("Cinema Number: <cinema_num>" );
+        // display movie title
+        System.out.println("\t\n*************** " + mInfo.getMovieTitle() + " ***************\n");
+
+        // display cinema number
+        System.out.println("Cinema Number: " + mInfo.getCinemaNum());
 
         // display timeslots
         System.out.println();
@@ -274,10 +260,7 @@ public class BookingSystem {
         }
 
         // choose timeslot
-        System.out.print("\nChoose time: ");
         time_slot = getIntInput();
-
-        System.out.println();
     }
 
     // Display the Summary for Regular Tickets - Screen 5A
