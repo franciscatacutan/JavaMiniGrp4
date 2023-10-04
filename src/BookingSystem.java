@@ -13,7 +13,6 @@ public class BookingSystem {
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
     private FileContentHandler fHandler;
-    private LocalDate DATE_TODAY = LocalDate.of(2021, 6, 1);
 
     public static void main(String[] args) {
         BookingSystem bs;
@@ -35,7 +34,7 @@ public class BookingSystem {
 
         //title screen
         do {
-        // title screen
+        // title screen (screen1)
         System.out.println("***************NOW SHOWING*****************");
         System.out.println("*\t [1] Shrek                        *");
         System.out.println("*\t [2] Kim Possible The Movie       *");
@@ -82,57 +81,36 @@ public class BookingSystem {
 
         }
 
-        } while (choice != 0);
+        } while (choice == 0);
 
         // set up reservations
         for (Reservation r : reservations) {
             prepareReservationsFromCSV(r);
+            System.out.println(r);
         }
-
-        
-        int[] showing = getShowing();
-
 
         // fHandler.deleteReservation(1234820);
 
         // for testing
-        // // movies.get(1).displaySeatAvailability();
-        // reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), 1, 0);
-        // // movies.get(1).displaySeatAvailability();
-        // System.out.println(movies.get(1).isSeatOccupied("A1"));
-        // System.out.println(movies.get(1).isSeatOccupied("A2"));
+        // movies.get(1).displaySeatAvailability();
+        reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), 1, 0);
+        // movies.get(1).displaySeatAvailability();
+        System.out.println(movies.get(1).isSeatOccupied("A1"));
+        System.out.println(movies.get(1).isSeatOccupied("A2"));
 
-        // reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), 1, 0);
-        // // movies.get(1).displaySeatAvailability();
-
-        // reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
-        // System.out.println("--------------------------------------");
-
+        reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), 1, 0);
         // movies.get(1).displaySeatAvailability();
 
-        // cancelReservation(1234820);
+        reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
+        System.out.println("--------------------------------------");
 
-        // movies.get(1).displaySeatAvailability();
-        // cancelReservation(1234829);
+        movies.get(1).displaySeatAvailability();
 
-    }
+        cancelReservation(1234820);
 
-    public int[] getShowing() {
-        int[] showing = new int[4];
-        int cinemaNum = 1;
-
-        while (cinemaNum < 5) {
-            for (Map.Entry<Integer, Movie> el : movies.entrySet()) {
-                Movie m = el.getValue();
-                if (m.getShowingDate().equals(DATE_TODAY) && m.getCinemaNum() == cinemaNum) {
-                    showing[cinemaNum - 1] = el.getKey();
-                    cinemaNum++;
-                    break;
-                }
-            }
-        }
-
-        return showing;
+        movies.get(1).displaySeatAvailability();
+        cancelReservation(1234829);
+        
     }
 
     // set the movieId field of Reservation objects retrieved from the csv file
