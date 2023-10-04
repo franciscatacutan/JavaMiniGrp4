@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class BookingSystem {
     }
 
     // Main method
-    public void startProgram() {
+    public void startProgram() throws FileNotFoundException {
         fHandler = new FileContentHandler();
         reservations = fHandler.readReservationFile();
         movies = fHandler.readMovieFile();
@@ -43,13 +44,16 @@ public class BookingSystem {
 
         // title screen
         do {
+            int i = 0;
             // title screen (screen1)
             System.out.println("***************NOW SHOWING*****************");
-            for (int i = 0; i < showing.size(); i++) {
+            for (i = 0; i < showing.size(); i++) {
                 System.out.printf("* [%d] %s%n", i + 1, movies.get(showing.get(i).get(0)).getMovieTitle());
             }
 
-            System.out.println("*******************************************");
+            System.out.println("* [" + 5 + "] Cancel Reservation\n" +
+                        "* [" + 0 + "] Cancel Reservation\n" +
+                        "*******************************************");
 
             // enter movie choice
             System.out.print("Choose Movie: ");
@@ -66,13 +70,18 @@ public class BookingSystem {
                     int movieId = selectTimeSlot(showing.get(choice - 1));
 
                     if (movieId != -999) {
-                        System.out.println(movies.get(movieId).getMovieInfo());
+                        Movie movie = movies.get(movieId);
+                        //System.out.println(movies.get(movieId).getMovieInfo());
+                        movie.displaySeatAvailability();
+                        String seatChoice = sc.nextLine();
                     }
 
                     break;
 
                 case 5:
-                    // when cancelling reservation
+                    System.out.println("Enter the ticket number: ");
+                    int ticketNum = getIntInput();
+                    cancelReservation(ticketNum);
                     break;
 
                 case 0:
@@ -142,7 +151,7 @@ public class BookingSystem {
         }
 
         return list;
-
+/*
         /*
          * reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
          * System.out.println("--------------------------------------");
@@ -266,8 +275,9 @@ public class BookingSystem {
             }
             System.out.println("[0] CANCEL TRANSACTION");
 
-            // choose timeslot
-            time_slot = getIntInput();
+        // choose timeslot
+        System.out.print("\nChoose time: ");
+        time_slot = getIntInput();
 
             
 
@@ -322,13 +332,6 @@ public class BookingSystem {
         // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
         // 2 == return to previous page Screen3: the screen for reserving seats
         // 3 == reset / return to main page / welcome page
-        System.out.println("Movie Title: " + movies.get(1));
-        System.out.println("Cinema Number: ");
-        System.out.println("Date: ");
-        System.out.println("Time: ");
-        System.out.println("Number of Ticket/s: ");
-        System.out.println("Seats Reserved: ");
-        System.out.println("Total Amount: ");
     }
 
     public void displayRegularReceipt() {
