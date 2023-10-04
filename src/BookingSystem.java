@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 public class BookingSystem {
     private Scanner sc;
@@ -32,63 +33,70 @@ public class BookingSystem {
         sc = new Scanner(System.in);
         int choice = 0;
 
-        //title screen
-        do {
-        // title screen (screen1)
-        System.out.println("***************NOW SHOWING*****************");
-        System.out.println("*\t [1] Shrek                        *");
-        System.out.println("*\t [2] Kim Possible The Movie       *");
-        System.out.println("*\t [3] Fantastic 4                  *");
-        System.out.println("*\t [4] A Man Called Otto            *");
-        System.out.println("*\t [5] Cancel Reservation           *");
-        System.out.println("*\t [0] Exit                         *");
-        System.out.println("*******************************************");
-
-        // enter movie choice
-        System.out.print("Choose Movie: ");
-        choice = getIntInput();
-
-        // process after choosing Movie
-        switch (choice) {
-        case 1:
-            // if movie1 is chosen
-        break;
-
-        case 2:
-            // if movie2 is chosen
-        break;
-
-        case 3:
-            // if movie3 is chosen
-        break;
-
-        case 4:
-            // if movie4 is chosen
-        break;
-
-        case 5:
-            // when cancelling reservation
-        break;
-
-        case 0:
-        System.out.println("\nThank you come again!");
-        System.exit(0);
-        break;
-
-        default:
-        System.out.println("\nINVALID INPUT");
-        System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
-
-        }
-
-        } while (choice == 0);
-
         // set up reservations
         for (Reservation r : reservations) {
             prepareReservationsFromCSV(r);
-            System.out.println(r);
         }
 
+        ArrayList<ArrayList<Integer>> showing = getShowing();
+
+        // title screen
+        do {
+            // title screen (screen1)
+            System.out.println("***************NOW SHOWING*****************");
+            System.out.println("*\t [1] Shrek                        *");
+            System.out.println("*\t [2] Kim Possible The Movie       *");
+            System.out.println("*\t [3] Fantastic 4                  *");
+            System.out.println("*\t [4] A Man Called Otto            *");
+            System.out.println("*\t [5] Cancel Reservation           *");
+            System.out.println("*\t [0] Exit                         *");
+            System.out.println("*******************************************");
+
+            // enter movie choice
+            System.out.print("Choose Movie: ");
+            choice = getIntInput();
+
+            // process after choosing Movie
+            switch (choice) {
+                case 1:
+                    movies.get(1).displaySeatAvailability();
+                    break;
+
+                case 2:
+                    movies.get(2).displaySeatAvailability();
+                    break;
+
+                case 3:
+                    movies.get(3).displaySeatAvailability();
+                    break;
+
+                case 4:
+                    movies.get(4).displaySeatAvailability();
+                    break;
+
+                case 5:
+                    // when cancelling reservation
+                    break;
+
+                case 0:
+                    System.out.println("\nThank you come again!");
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("\nINVALID INPUT");
+                    System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
+
+            }
+
+        } while (choice == 0);
+
+        // for (int i = 0; i < showing.size(); i++) {
+        // System.out.println("cinmea " + i);
+        // for (int ids : showing.get(i)) {
+        // System.out.println(ids);
+        // }
+        // }
         // fHandler.deleteReservation(1234820);
 
         // for testing
@@ -100,6 +108,43 @@ public class BookingSystem {
 
         reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), 1, 0);
         // movies.get(1).displaySeatAvailability();
+        // cancelReservation(1234829);
+
+    }
+
+    // public int[] getShowing() {
+    // int[] showing = new int[4];
+    // int cinemaNum = 1;
+
+    // while (cinemaNum < 5) {
+    // for (Map.Entry<Integer, Movie> el : movies.entrySet()) {
+    // Movie m = el.getValue();
+    // if (m.getShowingDate().equals(DATE_TODAY) && m.getCinemaNum() == cinemaNum) {
+    // showing[cinemaNum - 1] = el.getKey();
+    // cinemaNum++;
+    // break;
+    // }
+    // }
+    // }
+
+    // return showing;
+    // }
+
+    public ArrayList<ArrayList<Integer>> getShowing() {
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+        list.add(new ArrayList<>());
+        list.add(new ArrayList<>());
+        list.add(new ArrayList<>());
+        list.add(new ArrayList<>());
+
+        for (Map.Entry<Integer, Movie> el : movies.entrySet()) {
+            Movie m = el.getValue();
+            if (m.getShowingDate().equals(DATE_TODAY)) {
+                list.get(m.getCinemaNum() - 1).add(el.getKey());
+            }
+        }
+
+        return list;
 
         reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
         System.out.println("--------------------------------------");
@@ -110,7 +155,7 @@ public class BookingSystem {
 
         movies.get(1).displaySeatAvailability();
         cancelReservation(1234829);
-        
+
     }
 
     // set the movieId field of Reservation objects retrieved from the csv file
