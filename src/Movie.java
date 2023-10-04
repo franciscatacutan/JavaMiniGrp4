@@ -38,6 +38,12 @@ public class Movie {
     }
 
     public void displaySeatAvailability() {
+        System.out.println("***************putMovieNameHere*****************");
+        System.out.println("Cinema Number: "); //put cinema number
+        System.out.println("Date of Screening:"); //put date of screening
+        System.out.println("Time Slot: "); //put time slot
+        System.out.println();
+        System.out.println("\nSeat Availability and Occupancy:");
         for (int i = 0; i < SEAT_ROWS; i++) {
             for (int j = 0; j < SEAT_COLS; j++) {
                 System.out.print(seats[i][j] + " ");
