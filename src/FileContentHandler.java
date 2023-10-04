@@ -81,7 +81,7 @@ public class FileContentHandler {
                     resList.add(res);
 
                 } else {
-                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if
+                    System.out.println("Data has invalid/null value. Please try another file"); // To add additional if
                     // have time
                 }
             }
