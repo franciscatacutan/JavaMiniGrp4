@@ -2,12 +2,11 @@ import java.io.FileNotFoundException;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
+import java.util.zip.DataFormatException;
 
 public class BookingSystem {
     private Scanner sc;
@@ -30,7 +29,7 @@ public class BookingSystem {
     }
 
     // Main method
-    public void startProgram() throws FileNotFoundException {
+    public void startProgram() throws FileNotFoundException, DataFormatException {
         fHandler = new FileContentHandler();
         reservations = fHandler.readReservationFile();
         movies = fHandler.readMovieFile();

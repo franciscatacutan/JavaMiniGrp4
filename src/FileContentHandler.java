@@ -2,8 +2,10 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
 
 public class FileContentHandler {
 
@@ -15,7 +17,7 @@ public class FileContentHandler {
      *
      * @return Movies stored in a HashMap
      */
-    public HashMap<Integer, Movie> readMovieFile() {
+    public HashMap<Integer, Movie> readMovieFile() throws DataFormatException, FileNotFoundException {
         HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
         int idCounter = 1;
 
@@ -59,7 +61,7 @@ public class FileContentHandler {
      *
      * @return an ArrayList of Reservation
      */
-    public ArrayList<Reservation> readReservationFile() {
+    public ArrayList<Reservation> readReservationFile() throws DataFormatException, FileNotFoundException {
         ArrayList<Reservation> resList = new ArrayList<>();
 
         try {
@@ -107,7 +109,7 @@ public class FileContentHandler {
             }
             file.close();
 
-        } catch (Exception e) { // Exits System Runtime after displaying message
+        } catch (IOException e) { // Exits System Runtime after displaying message
             System.err.println("[ERROR]  Reservation File can't be read: " + e);
             System.exit(1);
         }
