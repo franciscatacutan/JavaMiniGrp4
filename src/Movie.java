@@ -38,19 +38,44 @@ public class Movie {
     }
 
     public void displaySeatAvailability() {
-        System.out.println("***************putMovieNameHere*****************");
-        System.out.println("Cinema Number: "); //put cinema number
-        System.out.println("Date of Screening:"); //put date of screening
-        System.out.println("Time Slot: "); //put time slot
+        String movieTitleDecoration = "******(" + movieTitle + ")******";
+        String cinemaNumberLabel = "Cinema Number: " + cinemaNum;
+        String dateAndTimeLabel = "Date and Time of Screening: " + showingDate + " " + timeStart;
+        String screenLabel = "SCREEN";
+        String entranceExitLabel = "Entrance/Exit";
+        String legendLabel = "Legend: [LN] = Available Seat  ,  [XX] = Seat Occupied";
+    
+        System.out.println(movieTitleDecoration);
+        System.out.println(cinemaNumberLabel);
+        System.out.println(dateAndTimeLabel);
         System.out.println();
-        System.out.println("\nSeat Availability and Occupancy:");
+        System.out.println("Seat Availability and Occupancy:");
+        System.out.println();
+        System.out.print("\t\t" + screenLabel);
+        System.out.println();
+    
         for (int i = 0; i < SEAT_ROWS; i++) {
+            char rowLetter = (char) ('A' + i);
+            System.out.print("|");
             for (int j = 0; j < SEAT_COLS; j++) {
-                System.out.print(seats[i][j] + " ");
+                System.out.print("\t" + seats[i][j] + "\t");
             }
-            System.out.println(); // Move to the next line after each row
+            System.out.println("|");
         }
+    
+        System.out.println(entranceExitLabel);
+        System.out.println();
+        System.out.println(legendLabel);
     }
+    
+    private String repeatChar(char c, int count) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+    
 
     public boolean isSeatOccupied(String seatCode) {
         int[] i = seatCodeToIndexes(seatCode);
@@ -76,9 +101,13 @@ public class Movie {
     }
 
     public int[] seatCodeToIndexes(String s) {
+        if (s.length() != 2 || s.charAt(0) < 'A' || s.charAt(0) > 'H' || s.charAt(1) < '1' || s.charAt(1) > '5') {
+            throw new IllegalArgumentException("Invalid seat code: " + s);
+        }
+    
         char code = s.charAt(0);
         int col = Integer.parseInt(s.substring(1));
-
+    
         return new int[] { code - 'A', col - 1 };
     }
 
