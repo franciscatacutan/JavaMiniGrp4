@@ -52,7 +52,7 @@ public class BookingSystem {
             }
 
             System.out.println("* [" + 5 + "] Cancel Reservation\n" +
-                    "* [" + 0 + "] Cancel Reservation\n" +
+                    "* [" + 0 + "] Exit\n" +
                     "*******************************************");
 
             // enter movie choice
