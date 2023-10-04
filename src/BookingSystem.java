@@ -52,19 +52,19 @@ public class BookingSystem {
         // process after choosing Movie
         switch (choice) {
         case 1:
-            // if movie1 is chosen
+            movies.get(1).displaySeatAvailability();
         break;
 
         case 2:
-            // if movie2 is chosen
+            movies.get(2).displaySeatAvailability();
         break;
 
         case 3:
-            // if movie3 is chosen
+            movies.get(3).displaySeatAvailability();
         break;
 
         case 4:
-            // if movie4 is chosen
+            movies.get(4).displaySeatAvailability();
         break;
 
         case 5:
@@ -82,7 +82,7 @@ public class BookingSystem {
 
         }
 
-        } while (choice != 0);
+        } while (choice == 0);
 
         // set up reservations
         for (Reservation r : reservations) {
