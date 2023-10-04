@@ -47,8 +47,9 @@ public class FileContentHandler {
                 lineNumber++;
             }
             file.close();
-        } catch (IOException e) {
-            System.err.println("[ERROR] Movie File can't be read: " + e);
+        } catch (RuntimeException e) {
+            System.err.println("[ERROR] A Movie/s is invalid within the data: " + e + "\n" +
+                    "Will proceed as the invalid Movie/s will be considered invalid.");
         }
         return movieList;
     }
@@ -109,9 +110,9 @@ public class FileContentHandler {
             }
             file.close();
 
-        } catch (IOException e) { // Exits System Runtime after displaying message
-            System.err.println("[ERROR]  Reservation File can't be read: " + e);
-            System.exit(1);
+        } catch (RuntimeException e) {
+            System.err.println("[ERROR] A Reservation/s is invalid within the data provided: " + e + "\n" +
+                    "Will proceed as the invalid Reservation/s will be considered invalid.");
         }
         return resList;
     }
