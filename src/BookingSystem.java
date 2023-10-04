@@ -322,21 +322,21 @@ public class BookingSystem {
                                                                     
     }
 
-public void displayPremierReceipt(){
-	System.out.println("***************Cinema World***************");
-	System.out.println("*\t Transaction Reference Number:                     *");
-	System.out.println("*\t Movie Title:                                      *");
-	System.out.println("*\t Cinema Number:                                    *");
-	System.out.println("*\t Date:                                             *");
-	System.out.println("*\t Time:                                             *");
-	System.out.println("*\t Number of Ticket/s:                               *");
-	System.out.println("*\t Seats Reserved:                                   *");
-	System.out.println("*\t Total Amount:                                     *");
-	System.out.println("\n\n [1] Make Another Transaction?");
-    System.out.println("[2] Exit");
-        //insert scanner to scan value for whether customer wants to make another transaction or to exit the whole transaction.
-																
-}
+    public void displayPremierReceipt(){
+        System.out.println("***************Cinema World***************");
+        System.out.println("*\t Transaction Reference Number:                     *");
+        System.out.println("*\t Movie Title:                                      *");
+        System.out.println("*\t Cinema Number:                                    *");
+        System.out.println("*\t Date:                                             *");
+        System.out.println("*\t Time:                                             *");
+        System.out.println("*\t Number of Ticket/s:                               *");
+        System.out.println("*\t Seats Reserved:                                   *");
+        System.out.println("*\t Total Amount:                                     *");
+        System.out.println("\n\n [1] Make Another Transaction?");
+        System.out.println("[2] Exit");
+            //insert scanner to scan value for whether customer wants to make another transaction or to exit the whole transaction.
+                                                                    
+    }
 
 
 }
