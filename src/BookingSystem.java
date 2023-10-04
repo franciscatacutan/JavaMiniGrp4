@@ -261,7 +261,7 @@ public class BookingSystem {
         System.out.println("*\\t Subtotal                             *"); //insert subtotal: The Subtotal is the initial total without the discount
         System.out.println("*\\t Discount Total:                      *"); //insert discount total: The discountTotal is the amount deducted from the tickets as a discount
         System.out.println("*\\t Total Amount:                        *"); //insert insert total amount: The TotalAmount is the final price (subtotal - discountTotal)
-        System.out.println("\n*\\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); //insert scanner and syntax to receive next instruction 
+        System.out.println("\n*\\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); //insert scanner and syntax to receive next instruction which is to select which screen to go next
         //if choice is:
         // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
         // 2 == return to previous page Screen3: the screen for reserving seats
