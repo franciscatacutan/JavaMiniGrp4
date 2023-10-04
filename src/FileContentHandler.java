@@ -114,7 +114,7 @@ public class FileContentHandler {
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-            writer.write(toCSVString(reservation));
+            writer.write(toCSVString(reservation) + "\n");
         } catch (IOException e) {
             System.err.println("Error writing reservation details to CSV file: " + e.getMessage());
         }
@@ -165,12 +165,12 @@ public class FileContentHandler {
 
     public String toCSVString(Reservation reservation) {
         StringBuilder csvContent = new StringBuilder();
-        csvContent.append('"' + reservation.getReserveTicketNum() + '"').append(",")
+        csvContent.append('"').append(reservation.getReserveTicketNum()).append('"').append(",")
                 .append('"').append(reservation.getDate()).append('"').append(",")
-                .append('"' + reservation.getCinemaNum() + '"').append(",")
+                .append('"').append(reservation.getCinemaNum()).append('"' + ",")
                 .append('"').append(reservation.getTime()).append('"').append(",")
                 .append('"').append(String.join(", ", reservation.getSeats())).append('"').append(",")
-                .append('"').append(String.format("%.2f", reservation.getPrice())).append('"').append("\n");
+                .append('"').append(String.format("%.2f", reservation.getPrice())).append('"');
         return csvContent.toString();
     }
 }
