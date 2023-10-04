@@ -37,9 +37,9 @@ public class FileContentHandler {
                             movieTimeDuration);
                     movieList.put(idCounter, movie);
                     idCounter++;
-                } else { // File Movie has NULL value
-                    System.out.println("Data has invalid/null value, Please try another file");
-                    System.exit(1);
+                } else { // Null Value
+                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if
+                                                                                                // still have time
                 }
             }
             file.close();
@@ -209,7 +209,7 @@ public class FileContentHandler {
                 .append('"').append(reservation.getDate()).append('"').append(",")
                 .append('"').append(reservation.getCinemaNum()).append('"' + ",")
                 .append('"').append(reservation.getTime()).append('"').append(",")
-                .append('"').append(String.join(",", reservation.getSeats())).append('"').append(",")
+                .append('"').append(String.join(", ", reservation.getSeats())).append('"').append(",")
                 .append('"').append(String.format("%.2f", reservation.getPrice())).append('"');
         return csvContent.toString();
     }
