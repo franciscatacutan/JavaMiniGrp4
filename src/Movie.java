@@ -166,9 +166,9 @@ public class Movie {
     }
 
     public String getMovieInfo() {
-        return "Movie Title: " + movieTitle +
+        return "*************** " + movieTitle + " *****************" +
+                "\nCinema Number: " + cinemaNum +        
                 "\nShowing Date: " + showingDate +
-                "\nCinema Number: " + cinemaNum +
                 "\nStart Time: " + timeStart +
                 "\nIs Premiere: " + isPremiere +
                 "\nMovie Length: " + movieTimeDuration + " hours";
