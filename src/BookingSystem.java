@@ -290,13 +290,19 @@ public class BookingSystem {
 
     public void displaySummaryPremier() {
         System.out.println("****************SUMMARY**************");
-        System.out.println("Movie Title: " + movies.get(1));
-        System.out.println("Cinema Number: ");
-        System.out.println("Date: ");
-        System.out.println("Time: ");
-        System.out.println("Number of Ticket/s: ");
-        System.out.println("Seats Reserved: ");
-        System.out.println("Total Amount: ");
+        System.out.println("\\t Movie Title:                         *"); // insert syntax to display movie title
+        System.out.println("\\t Cinema Number:                       *"); // insert cinema number
+        System.out.println("\\t Date:                                *"); // insert date
+        System.out.println("\\t Time:                                *"); // insert time
+        System.out.println("\\t Number of Ticket/s:                  *"); // insert number of tickets
+        System.out.println("\\t Seats Reserved:                      *"); // insert what seats have been reserved
+        System.out.println("\\t Total Amount:                        *"); // insert insert total amount:
+        System.out.println("\n*\\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); // insert scanner and syntax to
+                                                                                  // receive next instruction
+        // if choice is:
+        // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
+        // 2 == return to previous page Screen3: the screen for reserving seats
+        // 3 == reset / return to main page / welcome page
     }
 
     public void displayRegularReceipt() {
