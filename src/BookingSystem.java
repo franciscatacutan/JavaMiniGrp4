@@ -153,8 +153,6 @@ public class BookingSystem {
 
         Movie movie = movies.get(movieId);
 
-        System.out.println(seatNums);
-
         // check whether a seat is occupied
         // reserves available seat
         for (String seat : seatNums) {
@@ -223,10 +221,9 @@ public class BookingSystem {
     }
 
     public int getIntInput() {
-        // String input = sc.nextLine();
         int num;
-        // int num = sc.nextInt();
 
+        // loops if the inputted value is an integer
         while (true) {
             try {
                 num = Integer.parseInt(sc.nextLine());
@@ -368,7 +365,9 @@ public class BookingSystem {
         }
 
         // Proceed to checkout or cancel without a card
-        System.out.print("[1] Proceed to Checkout>>> ");
+        System.out.println("[1] Proceed to Checkout>>> ");
+        System.out.println("PADAGDAG");
+        System.out.println("----------------------------------------");
         int checkoutChoice = getIntInput();
         if (checkoutChoice == 1) {
             return quantity;
