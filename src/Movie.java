@@ -49,7 +49,7 @@ public class Movie {
     public boolean isSeatOccupied(String seatCode) {
         int[] i = seatCodeToIndexes(seatCode);
 
-        if (seats[i[0]][i[1]].equals("[X]")) {
+        if (seats[i[0]][i[1]].equals("[XX]")) {
             return true;
         }
         return false;
@@ -58,7 +58,7 @@ public class Movie {
     public void setSeatOccupied(ArrayList<String> list) {
         for (String s : list) {
             int[] i = seatCodeToIndexes(s);
-            seats[i[0]][i[1]] = "[X]";
+            seats[i[0]][i[1]] = "[XX]";
         }
     }
 
@@ -131,10 +131,6 @@ public class Movie {
 
     public void setMovieTimeDuration(double movieTimeDuration) {
         this.movieTimeDuration = movieTimeDuration;
-    }
-
-    public boolean isIsPremiere() {
-        return this.isPremiere;
     }
 
     public boolean getIsPremiere() {
