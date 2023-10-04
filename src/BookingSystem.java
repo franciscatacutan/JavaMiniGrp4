@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class BookingSystem {
     }
 
     // Main method
-    public void startProgram() {
+    public void startProgram() throws FileNotFoundException {
         fHandler = new FileContentHandler();
         reservations = fHandler.readReservationFile();
         movies = fHandler.readMovieFile();
@@ -43,13 +44,16 @@ public class BookingSystem {
 
         // title screen
         do {
+            int i = 0;
             // title screen (screen1)
             System.out.println("***************NOW SHOWING*****************");
-            for (int i = 0; i < showing.size(); i++) {
+            for (i = 0; i < showing.size(); i++) {
                 System.out.printf("* [%d] %s%n", i + 1, movies.get(showing.get(i).get(0)).getMovieTitle());
             }
 
-            System.out.println("*******************************************");
+            System.out.println("* [" + 5 + "] Cancel Reservation\n" +
+                        "* [" + 0 + "] Cancel Reservation\n" +
+                        "*******************************************");
 
             // enter movie choice
             System.out.print("Choose Movie: ");
@@ -75,7 +79,9 @@ public class BookingSystem {
                     break;
 
                 case 5:
-                    // when cancelling reservation
+                    System.out.println("Enter the ticket number: ");
+                    int ticketNum = getIntInput();
+                    cancelReservation(ticketNum);
                     break;
 
                 case 0:
@@ -145,7 +151,7 @@ public class BookingSystem {
         }
 
         return list;
-
+/*
         /*
          * reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
          * System.out.println("--------------------------------------");
