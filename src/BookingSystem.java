@@ -281,7 +281,8 @@ public class BookingSystem {
         System.out.print("\nChoose time: ");
         time_slot = getIntInput();
 
-        System.out.println();
+        System.out.print("\nCancel Transaction [Y] or [N]? ");
+        char choice = sc.next().toLowerCase().charAt(0);
     }
 
     // Display the Summary for Regular Tickets - Screen 5A
