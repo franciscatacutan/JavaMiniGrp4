@@ -45,7 +45,7 @@ public class Movie {
         String screenLabel = "\t\t       SCREEN";
         String entranceExitLabel = "Entrance/Exit";
         String legendLabel = "Legend: [LN] = Available Seat  ,  [XX] = Seat Occupied";
-        
+
         System.out.println(movieTitleDecoration);
         System.out.println(cinemaNumberLabel);
         System.out.println(dateAndTimeLabel);
@@ -54,7 +54,7 @@ public class Movie {
         System.out.println();
         System.out.print("\t\t" + screenLabel);
         System.out.println();
-    
+
         for (int i = 0; i < SEAT_ROWS; i++) {
             char rowLetter = (char) ('A' + i);
             System.out.print("|");
@@ -63,13 +63,13 @@ public class Movie {
             }
             System.out.println("|");
         }
-    
+
         System.out.println(entranceExitLabel);
         System.out.println();
         System.out.println(legendLabel);
         System.out.println(chooseSeat);
     }
-    
+
     private String repeatChar(char c, int count) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < count; i++) {
@@ -77,7 +77,6 @@ public class Movie {
         }
         return sb.toString();
     }
-    
 
     public boolean isSeatOccupied(String seatCode) {
         int[] i = seatCodeToIndexes(seatCode);
@@ -88,7 +87,7 @@ public class Movie {
         return false;
     }
 
-    public void setSeatOccupied(ArrayList<String> list) {
+    public void setSeatsOccupied(ArrayList<String> list) {
         for (String s : list) {
             int[] i = seatCodeToIndexes(s);
             seats[i[0]][i[1]] = "[XX]";
@@ -106,10 +105,10 @@ public class Movie {
         if (s.length() != 2 || s.charAt(0) < 'A' || s.charAt(0) > 'H' || s.charAt(1) < '1' || s.charAt(1) > '5') {
             throw new IllegalArgumentException("Invalid seat code: " + s);
         }
-    
+
         char code = s.charAt(0);
         int col = Integer.parseInt(s.substring(1));
-    
+
         return new int[] { code - 'A', col - 1 };
     }
 
@@ -204,7 +203,7 @@ public class Movie {
 
     public String getMovieInfo() {
         return "*************** " + movieTitle + " *****************" +
-                "\nCinema Number: " + cinemaNum +        
+                "\nCinema Number: " + cinemaNum +
                 "\nShowing Date: " + showingDate +
                 "\nStart Time: " + timeStart +
                 "\nIs Premiere: " + isPremiere +

@@ -80,14 +80,18 @@ public class BookingSystem {
                     }
                     int movieId = selectTimeSlot(showing.get(choice - 1));
 
-                    
-
-
                     if (movieId != -999) {
+                        // to insert loop here
+
                         Movie movie = movies.get(movieId);
                         // System.out.println(movies.get(movieId).getMovieInfo());
                         movie.displaySeatAvailability();
                         String seatChoice = sc.nextLine();
+                        ArrayList<String> seats = checkSeats(seatChoice, movieId);
+
+                        if (seats.size() == 0) {
+                            break;
+                        }
 
                         // if a movie is primier the program won't proceed with the senior discount
                         int sCount = 0;
@@ -96,7 +100,7 @@ public class BookingSystem {
                         }
 
                         if (sCount != -999) {
-                            reserveSeat(seatChoice, movieId, sCount);
+                            reserveSeat(seats, movieId, sCount);
                         }
 
                     }
@@ -147,15 +151,13 @@ public class BookingSystem {
         for (Map.Entry<Integer, Movie> m : movies.entrySet()) {
             if (m.getValue().isMovie(reservation.getDate(), reservation.getTime(), reservation.getCinemaNum())) {
                 reservation.setMovieId(m.getKey());
-                m.getValue().setSeatOccupied(reservation.getSeats());
+                m.getValue().setSeatsOccupied(reservation.getSeats());
                 return;
             }
         }
     }
 
-    // create a new reservation
-    public boolean reserveSeat(String seats, int movieId, int seniorCount) {
-
+    public ArrayList<String> checkSeats(String seats, int movieId) {
         ArrayList<String> seatNums = new ArrayList<>();
 
         // Split the input string by comma and optional whitespace
@@ -166,17 +168,29 @@ public class BookingSystem {
 
         Movie movie = movies.get(movieId);
 
-        System.out.println(seatNums);
-
         // check whether a seat is occupied
         // reserves available seat
         for (String seat : seatNums) {
-            if (movie.isSeatOccupied(seat)) {
-                System.out.println("Seat " + seat + " is already Occupied");
-                return false;
+            try {
+                if (movie.isSeatOccupied(seat)) {
+                    System.out.println("Seat " + seat + " is already Occupied");
+                    return new ArrayList<String>();
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return new ArrayList<String>();
             }
         }
-        movie.setSeatOccupied(seatNums);
+
+        return seatNums;
+    }
+
+    // create a new reservation
+    public boolean reserveSeat(ArrayList<String> seatNums, int movieId, int seniorCount) {
+
+        Movie movie = movies.get(movieId);
+
+        movie.setSeatsOccupied(seatNums);
 
         // new reservation
         int reserveTicketNum = (reservations.size() == 0) ? 1234820
@@ -257,8 +271,6 @@ public class BookingSystem {
         Movie mInfo = movies.get(ids.get(0));
         int time_slot;
 
-
-
         do {
             // display movie title
             System.out.println("\t\n*************** " + mInfo.getMovieTitle() + " ***************\n");
@@ -282,9 +294,6 @@ public class BookingSystem {
             return ids.get(time_slot - 1);
         }
         return -999;
-
-        // System.out.print("\nCancel Transaction [Y] or [N]? ");
-        // char choice = sc.next().toLowerCase().charAt(0);
     }
 
     // Display the Summary for Regular Tickets - Screen 5A
