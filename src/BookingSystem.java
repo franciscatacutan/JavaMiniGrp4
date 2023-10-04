@@ -263,7 +263,7 @@ public class BookingSystem {
             System.out.print("\nChoose time: ");
             time_slot = getIntInput();
 
-        } while (time_slot >= ids.size() || time_slot < 0);
+        } while (time_slot > ids.size() || time_slot < 0);
         if (time_slot != 0) {
             return ids.get(time_slot - 1);
         }
