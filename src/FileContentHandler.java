@@ -189,7 +189,7 @@ public class FileContentHandler {
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-            writer.write(toCSVString(reservation) + "\n");
+            writer.write("\n" + toCSVString(reservation));
         } catch (IOException e) { // Exits System Runtime after displaying message
             System.err.println("(ERROR)Writing reservation details to CSV file: " + e.getMessage());
             System.exit(1);

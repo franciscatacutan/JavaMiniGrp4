@@ -52,8 +52,8 @@ public class BookingSystem {
             }
 
             System.out.println("* [" + 5 + "] Cancel Reservation\n" +
-                        "* [" + 0 + "] Cancel Reservation\n" +
-                        "*******************************************");
+                    "* [" + 0 + "] Cancel Reservation\n" +
+                    "*******************************************");
 
             // enter movie choice
             System.out.print("Choose Movie: ");
@@ -68,12 +68,15 @@ public class BookingSystem {
                     // movies.get(4).displaySeatAvailability();
                     // transition to time slot method
                     int movieId = selectTimeSlot(showing.get(choice - 1));
-                    
+
                     if (movieId != -999) {
                         Movie movie = movies.get(movieId);
-                        //System.out.println(movies.get(movieId).getMovieInfo());
+                        // System.out.println(movies.get(movieId).getMovieInfo());
                         movie.displaySeatAvailability();
                         String seatChoice = sc.nextLine();
+
+                        reserveSeat(seatChoice, movieId, 0);
+
                     }
 
                     break;
@@ -151,8 +154,8 @@ public class BookingSystem {
         }
 
         return list;
-/*
         /*
+         * /*
          * reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
          * System.out.println("--------------------------------------");
          * 
@@ -181,8 +184,14 @@ public class BookingSystem {
     }
 
     // create a new reservation
-    public boolean reserveSeat(ArrayList<String> seatNums, int movieId, int seniorCount) {
+    public boolean reserveSeat(String seats, int movieId, int seniorCount) {
+
+        ArrayList<String> seatNums = new ArrayList<>();
+        seatNums.add(seats);
+
         Movie movie = movies.get(movieId);
+
+        System.out.println(seatNums);
 
         // check whether a seat is occupied
         // reserves available seat
