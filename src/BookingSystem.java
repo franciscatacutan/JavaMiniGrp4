@@ -14,6 +14,7 @@ public class BookingSystem {
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
     private FileContentHandler fHandler;
+    private LocalDate DATE_TODAY = LocalDate.of(2021, 6, 1);
 
     public static void main(String[] args) {
         BookingSystem bs;
