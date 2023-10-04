@@ -25,6 +25,8 @@ public class BookingSystem {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.exit(0);
     }
 
     // Main method
@@ -90,8 +92,8 @@ public class BookingSystem {
 
                 case 0:
                     System.out.println("\nThank you come again!");
-                    System.exit(0);
-                    break;
+                    return;
+                    
 
                 default:
                     System.out.println("\nINVALID INPUT");
@@ -189,7 +191,7 @@ public class BookingSystem {
 
         ArrayList<String> seatNums = new ArrayList<>();
         seatNums.add(seats);
-
+        
         Movie movie = movies.get(movieId);
 
         System.out.println(seatNums);
