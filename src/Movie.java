@@ -38,13 +38,14 @@ public class Movie {
     }
 
     public void displaySeatAvailability() {
-        String movieTitleDecoration = "******(" + movieTitle + ")******";
+        String chooseSeat = ("Input Seats to Reserve for this Transaction('A1, A2, ... H5'): ");
+        String movieTitleDecoration = "\n******(" + movieTitle + ")******";
         String cinemaNumberLabel = "Cinema Number: " + cinemaNum;
         String dateAndTimeLabel = "Date and Time of Screening: " + showingDate + " " + timeStart;
-        String screenLabel = "SCREEN";
+        String screenLabel = "\t\t       SCREEN";
         String entranceExitLabel = "Entrance/Exit";
         String legendLabel = "Legend: [LN] = Available Seat  ,  [XX] = Seat Occupied";
-    
+        
         System.out.println(movieTitleDecoration);
         System.out.println(cinemaNumberLabel);
         System.out.println(dateAndTimeLabel);
@@ -66,6 +67,7 @@ public class Movie {
         System.out.println(entranceExitLabel);
         System.out.println();
         System.out.println(legendLabel);
+        System.out.println(chooseSeat);
     }
     
     private String repeatChar(char c, int count) {
