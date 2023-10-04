@@ -133,10 +133,6 @@ public class Movie {
         this.movieTimeDuration = movieTimeDuration;
     }
 
-    public boolean isIsPremiere() {
-        return this.isPremiere;
-    }
-
     public boolean getIsPremiere() {
         return this.isPremiere;
     }
