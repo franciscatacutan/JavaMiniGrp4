@@ -45,12 +45,9 @@ public class BookingSystem {
         do {
             // title screen (screen1)
             System.out.println("***************NOW SHOWING*****************");
-            System.out.println("*\t [1] Shrek                        *");
-            System.out.println("*\t [2] Kim Possible The Movie       *");
-            System.out.println("*\t [3] Fantastic 4                  *");
-            System.out.println("*\t [4] A Man Called Otto            *");
-            System.out.println("*\t [5] Cancel Reservation           *");
-            System.out.println("*\t [0] Exit                         *");
+            for (int i = 0; i < showing.size(); i++) {
+                System.out.printf("*\t [%d] %70s*%n", i + 1, movies.get(showing.get(i).get(0)).getMovieTitle());
+            }
             System.out.println("*******************************************");
 
             // enter movie choice
@@ -256,8 +253,8 @@ public class BookingSystem {
 
         //display timeslots
         System.out.println();
-        for (int i = 0; i < 5; i++) {
-            System.out.println("{Display time slot here}");
+        for (int i = 0; i < ids.size(); i++) {
+            System.out.println(movies.get(ids.get(i)).getTimeStart());
         }
 
         // choose timeslot
