@@ -163,7 +163,7 @@ public class FileContentHandler {
                 .append('"' + reservation.getCinemaNum() + '"').append(",")
                 .append('"').append(reservation.getTime()).append('"').append(",")
                 .append('"').append(String.join(", ", reservation.getSeats())).append('"').append(",")
-                .append('"').append(String.format("%.2f", reservation.getPrice())).append('"');
+                .append('"').append(String.format("%.2f", reservation.getPrice())).append('"').append("\n");
         return csvContent.toString();
     }
 }
