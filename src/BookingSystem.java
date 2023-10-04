@@ -67,7 +67,7 @@ public class BookingSystem {
                 case 2:
                 case 3:
                 case 4:
-                    // movies.get(4).displaySeatAvailability();
+
                     // transition to time slot method
                     int movieId = selectTimeSlot(showing.get(choice - 1));
 
@@ -76,9 +76,16 @@ public class BookingSystem {
                         // System.out.println(movies.get(movieId).getMovieInfo());
                         movie.displaySeatAvailability();
                         String seatChoice = sc.nextLine();
-                        scInput();
 
-                        reserveSeat(seatChoice, movieId, 0);
+                        // if a movie is primier the program won't proceed with the senior discount
+                        int sCount = 0;
+                        if (!movie.isPremiere()) {
+                            sCount = scInput();
+                        }
+
+                        if (sCount != -999) {
+                            reserveSeat(seatChoice, movieId, sCount);
+                        }
 
                     }
 
@@ -103,44 +110,7 @@ public class BookingSystem {
 
         } while (choice != 0);
 
-        // for (int i = 0; i < showing.size(); i++) {
-        // System.out.println("cinmea " + i);
-        // for (int ids : showing.get(i)) {
-        // System.out.println(ids);
-        // }
-        // }
-        // fHandler.deleteReservation(1234820);
-
-        // for testing
-        // // movies.get(1).displaySeatAvailability();
-        // reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), 1, 0);
-        // // movies.get(1).displaySeatAvailability();
-        // System.out.println(movies.get(1).isSeatOccupied("A1"));
-        // System.out.println(movies.get(1).isSeatOccupied("A2"));
-
-        // reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), 1, 0);
-        // movies.get(1).displaySeatAvailability();
-        // cancelReservation(1234829);
-
     }
-
-    // public int[] getShowing() {
-    // int[] showing = new int[4];
-    // int cinemaNum = 1;
-
-    // while (cinemaNum < 5) {
-    // for (Map.Entry<Integer, Movie> el : movies.entrySet()) {
-    // Movie m = el.getValue();
-    // if (m.getShowingDate().equals(DATE_TODAY) && m.getCinemaNum() == cinemaNum) {
-    // showing[cinemaNum - 1] = el.getKey();
-    // cinemaNum++;
-    // break;
-    // }
-    // }
-    // }
-
-    // return showing;
-    // }
 
     public ArrayList<ArrayList<Integer>> getShowing() {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -157,20 +127,6 @@ public class BookingSystem {
         }
 
         return list;
-        /*
-         * /*
-         * reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
-         * System.out.println("--------------------------------------");
-         * 
-         * movies.get(1).displaySeatAvailability();
-         * 
-         * cancelReservation(1234820);
-         * 
-         * movies.get(1).displaySeatAvailability();
-         * cancelReservation(1234829);
-         */
-
-        // cancelReservation(1234829);
 
     }
 
@@ -190,8 +146,13 @@ public class BookingSystem {
     public boolean reserveSeat(String seats, int movieId, int seniorCount) {
 
         ArrayList<String> seatNums = new ArrayList<>();
-        seatNums.add(seats);
-        
+
+        // Split the input string by comma and optional whitespace
+        String[] seatCodes = seats.toUpperCase().split(",\\s*");
+
+        // Add the individual seat codes to the ArrayList
+        seatNums.addAll(Arrays.asList(seatCodes));
+
         Movie movie = movies.get(movieId);
 
         System.out.println(seatNums);
@@ -264,8 +225,19 @@ public class BookingSystem {
     }
 
     public int getIntInput() {
-        int num = sc.nextInt();
-        sc.nextLine();
+        // String input = sc.nextLine();
+        int num;
+        // int num = sc.nextInt();
+
+        while (true) {
+            try {
+                num = Integer.parseInt(sc.nextLine());
+                break; // Exit the loop if parsing is successful
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input.");
+                System.out.print("Enter again: " + "\n");
+            }
+        }
         return num;
     }
 
@@ -382,37 +354,31 @@ public class BookingSystem {
     }
 
     // inputting process for senior citizens
-    public void scInput() {
+    public int scInput() {
         System.out.print("Do you have a Senior Citizen or PWD Card? (Yes/No): ");
         String hasCard = sc.nextLine().trim();
+        int quantity = 0;
 
         if (hasCard.equalsIgnoreCase("yes")) {
+
             // If they have a card, prompt for the quantity and card ID
             System.out.print("Quantity Senior Citizens / PWDs: ");
-            int quantity = sc.nextInt();
-            sc.nextLine(); // Consume the newline
+            quantity = getIntInput();
+
             System.out.print("Please input Senior Citizen Card / PWD Card ID Number: ");
             String cardId = sc.nextLine().trim();
+        }
 
-            // Proceed to checkout or cancel
-            System.out.print("[1] Proceed to Checkout>>> ");
-            int checkoutChoice = sc.nextInt();
-            if (checkoutChoice == 1) {
-                // Implement checkout logic here
-                // You have all the necessary information to complete the reservation
-            } else {
-                System.out.println("Transaction canceled.");
-            }
+        // Proceed to checkout or cancel without a card
+        System.out.print("[1] Proceed to Checkout>>> ");
+        int checkoutChoice = getIntInput();
+        if (checkoutChoice == 1) {
+            return quantity;
+            // Implement checkout logic here
+            // You have all the necessary information to complete the reservation
         } else {
-            // Proceed to checkout or cancel without a card
-            System.out.print("[1] Proceed to Checkout>>> ");
-            int checkoutChoice = sc.nextInt();
-            if (checkoutChoice == 1) {
-                // Implement checkout logic here
-                // You have all the necessary information to complete the reservation
-            } else {
-                System.out.println("Transaction canceled.");
-            }
+            System.out.println("Transaction canceled.");
+            return -999;
         }
     }
 
