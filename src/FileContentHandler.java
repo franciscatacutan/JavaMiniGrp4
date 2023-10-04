@@ -143,6 +143,7 @@ public class FileContentHandler {
 
             if (!isFound) {
                 System.err.println("Reservation with ticket number " + ticketNumber + " not isFound.");
+                return;
             }
 
         } catch (IOException e) {
@@ -152,7 +153,7 @@ public class FileContentHandler {
         if (isFound && tempFile.renameTo(inputFile)) {
             System.out.println("Reservation with ticket number " + ticketNumber + " deleted successfully.");
         } else {
-            System.err.println("Unable to update CSV file.");
+            System.err.println("Unable to update tempReservations CSV file. Cannot rename to Reservations.csv file.");
         }
     }
 
