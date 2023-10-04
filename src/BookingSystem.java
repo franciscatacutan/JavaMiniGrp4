@@ -64,7 +64,7 @@ public class BookingSystem {
                     // movies.get(4).displaySeatAvailability();
                     // transition to time slot method
                     int movieId = selectTimeSlot(showing.get(choice - 1));
-                    
+
                     if (movieId != -999) {
                         System.out.println(movies.get(movieId).getMovieInfo());
                     }
@@ -86,7 +86,7 @@ public class BookingSystem {
 
             }
 
-        } while (choice == 0);
+        } while (choice != 0);
 
         // for (int i = 0; i < showing.size(); i++) {
         // System.out.println("cinmea " + i);
@@ -97,13 +97,13 @@ public class BookingSystem {
         // fHandler.deleteReservation(1234820);
 
         // for testing
-        // movies.get(1).displaySeatAvailability();
-        reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), 1, 0);
-        // movies.get(1).displaySeatAvailability();
-        System.out.println(movies.get(1).isSeatOccupied("A1"));
-        System.out.println(movies.get(1).isSeatOccupied("A2"));
+        // // movies.get(1).displaySeatAvailability();
+        // reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), 1, 0);
+        // // movies.get(1).displaySeatAvailability();
+        // System.out.println(movies.get(1).isSeatOccupied("A1"));
+        // System.out.println(movies.get(1).isSeatOccupied("A2"));
 
-        reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), 1, 0);
+        // reserveSeat(new ArrayList<String>(Arrays.asList("A2", "A3")), 1, 0);
         // movies.get(1).displaySeatAvailability();
         // cancelReservation(1234829);
 
@@ -252,26 +252,29 @@ public class BookingSystem {
     public int selectTimeSlot(ArrayList<Integer> ids) {
         Movie mInfo = movies.get(ids.get(0));
         int time_slot;
+        do {
+            // display movie title
+            System.out.println("\t\n*************** " + mInfo.getMovieTitle() + " ***************\n");
 
-        // display movie title
-        System.out.println("\t\n*************** " + mInfo.getMovieTitle() + " ***************\n");
+            // display cinema number
+            System.out.println("Cinema Number: " + mInfo.getCinemaNum());
 
-        // display cinema number
-        System.out.println("Cinema Number: " + mInfo.getCinemaNum());
+            // display timeslots
+            System.out.println();
+            for (int i = 0; i < ids.size(); i++) {
+                System.out.println("[" + (i + 1) + "] " + movies.get(ids.get(i)).getTimeStart());
+            }
+            System.out.println("[0] CANCEL TRANSACTION");
 
-        // display timeslots
-        System.out.println();
-        for (int i = 0; i < ids.size(); i++) {
-            System.out.println("[" + (i + 1) + "] " + movies.get(ids.get(i)).getTimeStart());
-        }
-        System.out.println("[0] CANCEL TRANSACTION");
+            // choose timeslot
+            time_slot = getIntInput();
 
-        // choose timeslot
-        time_slot = getIntInput();
+            
 
+        } while (time_slot >= ids.size() || time_slot < 0);
         if (time_slot != 0) {
-            return ids.get(time_slot - 1);
-        }
+                        return ids.get(time_slot - 1);
+                    }
         return -999;
 
         // System.out.print("\nCancel Transaction [Y] or [N]? ");
