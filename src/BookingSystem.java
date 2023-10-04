@@ -46,8 +46,9 @@ public class BookingSystem {
             // title screen (screen1)
             System.out.println("***************NOW SHOWING*****************");
             for (int i = 0; i < showing.size(); i++) {
-                System.out.printf("*\t [%d] %70s*%n", i + 1, movies.get(showing.get(i).get(0)).getMovieTitle());
+                System.out.printf("* [%d] %s%n", i + 1, movies.get(showing.get(i).get(0)).getMovieTitle());
             }
+            
             System.out.println("*******************************************");
 
             // enter movie choice
@@ -80,19 +81,19 @@ public class BookingSystem {
 
             }
 
-        } while (choice == 0);
+        }while(choice==0);
 
-        // for (int i = 0; i < showing.size(); i++) {
-        // System.out.println("cinmea " + i);
-        // for (int ids : showing.get(i)) {
-        // System.out.println(ids);
-        // }
-        // }
-        // fHandler.deleteReservation(1234820);
+    // for (int i = 0; i < showing.size(); i++) {
+    // System.out.println("cinmea " + i);
+    // for (int ids : showing.get(i)) {
+    // System.out.println(ids);
+    // }
+    // }
+    // fHandler.deleteReservation(1234820);
 
-        // for testing
-        // movies.get(1).displaySeatAvailability();
-        reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), 1, 0);
+    // for testing
+    // movies.get(1).displaySeatAvailability();
+    reserveSeat(new ArrayList<String>(Arrays.asList("A1", "H1", "B3")), 1, 0);
         // movies.get(1).displaySeatAvailability();
         System.out.println(movies.get(1).isSeatOccupied("A1"));
         System.out.println(movies.get(1).isSeatOccupied("A2"));
@@ -251,10 +252,10 @@ public class BookingSystem {
         // display cinema number
         System.out.println("Cinema Number: " + mInfo.getCinemaNum());
 
-        //display timeslots
+        // display timeslots
         System.out.println();
         for (int i = 0; i < ids.size(); i++) {
-            System.out.println(movies.get(ids.get(i)).getTimeStart());
+            System.out.println("[" + (i + 1) + "] " + movies.get(ids.get(i)).getTimeStart());
         }
 
         // choose timeslot
@@ -263,28 +264,34 @@ public class BookingSystem {
         System.out.print("\nCancel Transaction [Y] or [N]? ");
         char choice = sc.next().toLowerCase().charAt(0);
     }
-    
-    //Display the Summary for Regular Tickets - Screen 5A
-    public void displaySummaryRegular (){
+
+    // Display the Summary for Regular Tickets - Screen 5A
+    public void displaySummaryRegular() {
         System.out.println("***************SUMMARY*****************");
-        System.out.println("*\t Movie Title:                         *"); //insert syntax to display movie title
-        System.out.println("*\t Cinema Number:                       *"); //insert cinema number
-        System.out.println("*\t Date:                                *"); //insert date
-        System.out.println("*\t Time of Screening:                   *"); //insert time
-        System.out.println("*\t Number of Tickets:                   *"); //insert number of tickets
-        System.out.println("*\t Seats Reserved:                      *"); //insert what seats have been reserved
-        System.out.println("*\t Subtotal                             *"); //insert subtotal: The Subtotal is the initial total without the discount
-        System.out.println("*\t Discount Total:                      *"); //insert discount total: The discountTotal is the amount deducted from the tickets as a discount
-        System.out.println("*\t Total Amount:                        *"); //insert insert total amount: The TotalAmount is the final price (subtotal - discountTotal)
-        System.out.println("\n*\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); //insert scanner and syntax to receive next instruction which is to select which screen to go next
-        //if choice is:
+        System.out.println("*\t Movie Title:                         *"); // insert syntax to display movie title
+        System.out.println("*\t Cinema Number:                       *"); // insert cinema number
+        System.out.println("*\t Date:                                *"); // insert date
+        System.out.println("*\t Time of Screening:                   *"); // insert time
+        System.out.println("*\t Number of Tickets:                   *"); // insert number of tickets
+        System.out.println("*\t Seats Reserved:                      *"); // insert what seats have been reserved
+        System.out.println("*\t Subtotal                             *"); // insert subtotal: The Subtotal is the
+                                                                          // initial total without the discount
+        System.out.println("*\t Discount Total:                      *"); // insert discount total: The discountTotal is
+                                                                          // the amount deducted from the tickets as a
+                                                                          // discount
+        System.out.println("*\t Total Amount:                        *"); // insert insert total amount: The TotalAmount
+                                                                          // is the final price (subtotal -
+                                                                          // discountTotal)
+        System.out.println("\n*\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); // insert scanner and syntax to receive
+                                                                                 // next instruction which is to select
+                                                                                 // which screen to go next
+        // if choice is:
         // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
         // 2 == return to previous page Screen3: the screen for reserving seats
         // 3 == reset / return to main page / welcome page
-    }   
+    }
 
-
-    public void displaySummaryPremier(){
+    public void displaySummaryPremier() {
         System.out.println("****************SUMMARY**************");
         System.out.println("\\t Movie Title:                         *"); // insert syntax to display movie title
         System.out.println("\\t Cinema Number:                       *"); // insert cinema number
@@ -300,17 +307,15 @@ public class BookingSystem {
         // 2 == return to previous page Screen3: the screen for reserving seats
         // 3 == reset / return to main page / welcome page
         System.out.println("Movie Title: " + movies.get(1));
-        System.out.println("Cinema Number: " );
+        System.out.println("Cinema Number: ");
         System.out.println("Date: ");
         System.out.println("Time: ");
         System.out.println("Number of Ticket/s: ");
         System.out.println("Seats Reserved: ");
         System.out.println("Total Amount: ");
-    }    
+    }
 
-
-
-    public void displayRegularReceipt(){
+    public void displayRegularReceipt() {
         System.out.println("***************Cinema World***************");
         System.out.println("*\t Transaction Reference Number:                 *");
         System.out.println("*\t Movie Title:                                  *");
@@ -325,11 +330,12 @@ public class BookingSystem {
         System.out.println("*\t Total Amount:                                 *");
         System.out.println("\n\n [1] Make Another Transaction?");
         System.out.println("[2] Exit");
-        //insert scanner to scan value for whether customer wants to make another transaction or to exit the whole transaction.
-                                                                    
+        // insert scanner to scan value for whether customer wants to make another
+        // transaction or to exit the whole transaction.
+
     }
 
-    public void displayPremierReceipt(){
+    public void displayPremierReceipt() {
         System.out.println("***************Cinema World***************");
         System.out.println("*\t Transaction Reference Number:                     *");
         System.out.println("*\t Movie Title:                                      *");
@@ -341,9 +347,9 @@ public class BookingSystem {
         System.out.println("*\t Total Amount:                                     *");
         System.out.println("\n\n [1] Make Another Transaction?");
         System.out.println("[2] Exit");
-            //insert scanner to scan value for whether customer wants to make another transaction or to exit the whole transaction.
-                                                                    
-    }
+        // insert scanner to scan value for whether customer wants to make another
+        // transaction or to exit the whole transaction.
 
+    }
 
 }
