@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.ArrayList;
 
 public class Movie2 {
-    
+
     private Date showingDate;
     private int cinemaNum;
     private Date timeStart;
@@ -58,7 +58,7 @@ public class Movie2 {
     // Adjust showtimes to avoid conflicts with other movies
     private void adjustShowtimes(ArrayList<Date> otherShowtimes) {
         for (Date otherShowtime : otherShowtimes) {
-            long timeDifference = otherShowtime.getTime() - timeStart.getTime();
+            int timeDifference = otherShowtime.getTime() - timeStart.getTime();
             if (timeDifference > 0) {
                 // Adjust the showtime to be later than the other movie
                 Date adjustedShowtime = new Date(otherShowtime.getTime() + 60 * 1000); // 1 minute later
@@ -69,11 +69,11 @@ public class Movie2 {
 
     public String getMovieInfo() {
         return "Movie Title: " + movieTitle +
-               "\nShowing Date: " + showingDate +
-               "\nCinema Number: " + cinemaNum +
-               "\nStart Time: " + timeStart +
-               "\nIs Premiere: " + isPremiere +
-               "\nMovie Length: " + movieLength + " hours";
+                "\nShowing Date: " + showingDate +
+                "\nCinema Number: " + cinemaNum +
+                "\nStart Time: " + timeStart +
+                "\nIs Premiere: " + isPremiere +
+                "\nMovie Length: " + movieLength + " hours";
     }
 
     public boolean isPremiere() {

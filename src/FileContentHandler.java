@@ -1,18 +1,15 @@
-import java.text.SimpleDateFormat;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.IOException;
-import java.io.FileReader;
 import java.util.Scanner;
 
 public class FileContentHandler {
 
     public HashMap<Integer, Movie> readMovieFile() {
         HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         int idCounter = 1;
 
         try {
@@ -29,11 +26,13 @@ public class FileContentHandler {
                     String movieTitle = movieData[4].replace("\"", "");
                     double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
 
-                        Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle, movieTimeDuration);
-                        movieList.put(idCounter, movie);
-                        idCounter++;
+                    Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle,
+                            movieTimeDuration);
+                    movieList.put(idCounter, movie);
+                    idCounter++;
                 } else { // Null Value
-                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if still have time
+                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if
+                                                                                                // still have time
                 }
             }
             file.close();
@@ -57,7 +56,7 @@ public class FileContentHandler {
 
                 if (resData != null && resData.length == 6) {
 
-                    long ticketNum = Long.parseLong(resData[0].replace("\"", ""));
+                    int ticketNum = Integer.parseInt(resData[0].replace("\"", ""));
                     LocalDate date = LocalDate.parse(resData[1].replace("\"", ""));
                     int cinemaNum = Integer.parseInt(resData[2].replace("\"", ""));
                     LocalTime time = LocalTime.parse(resData[3].replace("\"", ""));
@@ -86,27 +85,6 @@ public class FileContentHandler {
         return resList;
     }
 
-    // Add a method to write the reservation to a CSV file
-    public void reservationFileWrite_toCSV() {
-        File filePath = new File("Resources/Reservations.csv");
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-            writer.write(toCSVString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String toCSVString(Reservation reservation, Movie movie) {
-
-        StringBuilder csvContent = new StringBuilder();
-        csvContent.append(reservation.getReserveTicketNum()).append(",");
-        csvContent.append(movie.getShowingDate()).append(",");
-        csvContent.append(movie.getCinemaNum()).append(",");
-        csvContent.append(movie.getTimeStart()).append(",");
-        csvContent.append(String.join(",", reservation.getSeats())).append(",");
-        csvContent.append(reservation.getPrice()).append("\n");
-        return csvContent.toString();
-    }
 
     private boolean containsNull(String[] array) {
         for (String value : array) {
@@ -117,4 +95,73 @@ public class FileContentHandler {
         return false;
     }
 
+    public void reservationFileWrite_toCSV(Reservation reservation) {
+        File filePath = new File("Resources/Reservations.csv");
+
+        try {
+            if (!filePath.exists()) {
+                if (filePath.createNewFile()) {
+                    try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
+                        writer.write(toCSVString(reservation));
+                    } catch (IOException e) {
+                        System.err.println("Error writing reservation details to CSV file: " + e.getMessage());
+                    }
+                } else {
+                    System.err.println("Unable to create the CSV file.");
+                }
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error creating the CSV file: " + e.getMessage());
+        }
+    }
+    public void deleteReservation(int ticketNumber) {
+        File inputFile = new File("Resources/Reservations.csv");
+        File tempFile = new File("Resources/TempReservations.csv");
+        String line;
+        boolean isFound = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             PrintWriter writer = new PrintWriter(new FileWriter(tempFile, true))) {
+            while ((line = reader.readLine()) != null) {
+                String[] resData = line.split("\",");
+                if (resData != null && resData.length == 6) {
+                    int currentTicketNum = Integer.parseInt(resData[0].replace("\"", ""));
+                    if (currentTicketNum == ticketNumber) {
+                        isFound = true;
+                    } else {
+                        writer.println(line);
+                    }
+                }
+            }
+
+            if (!isFound) {
+                System.err.println("Reservation with ticket number " + ticketNumber + " not isFound.");
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error deleting reservation from CSV file: " + e.getMessage());
+        }
+
+        if (isFound && tempFile.renameTo(inputFile)) {
+            System.out.println("Reservation with ticket number " + ticketNumber + " deleted successfully.");
+        } else {
+            System.err.println("Unable to update CSV file.");
+        }
+    }
+
+    public String toCSVString(Reservation reservation) {
+        StringBuilder csvContent = new StringBuilder();
+        csvContent.append("=============================================\n")
+                .append("Reservation Details:\n")
+                .append("=============================================\n")
+                .append("Ticket Number: ").append(reservation.getReserveTicketNum()).append("\n")
+                .append("Date: ").append(reservation.getDate()).append("\n")
+                .append("Cinema Number: ").append(reservation.getCinemaNum()).append("\n")
+                .append("Time: ").append(reservation.getTime()).append("\n")
+                .append("Seats: ").append(String.join(", ", reservation.getSeats())).append("\n")
+                .append("Price: Php").append(String.format("%.2f", reservation.getPrice()))
+                .append("\n=============================================\n");
+        return csvContent.toString();
+    }
 }
