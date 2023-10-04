@@ -62,7 +62,7 @@ public class Movie {
         }
     }
 
-    public void setSeatAvailable(ArrayList<String> list) {
+    public void setSeatsAvailable(ArrayList<String> list) {
         for (String s : list) {
             int[] i = seatCodeToIndexes(s);
             seats[i[0]][i[1]] = "[" + s + "]";
@@ -168,7 +168,6 @@ public class Movie {
     public void setSeats(String[][] seats) {
         this.seats = seats;
     }
-
 
     public String getMovieInfo() {
         return "Movie Title: " + movieTitle +

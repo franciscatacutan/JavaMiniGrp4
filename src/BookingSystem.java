@@ -12,6 +12,7 @@ public class BookingSystem {
     private HashMap<Integer, Movie> movies;
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
+    private FileContentHandler fHandler; 
 
     public static void main(String[] args) {
         BookingSystem bs;
@@ -25,7 +26,7 @@ public class BookingSystem {
 
     // Main method
     public void startProgram() {
-        FileContentHandler fHandler = new FileContentHandler();
+        fHandler = new FileContentHandler();
         reservations = fHandler.readReservationFile();
         movies = fHandler.readMovieFile();
         sc = new Scanner(System.in);
@@ -35,6 +36,8 @@ public class BookingSystem {
             prepareReservationsFromCSV(r);
             System.out.println(r);
         }
+
+        fHandler.deleteReservation(1234820);
 
         int choice = 0;
 
@@ -130,7 +133,7 @@ public class BookingSystem {
         }
         movie.setSeatOccupied(seatNums);
 
-        int reserveTicketNum = reservations.get(reservations.size() - 1).getReserveTicketNum() + 1;
+        int reserveTicketNum = (reservations.size() == 0) ? 1234820 : (reservations.get(reservations.size() - 1).getReserveTicketNum() + 1);
         LocalDate date = movie.getShowingDate();
         int cinemaNum = movie.getCinemaNum();
         LocalTime timeStart = movie.getTimeStart();
@@ -139,7 +142,8 @@ public class BookingSystem {
         Reservation newRes = new Reservation(reserveTicketNum, date, cinemaNum, timeStart, seatNums, price, movieId);
         System.out.println(newRes);
 
-        //WRITE CSV
+        // WRITE CSV
+        fHandler.reservationFileWrite_toCSV(newRes);
 
         return true;
     }
@@ -157,7 +161,8 @@ public class BookingSystem {
 
             // if inputed ticket is found in the reservations it is deleted in the array
             if (reservation.getReserveTicketNum() == ticketNum) {
-                movies.get(reservation.getMovieId()).setSeatAvailable(reservation.getSeats());
+                movies.get(reservation.getMovieId()).setSeatsAvailable(reservation.getSeats());
+                fHandler.deleteReservation(reservation.getReserveTicketNum());
                 iterator.remove();
             }
         }
