@@ -2,8 +2,10 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
 
 public class FileContentHandler {
 
@@ -15,12 +17,13 @@ public class FileContentHandler {
      *
      * @return Movies stored in a HashMap
      */
-    public HashMap<Integer, Movie> readMovieFile() {
+    public HashMap<Integer, Movie> readMovieFile() throws DataFormatException, FileNotFoundException {
         HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
         int idCounter = 1;
 
         try {
             Scanner file = new Scanner(new FileReader("Resources/Movies.csv"));
+            int lineNumber = 1;
 
             while (file.hasNextLine()) {
                 String line = file.nextLine();
@@ -38,13 +41,14 @@ public class FileContentHandler {
                     movieList.put(idCounter, movie);
                     idCounter++;
                 } else { // File Movie has NULL value
-                    System.out.println("Data has invalid/null value. Please try another file.");
+                    System.out.println("Data has invalid/null value on line " + lineNumber + ". Please try another file.");
                     System.exit(1);
                 }
+                lineNumber++;
             }
             file.close();
         } catch (IOException e) {
-            System.err.println("(ERROR)Movie File can't be read: " + e);
+            System.err.println("[ERROR] Movie File can't be read: " + e);
         }
         return movieList;
     }
@@ -57,7 +61,7 @@ public class FileContentHandler {
      *
      * @return an ArrayList of Reservation
      */
-    public ArrayList<Reservation> readReservationFile() {
+    public ArrayList<Reservation> readReservationFile() throws DataFormatException, FileNotFoundException {
         ArrayList<Reservation> resList = new ArrayList<>();
 
         try {
@@ -66,12 +70,13 @@ public class FileContentHandler {
                 try {
                     filePath.createNewFile();
                 } catch (IOException e) {
-                    System.err.println("(ERROR)Reservation File: " + e.getMessage());
+                    System.err.println("[ERROR] Reservation File: " + e.getMessage());
                     System.exit(1);
                 }
             }
 
             Scanner file = new Scanner(new FileReader("Resources/Reservations.csv"));
+            int lineNum = 1;
 
             while (file.hasNextLine()) {
                 String line = file.nextLine();
@@ -95,14 +100,17 @@ public class FileContentHandler {
                     resList.add(res);
 
                 } else {
-                    System.err.println("Data has invalid/null value. Please try another file."); // To add additional if have time
+                    System.err.println("Data has invalid/null value on line " + lineNum + ". Please try another file."); // To add additional if
+                                                                                                 // have time
                     System.exit(1);
                 }
+
+                lineNum++;
             }
             file.close();
 
-        } catch (Exception e) { // Exits System Runtime after displaying message
-            System.err.println("(ERROR) Reservation File can't be read: " + e);
+        } catch (IOException e) { // Exits System Runtime after displaying message
+            System.err.println("[ERROR]  Reservation File can't be read: " + e);
             System.exit(1);
         }
         return resList;
@@ -120,14 +128,14 @@ public class FileContentHandler {
         boolean isFound = false;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             PrintWriter writer = new PrintWriter(new FileWriter(tempFile, true))) {
+                PrintWriter writer = new PrintWriter(new FileWriter(tempFile, true))) {
             while ((line = reader.readLine()) != null) {
                 String[] resData = line.split("\",");
                 if (resData != null && resData.length == 6) {
                     int currentTicketNum = Integer.parseInt(resData[0].replace("\"", ""));
                     if (currentTicketNum == ticketNumber) {
                         isFound = true;
-                        
+
                     } else {
                         writer.println(line);
                     }
@@ -135,13 +143,13 @@ public class FileContentHandler {
             }
 
             if (!isFound) {
-                System.err.println("(ERROR)Reservation with ticket number " + ticketNumber + " not isFound.");
+                System.err.println("[ERROR] Reservation with ticket number " + ticketNumber + " is not found.");
                 tempFile.delete();
                 return;
             }
 
         } catch (IOException e) { // Exits System Runtime after displaying message
-            System.err.println("(ERROR)Deleting reservation from CSV file: " + e.getMessage());
+            System.err.println("[ERROR] Deleting reservation from CSV file: " + e.getMessage());
             System.exit(1);
         }
 
@@ -152,7 +160,8 @@ public class FileContentHandler {
         if (isFound && tempFile.renameTo(inputFile)) {
             System.out.println("Reservation with ticket number " + ticketNumber + " deleted successfully.");
         } else {
-            System.err.println("(ERROR)Unable to update tempReservations CSV file. Cannot rename to Reservations.csv file.");
+            System.err.println(
+                    "[ERROR] Unable to update tempReservations CSV file. Cannot rename to Reservations.csv file.");
         }
     }
 
@@ -201,12 +210,11 @@ public class FileContentHandler {
             }
             file.close();
             writer.close();
-        } catch(IOException e){
-            System.err.println("(ERROR)Writing reservation details to CSV file: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("[ERROR] Writing reservation details to CSV file: " + e.getMessage());
             System.exit(1);
         }
     }
-
 
     /**
      * Used for formatting the output result to the csv.

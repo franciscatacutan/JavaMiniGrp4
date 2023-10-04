@@ -2,12 +2,11 @@ import java.io.FileNotFoundException;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
+import java.util.zip.DataFormatException;
 
 public class BookingSystem {
     private Scanner sc;
@@ -25,10 +24,12 @@ public class BookingSystem {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.exit(0);
     }
 
     // Main method
-    public void startProgram() throws FileNotFoundException {
+    public void startProgram() throws FileNotFoundException, DataFormatException {
         fHandler = new FileContentHandler();
         reservations = fHandler.readReservationFile();
         movies = fHandler.readMovieFile();
@@ -48,7 +49,12 @@ public class BookingSystem {
             // title screen (screen1)
             System.out.println("***************NOW SHOWING*****************");
             for (i = 0; i < showing.size(); i++) {
-                System.out.printf("* [%d] %s%n", i + 1, movies.get(showing.get(i).get(0)).getMovieTitle());
+                if (showing.get(i).size() > 0) {
+                    System.out.printf("* [%d] %s%n", i + 1, movies.get(showing.get(i).get(0)).getMovieTitle());
+                } else {
+                    System.out.printf("* [%d] %s%n", i + 1, " --- NO MOVIE --- ");
+
+                }
             }
 
             System.out.println("* [" + 5 + "] Cancel Reservation\n" +
@@ -67,7 +73,14 @@ public class BookingSystem {
                 case 4:
 
                     // transition to time slot method
+                    if (showing.get(choice - 1).size() == 0) {
+                        System.out.println("There's no Movie scheduled for cinema " + choice + "\n");
+                        break;
+                    }
                     int movieId = selectTimeSlot(showing.get(choice - 1));
+
+                    
+
 
                     if (movieId != -999) {
                         Movie movie = movies.get(movieId);
@@ -97,8 +110,7 @@ public class BookingSystem {
 
                 case 0:
                     System.out.println("\nThank you come again!");
-                    System.exit(0);
-                    break;
+                    return;
 
                 default:
                     System.out.println("\nINVALID INPUT");
@@ -240,6 +252,9 @@ public class BookingSystem {
     public int selectTimeSlot(ArrayList<Integer> ids) {
         Movie mInfo = movies.get(ids.get(0));
         int time_slot;
+
+
+
         do {
             // display movie title
             System.out.println("\t\n*************** " + mInfo.getMovieTitle() + " ***************\n");
@@ -258,7 +273,7 @@ public class BookingSystem {
             System.out.print("\nChoose time: ");
             time_slot = getIntInput();
 
-        } while (time_slot >= ids.size() || time_slot < 0);
+        } while (time_slot > ids.size() || time_slot < 0);
         if (time_slot != 0) {
             return ids.get(time_slot - 1);
         }
