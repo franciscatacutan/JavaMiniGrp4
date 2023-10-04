@@ -61,26 +61,18 @@ public class BookingSystem {
             switch (choice) {
                 case 1:
                     movies.get(1).displaySeatAvailability();
-                    // transition to time slot method
-                    selectTimeSlot();
                     break;
 
                 case 2:
                     movies.get(2).displaySeatAvailability();
-                    // transition to time slot method
-                    selectTimeSlot();
                     break;
 
                 case 3:
                     movies.get(3).displaySeatAvailability();
-                    // transition to time slot method
-                    selectTimeSlot();
                     break;
 
                 case 4:
                     movies.get(4).displaySeatAvailability();
-                    // transition to time slot method
-                    selectTimeSlot();
                     break;
 
                 case 5:
@@ -163,8 +155,8 @@ public class BookingSystem {
         cancelReservation(1234820);
 
         movies.get(1).displaySeatAvailability();
-        cancelReservation(1234829); */
-
+        cancelReservation(1234829);
+        */
     }
 
     // set the movieId field of Reservation objects retrieved from the csv file
@@ -256,23 +248,24 @@ public class BookingSystem {
         return num;
     }
 
-    //2nd screen for choosing time slots
-    public void selectTimeSlot() {
-        int time_slot;
-        
-        //display movie title
-        System.out.println("\t\n*************** <INSERT MOVIE TITLE HERE>" /* insert movie title object here */ + " ***************\n");
+    
+    //Display the Summary for Regular Tickets - Screen 5A
+    public void displaySummaryRegular (){
+        System.out.println("***************SUMMARY*****************");
+        System.out.println("*\\t Movie Title:                         *"); //insert syntax to display movie title
+        System.out.println("*\\t Cinema Number:                       *"); //insert cinema number
+        System.out.println("*\\t Date:                                *"); //insert date
+        System.out.println("*\\t Time of Screening:                   *"); //insert time
+        System.out.println("*\\t Number of Tickets:                   *"); //insert number of tickets
+        System.out.println("*\\t Seats Reserved:                      *"); //insert what seats have been reserved
+        System.out.println("*\\t Subtotal                             *"); //insert subtotal: The Subtotal is the initial total without the discount
+        System.out.println("*\\t Discount Total:                      *"); //insert discount total: The discountTotal is the amount deducted from the tickets as a discount
+        System.out.println("*\\t Total Amount:                        *"); //insert insert total amount: The TotalAmount is the final price (subtotal - discountTotal)
+        System.out.println("\n*\\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); //insert scanner and syntax to receive next instruction 
+        //if choice is:
+        // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
+        // 2 == return to previous page Screen3: the screen for reserving seats
+        // 3 == reset / return to main page / welcome page
+    }   
 
-        //display cinema number
-        System.out.println("Cinema Number: <cinema_num>" );
-
-        //display timeslots
-        System.out.println();
-        for (int i = 0; i < 5; i++) {
-            System.out.println("{Display time slot here}");
-        }
-
-        //choose timeslot
-        time_slot = getIntInput();
-    }
 }
