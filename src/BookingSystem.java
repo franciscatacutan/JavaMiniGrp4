@@ -45,12 +45,9 @@ public class BookingSystem {
         do {
             // title screen (screen1)
             System.out.println("***************NOW SHOWING*****************");
-            System.out.println("*\t [1] Shrek                        *");
-            System.out.println("*\t [2] Kim Possible The Movie       *");
-            System.out.println("*\t [3] Fantastic 4                  *");
-            System.out.println("*\t [4] A Man Called Otto            *");
-            System.out.println("*\t [5] Cancel Reservation           *");
-            System.out.println("*\t [0] Exit                         *");
+            for (int i = 0; i < showing.size(); i++) {
+                System.out.printf("*\t [%d] %70s*%n", i + 1, movies.get(showing.get(i).get(0)).getMovieTitle());
+            }
             System.out.println("*******************************************");
 
             // enter movie choice
@@ -60,19 +57,12 @@ public class BookingSystem {
             // process after choosing Movie
             switch (choice) {
                 case 1:
-                    movies.get(1).displaySeatAvailability();
-                    break;
-
                 case 2:
-                    movies.get(2).displaySeatAvailability();
-                    break;
-
                 case 3:
-                    movies.get(3).displaySeatAvailability();
-                    break;
-
                 case 4:
-                    movies.get(4).displaySeatAvailability();
+                    // movies.get(4).displaySeatAvailability();
+                    // transition to time slot method
+                    selectTimeSlot(showing.get(choice - 1));
                     break;
 
                 case 5:
@@ -250,23 +240,24 @@ public class BookingSystem {
         return num;
     }
 
-    //2nd screen for choosing time slots
-    public void selectTimeSlot() {
+    // 2nd screen for choosing time slots
+    public void selectTimeSlot(ArrayList<Integer> ids) {
+        Movie mInfo = movies.get(ids.get(0));
         int time_slot;
-        
-        //display movie title
-        System.out.println("\t\n*************** <INSERT MOVIE TITLE HERE>" /* insert movie title object here */ + " ***************\n");
 
-        //display cinema number
-        System.out.println("Cinema Number: <cinema_num>" );
+        // display movie title
+        System.out.println("\t\n*************** " + mInfo.getMovieTitle() + " ***************\n");
+
+        // display cinema number
+        System.out.println("Cinema Number: " + mInfo.getCinemaNum());
 
         //display timeslots
         System.out.println();
-        for (int i = 0; i < 5; i++) {
-            System.out.println("{Display time slot here}");
+        for (int i = 0; i < ids.size(); i++) {
+            System.out.println(movies.get(ids.get(i)).getTimeStart());
         }
 
-        //choose timeslot
+        // choose timeslot
         time_slot = getIntInput();
 
         System.out.print("\nCancel Transaction [Y] or [N]? ");
@@ -295,6 +286,19 @@ public class BookingSystem {
 
     public void displaySummaryPremier(){
         System.out.println("****************SUMMARY**************");
+        System.out.println("\\t Movie Title:                         *"); // insert syntax to display movie title
+        System.out.println("\\t Cinema Number:                       *"); // insert cinema number
+        System.out.println("\\t Date:                                *"); // insert date
+        System.out.println("\\t Time:                                *"); // insert time
+        System.out.println("\\t Number of Ticket/s:                  *"); // insert number of tickets
+        System.out.println("\\t Seats Reserved:                      *"); // insert what seats have been reserved
+        System.out.println("\\t Total Amount:                        *"); // insert insert total amount:
+        System.out.println("\n*\\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); // insert scanner and syntax to
+                                                                                  // receive next instruction
+        // if choice is:
+        // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
+        // 2 == return to previous page Screen3: the screen for reserving seats
+        // 3 == reset / return to main page / welcome page
         System.out.println("Movie Title: " + movies.get(1));
         System.out.println("Cinema Number: " );
         System.out.println("Date: ");
