@@ -60,19 +60,9 @@ public class BookingSystem {
             // process after choosing Movie
             switch (choice) {
                 case 1:
-                    movies.get(1).displaySeatAvailability();
-                    break;
-
                 case 2:
-                    movies.get(2).displaySeatAvailability();
-                    break;
-
                 case 3:
-                    movies.get(3).displaySeatAvailability();
-                    break;
-
                 case 4:
-                    movies.get(4).displaySeatAvailability();
                     // movies.get(4).displaySeatAvailability();
                     // transition to time slot method
                     selectTimeSlot(showing.get(choice - 1));
@@ -270,8 +260,11 @@ public class BookingSystem {
             System.out.println("{Display time slot here}");
         }
 
-        //choose timeslot
+        // choose timeslot
         time_slot = getIntInput();
+
+        System.out.print("\nCancel Transaction [Y] or [N]? ");
+        char choice = sc.next().toLowerCase().charAt(0);
     }
     
     //Display the Summary for Regular Tickets - Screen 5A
