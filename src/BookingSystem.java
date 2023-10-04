@@ -52,32 +52,22 @@ public class BookingSystem {
         switch (choice) {
         case 1:
             // if movie1 is chosen
-            //sample driver calling the stub
-            selectTimeSlot();
         break;
 
         case 2:
             // if movie2 is chosen
-            //sample driver calling the stub
-            selectTimeSlot();
         break;
 
         case 3:
             // if movie3 is chosen
-            //sample driver calling the stub
-            selectTimeSlot();
         break;
 
         case 4:
             // if movie4 is chosen
-            //sample driver calling the stub
-            selectTimeSlot();
         break;
 
         case 5:
             // when cancelling reservation
-            //sample driver calling the stub
-            selectTimeSlot();
         break;
 
         case 0:
@@ -93,7 +83,6 @@ public class BookingSystem {
 
         } while (choice == 0);
 
-        /*
         // set up reservations
         for (Reservation r : reservations) {
             prepareReservationsFromCSV(r);
@@ -121,13 +110,7 @@ public class BookingSystem {
 
         movies.get(1).displaySeatAvailability();
         cancelReservation(1234829);
-        */
-    }
-
-    //2nd screen for choosing time slots
-    public void selectTimeSlot() {
-        //display movie title
-        System.out.println("\t*************** <INSERT MOVIE TITLE HERE>" /* insert movie title object here */ + " ***************\t");
+        
     }
 
     // set the movieId field of Reservation objects retrieved from the csv file
