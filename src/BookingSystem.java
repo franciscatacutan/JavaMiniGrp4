@@ -262,6 +262,9 @@ public class BookingSystem {
 
         // choose timeslot
         time_slot = getIntInput();
+
+        System.out.print("\nCancel Transaction [Y] or [N]? ");
+        char choice = sc.next().toLowerCase().charAt(0);
     }
     
     //Display the Summary for Regular Tickets - Screen 5A
