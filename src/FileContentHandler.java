@@ -38,7 +38,7 @@ public class FileContentHandler {
                     movieList.put(idCounter, movie);
                     idCounter++;
                 } else { // File Movie has NULL value
-                    System.out.println("Data has invalid/null value, Please try another file");
+                    System.out.println("Data has invalid/null value. Please try another file.");
                     System.exit(1);
                 }
             }
@@ -91,12 +91,12 @@ public class FileContentHandler {
                         seats.add(s);
                     }
 
-                    // Rservation boject
                     Reservation res = new Reservation(ticketNum, date, cinemaNum, time, seats, price);
                     resList.add(res);
 
                 } else {
-                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if have time
+                    System.err.println("Data has invalid/null value. Please try another file."); // To add additional if have time
+                    System.exit(1);
                 }
             }
             file.close();
@@ -177,25 +177,36 @@ public class FileContentHandler {
      * @param reservation the value determined to be written on the csv.
      */
     public void reservationFileWrite_toCSV(Reservation reservation) {
-        File filePath = new File("Resources/Reservations.csv");
+        try {
+            File filePath = new File("Resources/Reservations.csv");
+            Scanner file = new Scanner(new FileReader("Resources/Movies.csv"));
 
-        if (!filePath.exists()) {
-            try {
+            if (!filePath.exists()) {
                 filePath.createNewFile();
-            } catch (IOException e) { // Exits System Runtime after displaying message
-                System.err.println("File not Updated: " + e.getMessage());
+                System.err.println("File not Updated: ");
                 System.exit(1);
             }
-        }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-            writer.write("\n" + toCSVString(reservation));
-        } catch (IOException e) { // Exits System Runtime after displaying message
+            PrintWriter writer = new PrintWriter(new FileWriter(filePath, true));
+            while (file.hasNext()) {
+                String line = file.nextLine();
+                if (line.isEmpty()) {
+                    writer.write(toCSVString(reservation));
+                    break;
+
+                } else {
+                    writer.write("\n" + toCSVString(reservation));
+                    break;
+                }
+            }
+            file.close();
+            writer.close();
+        } catch(IOException e){
             System.err.println("(ERROR)Writing reservation details to CSV file: " + e.getMessage());
             System.exit(1);
         }
-
     }
+
 
     /**
      * Used for formatting the output result to the csv.
