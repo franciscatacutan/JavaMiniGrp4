@@ -61,18 +61,26 @@ public class BookingSystem {
             switch (choice) {
                 case 1:
                     movies.get(1).displaySeatAvailability();
+                    // transition to time slot method
+                    selectTimeSlot();
                     break;
 
                 case 2:
                     movies.get(2).displaySeatAvailability();
+                    // transition to time slot method
+                    selectTimeSlot();
                     break;
 
                 case 3:
                     movies.get(3).displaySeatAvailability();
+                    // transition to time slot method
+                    selectTimeSlot();
                     break;
 
                 case 4:
                     movies.get(4).displaySeatAvailability();
+                    // transition to time slot method
+                    selectTimeSlot();
                     break;
 
                 case 5:
@@ -147,7 +155,7 @@ public class BookingSystem {
 
         return list;
 
-        reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
+        /*reserveSeat(new ArrayList<String>(Arrays.asList("A4", "A1")), 1, 0);
         System.out.println("--------------------------------------");
 
         movies.get(1).displaySeatAvailability();
@@ -155,7 +163,7 @@ public class BookingSystem {
         cancelReservation(1234820);
 
         movies.get(1).displaySeatAvailability();
-        cancelReservation(1234829);
+        cancelReservation(1234829); */
 
     }
 
@@ -246,5 +254,25 @@ public class BookingSystem {
         int num = sc.nextInt();
         sc.nextLine();
         return num;
+    }
+
+    //2nd screen for choosing time slots
+    public void selectTimeSlot() {
+        int time_slot;
+        
+        //display movie title
+        System.out.println("\t\n*************** <INSERT MOVIE TITLE HERE>" /* insert movie title object here */ + " ***************\n");
+
+        //display cinema number
+        System.out.println("Cinema Number: <cinema_num>" );
+
+        //display timeslots
+        System.out.println();
+        for (int i = 0; i < 5; i++) {
+            System.out.println("{Display time slot here}");
+        }
+
+        //choose timeslot
+        time_slot = getIntInput();
     }
 }
