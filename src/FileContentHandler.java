@@ -37,9 +37,9 @@ public class FileContentHandler {
                             movieTimeDuration);
                     movieList.put(idCounter, movie);
                     idCounter++;
-                } else { // File Movie has NULL value
-                    System.out.println("Data has invalid/null value, Please try another file");
-                    System.exit(1);
+                } else { // Null Value
+                    System.out.println("Data has invalid/null value, Please try another file"); // To add additional if
+                                                                                                // still have time
                 }
             }
             file.close();
