@@ -125,8 +125,12 @@ public class BookingSystem {
         }
     }
 
+    // create a new reservation
     public boolean reserveSeat(ArrayList<String> seatNums, int movieId, int seniorCount) {
         Movie movie = movies.get(movieId);
+
+        // check whether a seat is occupied
+        // reserves available seat
         for (String seat : seatNums) {
             if (movie.isSeatOccupied(seat)) {
                 System.out.println("Seat " + seat + " is already Occupied");
@@ -135,6 +139,7 @@ public class BookingSystem {
         }
         movie.setSeatOccupied(seatNums);
 
+        // new reservation
         int reserveTicketNum = (reservations.size() == 0) ? 1234820
                 : (reservations.get(reservations.size() - 1).getReserveTicketNum() + 1);
         LocalDate date = movie.getShowingDate();
@@ -145,16 +150,13 @@ public class BookingSystem {
         Reservation newRes = new Reservation(reserveTicketNum, date, cinemaNum, timeStart, seatNums, price, movieId);
         System.out.println(newRes);
 
-        // WRITE CSV
+        // records reservation in csv
         fHandler.reservationFileWrite_toCSV(newRes);
 
         return true;
     }
 
-    // public Reservation createReservation(Movie movie) {
-
-    // }
-
+    // cancel a reservation
     public void cancelReservation(int ticketNum) {
         boolean isExist = false;
         // create iterator to check reservations
