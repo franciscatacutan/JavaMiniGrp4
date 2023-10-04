@@ -74,6 +74,7 @@ public class BookingSystem {
                         // System.out.println(movies.get(movieId).getMovieInfo());
                         movie.displaySeatAvailability();
                         String seatChoice = sc.nextLine();
+                        scInput();
 
                         reserveSeat(seatChoice, movieId, 0);
 
@@ -284,16 +285,14 @@ public class BookingSystem {
             }
             System.out.println("[0] CANCEL TRANSACTION");
 
-        // choose timeslot
-        System.out.print("\nChoose time: ");
-        time_slot = getIntInput();
-
-            
+            // choose timeslot
+            System.out.print("\nChoose time: ");
+            time_slot = getIntInput();
 
         } while (time_slot >= ids.size() || time_slot < 0);
         if (time_slot != 0) {
-                        return ids.get(time_slot - 1);
-                    }
+            return ids.get(time_slot - 1);
+        }
         return -999;
 
         // System.out.print("\nCancel Transaction [Y] or [N]? ");
@@ -378,6 +377,41 @@ public class BookingSystem {
         // insert scanner to scan value for whether customer wants to make another
         // transaction or to exit the whole transaction.
 
+    }
+
+    // inputting process for senior citizens
+    public void scInput() {
+        System.out.print("Do you have a Senior Citizen or PWD Card? (Yes/No): ");
+        String hasCard = sc.nextLine().trim();
+
+        if (hasCard.equalsIgnoreCase("yes")) {
+            // If they have a card, prompt for the quantity and card ID
+            System.out.print("Quantity Senior Citizens / PWDs: ");
+            int quantity = sc.nextInt();
+            sc.nextLine(); // Consume the newline
+            System.out.print("Please input Senior Citizen Card / PWD Card ID Number: ");
+            String cardId = sc.nextLine().trim();
+
+            // Proceed to checkout or cancel
+            System.out.print("[1] Proceed to Checkout>>> ");
+            int checkoutChoice = sc.nextInt();
+            if (checkoutChoice == 1) {
+                // Implement checkout logic here
+                // You have all the necessary information to complete the reservation
+            } else {
+                System.out.println("Transaction canceled.");
+            }
+        } else {
+            // Proceed to checkout or cancel without a card
+            System.out.print("[1] Proceed to Checkout>>> ");
+            int checkoutChoice = sc.nextInt();
+            if (checkoutChoice == 1) {
+                // Implement checkout logic here
+                // You have all the necessary information to complete the reservation
+            } else {
+                System.out.println("Transaction canceled.");
+            }
+        }
     }
 
 }
