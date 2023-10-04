@@ -2,12 +2,11 @@ import java.io.FileNotFoundException;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
+import java.util.zip.DataFormatException;
 
 public class BookingSystem {
     private Scanner sc;
@@ -30,7 +29,7 @@ public class BookingSystem {
     }
 
     // Main method
-    public void startProgram() throws FileNotFoundException {
+    public void startProgram() throws FileNotFoundException, DataFormatException {
         fHandler = new FileContentHandler();
         reservations = fHandler.readReservationFile();
         movies = fHandler.readMovieFile();
@@ -250,10 +249,9 @@ public class BookingSystem {
     }
 
     public int getIntInput() {
-        // String input = sc.nextLine();
         int num;
-        // int num = sc.nextInt();
 
+        // loops if the inputted value is an integer
         while (true) {
             try {
                 num = Integer.parseInt(sc.nextLine());
@@ -393,7 +391,9 @@ public class BookingSystem {
         }
 
         // Proceed to checkout or cancel without a card
-        System.out.print("[1] Proceed to Checkout>>> ");
+        System.out.println("[1] Proceed to Checkout>>> ");
+        System.out.println("PADAGDAG");
+        System.out.println("----------------------------------------");
         int checkoutChoice = getIntInput();
         if (checkoutChoice == 1) {
             return quantity;
