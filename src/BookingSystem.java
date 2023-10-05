@@ -339,61 +339,26 @@ public class BookingSystem {
         // 3 == reset / return to main page / welcome page
     }
 
-    public void displayRegularReceipt() {
+      public void displayReceipt(int movieId, String hasCard) {
         System.out.println("***************Cinema World***************");
         System.out.println("*\t Transaction Reference Number:                 *");
         System.out.println("*\t Movie Title:                                  *");
         System.out.println("*\t Cinema Number:                                *");
         System.out.println("*\t Date:                                         *");
         System.out.println("*\t Time:                                         *");
-        System.out.println("*\t Number of Ticket/s:                           *");
+        System.out.println("*\t Number of Ticket/s:                           *")
+            if(hasCard.equals("Yes")){
+                System.out.println("*\t Discounted Amount:                     *");
+                System.out.println("*\t Subtotal:                              *");
+
+            }
         System.out.println("*\t Seats Reserved:                               *");
-        System.out.println("*\t Subtotal:                                     *");
         System.out.println("*\t Total Amount:                                 *");
         System.out.println("\n\n [1] Make Another Transaction?");
         System.out.println("[2] Exit");
         // insert scanner to scan value for whether customer wants to make another
         // transaction or to exit the whole transaction.
-
     }
-
-    public void displayDiscountedReceipt() {
-        System.out.println("***************Cinema World***************");
-        System.out.println("*\t Transaction Reference Number:                 *");
-        System.out.println("*\t Movie Title:                                  *");
-        System.out.println("*\t Cinema Number:                                *");
-        System.out.println("*\t Date:                                         *");
-        System.out.println("*\t Time:                                         *");
-        System.out.println("*\t Number of Ticket/s:                           *");
-        System.out.println("*\t Number of Discounted Tickets:                 *");
-        System.out.println("*\t Seats Reserved:                               *");
-        System.out.println("*\t Subtotal:                                     *");
-        System.out.println("*\t Discounted Amount:                            *");
-        System.out.println("*\t Total Amount:                                 *");
-        System.out.println("\n\n [1] Make Another Transaction?");
-        System.out.println("[2] Exit");
-        // insert scanner to scan value for whether customer wants to make another
-        // transaction or to exit the whole transaction.
-
-    }
-
-    public void displayPremierReceipt() {
-        System.out.println("***************Cinema World***************");
-        System.out.println("*\t Transaction Reference Number:                     *");
-        System.out.println("*\t Movie Title:                                      *");
-        System.out.println("*\t Cinema Number:                                    *");
-        System.out.println("*\t Date:                                             *");
-        System.out.println("*\t Time:                                             *");
-        System.out.println("*\t Number of Ticket/s:                               *");
-        System.out.println("*\t Seats Reserved:                                   *");
-        System.out.println("*\t Total Amount:                                     *");
-        System.out.println("\n\n [1] Make Another Transaction?");
-        System.out.println("\n[2] Exit");
-        // insert scanner to scan value for whether customer wants to make another
-        // transaction or to exit the whole transaction.
-
-    }
-
     // inputting process for senior citizens
     public int scInput() {
         System.out.print("Do you have a Senior Citizen or PWD Card? (Yes/No): ");
