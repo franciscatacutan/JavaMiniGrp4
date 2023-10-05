@@ -346,7 +346,7 @@ public class BookingSystem {
         System.out.println("*\t Cinema Number:                                *");
         System.out.println("*\t Date:                                         *");
         System.out.println("*\t Time:                                         *");
-        System.out.println("*\t Number of Ticket/s:                           *")
+        System.out.println("*\t Number of Ticket/s:                           *");
             if(hasCard.equals("Yes")){
                 System.out.println("*\t Discounted Amount:                     *");
                 System.out.println("*\t Subtotal:                              *");
@@ -420,6 +420,7 @@ public class BookingSystem {
                 // Implement payment processing logic here
                 // You can add payment processing, receipt generation, etc.
                 System.out.println("Payment successful!");
+                //System.out.println(displayReceipt());
 
                 // make this more efficient
                 // if (seniorCount > 0) {
