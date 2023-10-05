@@ -79,6 +79,7 @@ public class BookingSystem {
                     }
                     int movieId = selectTimeSlot(showing.get(choice - 1));
 
+                    // if transaction not cancelled from time slot input
                     if (movieId != -999) {
                         // to insert loop here
 
@@ -98,8 +99,10 @@ public class BookingSystem {
                             sCount = scInput();
                         }
 
+                        // if transaction not cancelled from senior count input
                         if (sCount != -999) {
                             double totalAmount = calculateAmount(seats.size(), sCount, movie.isPremiere());
+                            reserveSeat(seats, movieId, sCount);
                             processCustomerCheckout(sCount, movie.isPremiere(), totalAmount);
                         }
                     }
@@ -200,7 +203,6 @@ public class BookingSystem {
         double price = calculateAmount(seatNums.size(), seniorCount, movie.getIsPremiere());
 
         Reservation newRes = new Reservation(reserveTicketNum, date, cinemaNum, timeStart, seatNums, price, movieId);
-        System.out.println(newRes);
 
         // records reservation in csv
         fHandler.reservationFileWrite_toCSV(newRes);
@@ -354,6 +356,7 @@ public class BookingSystem {
         // transaction or to exit the whole transaction.
 
     }
+
     public void displayDiscountedReceipt() {
         System.out.println("***************Cinema World***************");
         System.out.println("*\t Transaction Reference Number:                 *");
@@ -396,15 +399,15 @@ public class BookingSystem {
         System.out.print("Do you have a Senior Citizen or PWD Card? (Yes/No): ");
         String hasCard = sc.nextLine().trim();
         int quantity = 0;
-    
+
         if (hasCard.equalsIgnoreCase("yes")) {
             // If they have a card, prompt for the quantity and card ID
             System.out.print("Quantity Senior Citizens / PWDs: ");
             quantity = getIntInput();
-    
+
             System.out.print("Please input Senior Citizen Card / PWD Card ID Number: ");
             String cardId = sc.nextLine().trim();
-    
+
             // Proceed to checkout for senior citizens/PWDs
             System.out.println("[1] Proceed to Checkout>>> ");
             System.out.println("PADAGDAG");
@@ -434,7 +437,6 @@ public class BookingSystem {
             }
         }
     }
-    
 
     public void checkoutScreen(int seniorCount, double totalAmount, boolean isPremier) {
         // Display checkout options
@@ -453,7 +455,8 @@ public class BookingSystem {
                 // Implement payment processing logic here
                 // You can add payment processing, receipt generation, etc.
                 System.out.println("Payment successful!");
-                
+
+                // make this more efficient
                 if (seniorCount > 0) {
                     displayDiscountedReceipt(); // Display the receipt for senior/PWD customers
                 } else if (isPremier) {
@@ -461,13 +464,13 @@ public class BookingSystem {
                 } else {
                     displayRegularReceipt(); // Display the receipt for regular customers
                 }
-                break;
-    
-            case 2:
-                System.out.println("Transaction canceled.");
-                break;
-    
-            default:
+
+                int choice = getIntInput();
+                if (choice == 2) {
+                    System.out.println("\nThank you come again!");
+                    System.exit(0);
+                }
+
                 System.out.println("Invalid choice. Please select a valid option.");
                 break;
         }
