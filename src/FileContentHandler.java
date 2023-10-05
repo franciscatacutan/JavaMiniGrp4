@@ -49,7 +49,8 @@ public class FileContentHandler {
                             movieList.put(idCounter, movie);
                             idCounter++;
                         } else {
-                            System.err.println("[ERROR] No Data within the Movie File.");
+                            System.err.println("[ERROR] Incomplete data within the Movies File." +
+                                    "\nFound at Line Number: " + idCounter);
                             System.exit(1);
                         }
                         lineNum++;
@@ -57,12 +58,12 @@ public class FileContentHandler {
                     file.close();
                 }
             } else {
-                System.err.println("[ERROR] No Movie File is exists.");
+                System.err.println("[ERROR] No Movie File exists.");
                 System.exit(1);
             }
 
         } catch (RuntimeException e) {
-            System.err.println("[ERROR] A Movie/s is invalid within the Movie File: " + e +
+            System.err.println("[ERROR] A data is invalid within the Movie File: " + e +
                     "\nFound at Line Number:  " + lineNum);
             System.exit(1);
         }
@@ -81,58 +82,59 @@ public class FileContentHandler {
         ArrayList<Reservation> resList = new ArrayList<>();
 
         int lineNum = 1;
+        int lineNum2 = 1;
 
         try {
+            Scanner file = new Scanner(new FileReader("Resources/Reservations.csv"));
             File filePath = new File("Resources/Reservations.csv");
             if (!filePath.exists()) {
                 try {
                     filePath.createNewFile();
                 } catch (IOException e) {
-                    System.err.println("[ERROR] Reservation File: " + e.getMessage());
+                    System.err.println("[ERROR] Reservation File is not created: " + e.getMessage());
                     System.exit(1);
                 }
-            }
+            } else{
+                if(!file.hasNextLine()){
+                    System.err.println("[ERROR] No Data within Reservation File.");
+                    System.exit(1);
+                }
 
-            Scanner file = new Scanner(new FileReader("Resources/Reservations.csv"));
+                while (file.hasNextLine()) {
+                    String line = file.nextLine();
+                    String[] resData = line.split("\",");
 
-            if(!file.hasNextLine()){
-                System.err.println("[ERROR] No Data within Reservation File.");
-                System.exit(1);
-            }
+                    if (resData != null && resData.length == 6) {
 
-            while (file.hasNextLine()) {
-                String line = file.nextLine();
-                String[] resData = line.split("\",");
+                        int ticketNum = Integer.parseInt(resData[0].replace("\"", ""));
+                        LocalDate date = LocalDate.parse(resData[1].replace("\"", ""));
+                        int cinemaNum = Integer.parseInt(resData[2].replace("\"", ""));
+                        LocalTime time = LocalTime.parse(resData[3].replace("\"", ""));
+                        double price = Double.parseDouble(resData[5].replace("\"", ""));
+                        ArrayList<String> seats = new ArrayList<>();
 
-                if (resData != null && resData.length == 6) {
+                        String[] seatsArr = resData[4].replace("\"", "").split(",");
+                        for (String s : seatsArr) {
+                            seats.add(s);
+                        }
 
-                    int ticketNum = Integer.parseInt(resData[0].replace("\"", ""));
-                    LocalDate date = LocalDate.parse(resData[1].replace("\"", ""));
-                    int cinemaNum = Integer.parseInt(resData[2].replace("\"", ""));
-                    LocalTime time = LocalTime.parse(resData[3].replace("\"", ""));
-                    double price = Double.parseDouble(resData[5].replace("\"", ""));
-                    ArrayList<String> seats = new ArrayList<>();
-
-                    String[] seatsArr = resData[4].replace("\"", "").split(",");
-                    for (String s : seatsArr) {
-                        seats.add(s);
+                        Reservation res = new Reservation(ticketNum, date, cinemaNum, time, seats, price);
+                        resList.add(res);
+                        lineNum++;
+                    } else {
+                        System.err.println("[ERROR] Incomplete data within the Reservation File." +
+                                "\nFound at line Number: " + lineNum);
+                        System.exit(1);
                     }
 
-                    Reservation res = new Reservation(ticketNum, date, cinemaNum, time, seats, price);
-                    resList.add(res);
-
-                } else {
-                    System.err.println("Data has invalid/null value on line " + lineNum + ". Please try another file."); // To add additional if
-                    System.exit(1);
+                    lineNum2++;
                 }
+                file.close();
 
-                lineNum++;
             }
-            file.close();
-
         } catch (RuntimeException e) {
             System.err.println("[ERROR] A Reservation/s is invalid within the data provided." + e +
-                    "\nFound at Line Number:  " + lineNum);
+                    "\nFound at Line Number:  " + lineNum2);
             System.exit(1);
         }
         return resList;
@@ -214,8 +216,6 @@ public class FileContentHandler {
 
             if (!filePath.exists()) {
                 filePath.createNewFile();
-                System.err.println("File not Updated: ");
-                System.exit(1);
             }
 
             PrintWriter writer = new PrintWriter(new FileWriter(filePath, true));
