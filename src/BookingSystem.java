@@ -388,7 +388,7 @@ public class BookingSystem {
         System.out.println("*\t Seats Reserved:                                   *");
         System.out.println("*\t Total Amount:                                     *");
         System.out.println("\n\n [1] Make Another Transaction?");
-        System.out.println("[2] Exit");
+        System.out.println("\n[2] Exit");
         // insert scanner to scan value for whether customer wants to make another
         // transaction or to exit the whole transaction.
 
@@ -402,7 +402,7 @@ public class BookingSystem {
 
         if (hasCard.equalsIgnoreCase("yes")) {
             // If they have a card, prompt for the quantity and card ID
-            System.out.print("Quantity Senior Citizens / PWDs: ");
+            System.out.print("Quantity of Senior Citizens / PWDs: ");
             quantity = getIntInput();
 
             System.out.print("Please input Senior Citizen Card / PWD Card ID Number: ");
