@@ -422,13 +422,13 @@ public class BookingSystem {
                 System.out.println("Payment successful!");
 
                 // make this more efficient
-                if (seniorCount > 0) {
-                    displayDiscountedReceipt(); // Display the receipt for senior/PWD customers
-                } else if (isPremier) {
-                    displayPremierReceipt(); // Display the receipt for premier customers
-                } else {
-                    displayRegularReceipt(); // Display the receipt for regular customers
-                }
+                // if (seniorCount > 0) {
+                //     displayDiscountedReceipt(); // Display the receipt for senior/PWD customers
+                // } else if (isPremier) {
+                //     displayPremierReceipt(); // Display the receipt for premier customers
+                // } else {
+                //     displayRegularReceipt(); // Display the receipt for regular customers
+                // }
 
                 int choice = getIntInput();
                 if (choice == 2) {
