@@ -425,10 +425,19 @@ public class BookingSystem {
     public void checkoutScreen(int seniorCount, double totalAmount, boolean isPremier) {
         // Display checkout options
         System.out.println("***************CHECKOUT***************");
-        System.out.println("*\t Total Amount: $" + totalAmount);
-        System.out.println("*\t [1] Confirm and Pay");
-        System.out.println("*\t [2] Cancel Transaction");
+        System.out.println("Movie Title: "); //+ movies.getMovieTitle() + " "
+        System.out.println("Cinema Number: ");
+        System.out.println("Date and Time: ");
+        System.out.println("Number of Tickets: ");
+        System.out.println("Seats Reserved: ");
+            if( isPremier == false){
+                System.out.println("Subtotal: ");
+                System.out.println("Discount Amount: ");
+            }
+        System.out.println("*Total Amount: Php" + totalAmount);
+        System.out.println("\n[1] Confirm and Pay \t[2] Back\t[3] Cancel Transaction");
         System.out.println("***************************************");
+        System.out.println();
 
         // Prompt for checkout choice
         System.out.print("Enter choice: ");
@@ -438,26 +447,17 @@ public class BookingSystem {
             case 1:
                 // Implement payment processing logic here
                 // You can add payment processing, receipt generation, etc.
-                System.out.println("Payment successful!");
-                // System.out.println(displayReceipt());
+                System.out.println("Payment successful! Thank you for booking with us!"); //temporary. insert code for receipt
+                System.out.println();
+                System.exit(0);
+            break;
+            //case 2: 
 
-                // make this more efficient
-                // if (seniorCount > 0) {
-                // displayDiscountedReceipt(); // Display the receipt for senior/PWD customers
-                // } else if (isPremier) {
-                // displayPremierReceipt(); // Display the receipt for premier customers
-                // } else {
-                // displayRegularReceipt(); // Display the receipt for regular customers
-                // }
-
-                int choice = getIntInput();
-                if (choice == 2) {
-                    System.out.println("\nThank you come again!");
-                    System.exit(0);
-                }
-
-                System.out.println("Invalid choice. Please select a valid option.");
-                break;
+            case 3: 
+                System.out.println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
+                System.out.println();
+                System.exit(0);
+            break;
         }
     }
 
