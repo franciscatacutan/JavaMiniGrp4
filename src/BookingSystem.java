@@ -89,6 +89,7 @@ public class BookingSystem {
                         String seatChoice = sc.nextLine();
                         ArrayList<String> seats = checkSeats(seatChoice, movieId);
 
+                        // seats are not available/ invalid seat code
                         if (seats.size() == 0) {
                             break;
                         }
@@ -96,7 +97,7 @@ public class BookingSystem {
                         // Prompt for senior/PWD input and calculate totalAmount
                         int sCount = 0;
                         if (!movie.isPremiere()) {
-                            sCount = scInput();
+                            sCount = scInput(seats.size());
                         }
 
                         // if transaction not cancelled from senior count input
@@ -271,7 +272,7 @@ public class BookingSystem {
         Movie mInfo = movies.get(ids.get(0));
         int time_slot;
 
-        do {
+        while (true) {
             // display movie title
             System.out.println("\t\n*************** " + mInfo.getMovieTitle() + " ***************\n");
 
@@ -289,7 +290,13 @@ public class BookingSystem {
             System.out.print("\nChoose time: ");
             time_slot = getIntInput();
 
-        } while (time_slot > ids.size() || time_slot < 0);
+            if (time_slot > ids.size() || time_slot < 0) {
+                System.out.println("Invalid Input. Please try again.");
+            } else {
+                break;
+            }
+        }
+
         if (time_slot != 0) {
             return ids.get(time_slot - 1);
         }
@@ -339,7 +346,7 @@ public class BookingSystem {
         // 3 == reset / return to main page / welcome page
     }
 
-      public void displayReceipt(int movieId, String hasCard) {
+    public void displayReceipt(int movieId, String hasCard) {
         System.out.println("***************Cinema World***************");
         System.out.println("*\t Transaction Reference Number:                 *");
         System.out.println("*\t Movie Title:                                  *");
@@ -347,11 +354,11 @@ public class BookingSystem {
         System.out.println("*\t Date:                                         *");
         System.out.println("*\t Time:                                         *");
         System.out.println("*\t Number of Ticket/s:                           *");
-            if(hasCard.equals("Yes")){
-                System.out.println("*\t Discounted Amount:                     *");
-                System.out.println("*\t Subtotal:                              *");
+        if (hasCard.equals("Yes")) {
+            System.out.println("*\t Discounted Amount:                     *");
+            System.out.println("*\t Subtotal:                              *");
 
-            }
+        }
         System.out.println("*\t Seats Reserved:                               *");
         System.out.println("*\t Total Amount:                                 *");
         System.out.println("\n\n [1] Make Another Transaction?");
@@ -359,19 +366,31 @@ public class BookingSystem {
         // insert scanner to scan value for whether customer wants to make another
         // transaction or to exit the whole transaction.
     }
+
     // inputting process for senior citizens
-    public int scInput() {
+    public int scInput(int numSeats) {
         System.out.print("Do you have a Senior Citizen or PWD Card? (Yes/No): ");
         String hasCard = sc.nextLine().trim();
         int quantity = 0;
 
         if (hasCard.equalsIgnoreCase("yes")) {
             // If they have a card, prompt for the quantity and card ID
-            System.out.print("Quantity of Senior Citizens / PWDs: ");
-            quantity = getIntInput();
 
-            System.out.print("Please input Senior Citizen Card / PWD Card ID Number: ");
-            String cardId = sc.nextLine().trim();
+            while (true) {
+                System.out.print("Quantity of Senior Citizens / PWDs: ");
+                quantity = getIntInput();
+
+                if (quantity > numSeats || quantity < 0) {
+                    System.out.println("Invalid input. Please input a number between 0 - " + numSeats + ".");
+                } else {
+                    break;
+                }
+            }
+
+            for (int i = 0; i < quantity; i++) {
+                System.out.printf("%s (%d):","Please input Senior Citizen Card / PWD Card ID Number",i+1);
+                sc.nextLine().trim();
+            }
 
             // Proceed to checkout for senior citizens/PWDs
             System.out.println("[1] Proceed to Checkout>>> ");
@@ -420,15 +439,15 @@ public class BookingSystem {
                 // Implement payment processing logic here
                 // You can add payment processing, receipt generation, etc.
                 System.out.println("Payment successful!");
-                //System.out.println(displayReceipt());
+                // System.out.println(displayReceipt());
 
                 // make this more efficient
                 // if (seniorCount > 0) {
-                //     displayDiscountedReceipt(); // Display the receipt for senior/PWD customers
+                // displayDiscountedReceipt(); // Display the receipt for senior/PWD customers
                 // } else if (isPremier) {
-                //     displayPremierReceipt(); // Display the receipt for premier customers
+                // displayPremierReceipt(); // Display the receipt for premier customers
                 // } else {
-                //     displayRegularReceipt(); // Display the receipt for regular customers
+                // displayRegularReceipt(); // Display the receipt for regular customers
                 // }
 
                 int choice = getIntInput();
