@@ -20,36 +20,51 @@ public class FileContentHandler {
     public HashMap<Integer, Movie> readMovieFile() throws DataFormatException, FileNotFoundException {
         HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
         int idCounter = 1;
+        int lineNum = 1;
+
 
         try {
+            File filePath = new File("Resources/Reservations.csv");
             Scanner file = new Scanner(new FileReader("Resources/Movies.csv"));
-            int lineNumber = 1;
 
-            while (file.hasNextLine()) {
-                String line = file.nextLine();
-                String[] movieData = line.split(",");
-                if (movieData.length == 6 && !containsNull(movieData)) {
-                    LocalDate showingDate = LocalDate.parse(movieData[0].replace("\"", ""));
-                    int cinemaNum = Integer.parseInt(movieData[1].replace("\"", ""));
-                    LocalTime timeStart = LocalTime.parse(movieData[2].replace("\"", ""));
-                    boolean isPremier = Boolean.parseBoolean(movieData[3].replace("\"", ""));
-                    String movieTitle = movieData[4].replace("\"", "");
-                    double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
-
-                    Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle,
-                            movieTimeDuration);
-                    movieList.put(idCounter, movie);
-                    idCounter++;
-                } else { // File Movie has NULL value
-                    System.out.println("Data has invalid/null value on line " + lineNumber + ". Please try another file.");
+            if(filePath.exists()){
+                if(!file.hasNextLine()){
+                    System.err.println("[ERROR] No Data within Movie File.");
                     System.exit(1);
+                } else {
+                    while (file.hasNextLine()) {
+                        String line = file.nextLine();
+                        String[] movieData = line.split(",");
+
+                        if (!containsNull(movieData) && movieData.length == 6) {
+                            LocalDate showingDate = LocalDate.parse(movieData[0].replace("\"", ""));
+                            int cinemaNum = Integer.parseInt(movieData[1].replace("\"", ""));
+                            LocalTime timeStart = LocalTime.parse(movieData[2].replace("\"", ""));
+                            boolean isPremier = Boolean.parseBoolean(movieData[3].replace("\"", ""));
+                            String movieTitle = movieData[4].replace("\"", "");
+                            double movieTimeDuration = Double.parseDouble(movieData[5].replace("\"", ""));
+
+                            Movie movie = new Movie(showingDate, cinemaNum, timeStart, isPremier, movieTitle,
+                                    movieTimeDuration);
+                            movieList.put(idCounter, movie);
+                            idCounter++;
+                        } else {
+                            System.err.println("[ERROR] No Data within the Movie File.");
+                            System.exit(1);
+                        }
+                        lineNum++;
+                    }
+                    file.close();
                 }
-                lineNumber++;
+            } else {
+                System.err.println("[ERROR] No Movie File is exists.");
+                System.exit(1);
             }
-            file.close();
+
         } catch (RuntimeException e) {
-            System.err.println("[ERROR] A Movie/s is invalid within the data: " + e + "\n" +
-                    "Will proceed as the invalid Movie/s will be considered invalid.");
+            System.err.println("[ERROR] A Movie/s is invalid within the Movie File: " + e +
+                    "\nFound at Line Number:  " + lineNum);
+            System.exit(1);
         }
         return movieList;
     }
@@ -65,6 +80,8 @@ public class FileContentHandler {
     public ArrayList<Reservation> readReservationFile() throws DataFormatException, FileNotFoundException {
         ArrayList<Reservation> resList = new ArrayList<>();
 
+        int lineNum = 1;
+
         try {
             File filePath = new File("Resources/Reservations.csv");
             if (!filePath.exists()) {
@@ -77,7 +94,11 @@ public class FileContentHandler {
             }
 
             Scanner file = new Scanner(new FileReader("Resources/Reservations.csv"));
-            int lineNum = 1;
+
+            if(!file.hasNextLine()){
+                System.err.println("[ERROR] No Data within Reservation File.");
+                System.exit(1);
+            }
 
             while (file.hasNextLine()) {
                 String line = file.nextLine();
@@ -102,7 +123,6 @@ public class FileContentHandler {
 
                 } else {
                     System.err.println("Data has invalid/null value on line " + lineNum + ". Please try another file."); // To add additional if
-                                                                                                 // have time
                     System.exit(1);
                 }
 
@@ -111,8 +131,9 @@ public class FileContentHandler {
             file.close();
 
         } catch (RuntimeException e) {
-            System.err.println("[ERROR] A Reservation/s is invalid within the data provided: " + e + "\n" +
-                    "Will proceed as the invalid Reservation/s will be considered invalid.");
+            System.err.println("[ERROR] A Reservation/s is invalid within the data provided." + e +
+                    "\nFound at Line Number:  " + lineNum);
+            System.exit(1);
         }
         return resList;
     }
