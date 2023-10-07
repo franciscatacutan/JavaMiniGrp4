@@ -454,12 +454,12 @@ public class BookingSystem {
                 // You can add payment processing, receipt generation, etc.
                 System.out.println("Payment successful! Thank you for booking with us!"); //temporary. insert code for receipt
                 System.out.println();
-                System.exit(0);
+                //System.exit(0);
             break;
             case 2: 
                 System.out.println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
                 System.out.println();
-                System.exit(0);
+                //System.exit(0);
             break;
         }
     }
