@@ -302,7 +302,7 @@ public class BookingSystem {
     }
 
     // Display the Summary for Regular Tickets - Screen 5A - to remove. start
-    public void displaySummaryRegular(int movieId, int numSeats, double calculateAmount, double totalAmount) {
+    /* public void displaySummaryRegular(int movieId, int numSeats, double calculateAmount, double totalAmount) {
         System.out.println("***************SUMMARY*****************");
         System.out.println("*\t Movie Title:                         *" + movies.get(movieId).getMovieTitle()); // insert
                                                                                                                 // syntax
@@ -331,15 +331,15 @@ public class BookingSystem {
         // discountTotal)
         System.out.println("\n*\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); // insert scanner and syntax to receive
                                                                                  // next instruction which is to select
-                                                                                 // which screen to go next
+                                                                                  */// which screen to go next
         // if choice is:
         // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
         // 2 == return to previous page Screen3: the screen for reserving seats
         // 3 == reset / return to main page / welcome page
-    }
+    //}
     // Display the Summary for Regular Tickets - Screen 5A - to remove. end
 
-    public void displaySummaryPremier(int movieId, int numSeats, double totalAmount) {
+    /*public void displaySummaryPremier(int movieId, int numSeats, double totalAmount) {
         System.out.println("****************SUMMARY**************");
         System.out.println("\\t Movie Title:                         *" + movies.get(movieId).getMovieTitle()); // insert
                                                                                                                 // syntax
@@ -364,7 +364,7 @@ public class BookingSystem {
         // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
         // 2 == return to previous page Screen3: the screen for reserving seats
         // 3 == reset / return to main page / welcome page
-    }
+    }*/
 
     //
     public void displayReceipt(int movieId, String hasCard, String calculateAmount, int numSeats, double totalAmount) {
@@ -379,7 +379,6 @@ public class BookingSystem {
         if (hasCard.equals("Yes")) {
             System.out.println("*\t Discounted Amount:                     *" + calculateAmount);
             // System.out.println("*\t Subtotal: *"+);
-
         }
         System.out.println("*\t Seats Reserved:                               *" + numSeats);
         System.out.println("*\t Total Amount:                                 *" + totalAmount);
@@ -454,7 +453,8 @@ public class BookingSystem {
     public void checkoutScreen(int seniorCount, double totalAmount, int movieId, int numSeats,
             ArrayList<String> seats, double discountAmount) {
         // Display checkout options
-        System.out.println("***************CHECKOUT***************");
+        
+        System.out.println("\n***************CHECKOUT***************");
         System.out.println("Movie Title: " + movies.get(movieId).getMovieTitle());
         System.out.println("Cinema Number: " + movies.get(movieId).getCinemaNum());
         System.out
@@ -465,7 +465,7 @@ public class BookingSystem {
             System.out.println("Subtotal: " + totalAmount);
             System.out.println("Discount Amount: " + (discountAmount));
         }
-        System.out.println("*Total Amount: Php" + (totalAmount - discountAmount));
+        System.out.println("*Total Amount: Php" + totalAmount);
         System.out.println("\n[1] Confirm and Pay>>> \t[2] Cancel Transaction<<<");
         System.out.println("***************************************");
         System.out.println();
@@ -481,6 +481,8 @@ public class BookingSystem {
                 System.out.println("Payment successful! Thank you for booking with us!"); // temporary. insert code for
                                                                                           // receipt
                 System.out.println();
+                System.out.println();
+
                 // System.exit(0);
                 break;
             case 2:
