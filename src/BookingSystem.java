@@ -103,9 +103,9 @@ public class BookingSystem {
 
                         // if transaction not cancelled from senior count input
                         if (sCount != -999) {
-                            double totalAmount = calculateAmount(seats.size(), sCount, movie.isPremiere());
+                            // double totalAmount = calculateAmount(seats.size(), movie.isPremiere());
                             reserveSeat(seats, movieId, sCount);
-                            processCustomerCheckout(sCount, movie, totalAmount, seats.size(), seats);
+                            processCustomerCheckout(sCount, movieId, seats.size(), seats);
                         }
                     }
 
@@ -202,7 +202,7 @@ public class BookingSystem {
         LocalDate date = movie.getShowingDate();
         int cinemaNum = movie.getCinemaNum();
         LocalTime timeStart = movie.getTimeStart();
-        double price = calculateAmount(seatNums.size(), seniorCount, movie.getIsPremiere());
+        double price = calculateAmount(seatNums.size(), movie.getIsPremiere());
 
         Reservation newRes = new Reservation(reserveTicketNum, date, cinemaNum, timeStart, seatNums, price, movieId);
 
@@ -235,20 +235,17 @@ public class BookingSystem {
         // update Reservations.csv
     }
 
-    public double calculateAmount(int seatNums, int senior, boolean isPremier) {
+    public double calculateAmount(int seatNums, boolean isPremier) {
         double price;
 
         // Calculate price if premier or not
         if (isPremier) {
             price = seatNums * 500;
-            System.out.println(price);
-
         } else {
-            price = (seatNums - senior) * 350 + ((350 - (350 * DISCOUNT)) * senior);
-            System.out.println(price);
+            // price = (seatNums - senior) * 350 + ((350 - (350 * DISCOUNT)) * senior);
+            price = seatNums * 350;
 
         }
-
         return price;
     }
 
@@ -454,20 +451,21 @@ public class BookingSystem {
     }
 
     // Final method for Summary
-    public void checkoutScreen(int seniorCount, double totalAmount, Movie movie, int numSeats,
-            ArrayList<String> seats) {
+    public void checkoutScreen(int seniorCount, double totalAmount, int movieId, int numSeats,
+            ArrayList<String> seats, double discountAmount) {
         // Display checkout options
         System.out.println("***************CHECKOUT***************");
-        System.out.println("Movie Title: " + movie.getMovieTitle());
-        System.out.println("Cinema Number: " + movie.getCinemaNum());
-        System.out.println("Date and Time: " + movie.getShowingDate() + movie.getTimeStart());
+        System.out.println("Movie Title: " + movies.get(movieId).getMovieTitle());
+        System.out.println("Cinema Number: " + movies.get(movieId).getCinemaNum());
+        System.out
+                .println("Date and Time: " + movies.get(movieId).getShowingDate() + movies.get(movieId).getTimeStart());
         System.out.println("Number of Seats: " + numSeats);
         System.out.println("Seats Reserved: " + seats);
-        if (movie.isPremiere() == false) {
+        if (movies.get(movieId).isPremiere() == false && seniorCount > 0) {
             System.out.println("Subtotal: " + totalAmount);
-            System.out.println("Discount Amount: ");
+            System.out.println("Discount Amount: " + (discountAmount));
         }
-        System.out.println("*Total Amount: Php" + totalAmount);
+        System.out.println("*Total Amount: Php" + (totalAmount - discountAmount));
         System.out.println("\n[1] Confirm and Pay>>> \t[2] Cancel Transaction<<<");
         System.out.println("***************************************");
         System.out.println();
@@ -494,10 +492,15 @@ public class BookingSystem {
         }
     }
 
-    public void processCustomerCheckout(int seniorCount, Movie movie, double totalAmount, int numSeats,
+    public void processCustomerCheckout(int seniorCount, int movieId, int numSeats,
             ArrayList<String> seats) {
-        // Display checkout screen
-        checkoutScreen(seniorCount, totalAmount, movie, numSeats, seats);
+
+        double totalAmount = calculateAmount(seats.size(), movies.get(movieId).getIsPremiere());
+        double discountAmount = (350 * DISCOUNT) * seniorCount;
+
+        System.out.println(discountAmount);
+
+        checkoutScreen(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);
 
         // You can add more logic here, such as updating reservation records, etc.
     }
