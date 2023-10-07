@@ -514,9 +514,9 @@ public class BookingSystem {
         System.out.println("Seats Reserved: " + seats);
         if (movies.get(movieId).isPremiere() == false && seniorCount > 0) {
             System.out.println("Subtotal: " + totalAmount);
-            System.out.println("Discount Amount: " + (discountAmount));
+            System.out.println("Discount Amount: " + discountAmount);
         }
-        System.out.println("*Total Amount: Php" + totalAmount);
+        System.out.println("*Total Amount: Php" + (totalAmount - discountAmount));
         System.out.println("\n[1] Confirm and Pay>>> \t[2] Cancel Transaction<<<");
         System.out.println("***************************************");
         System.out.println();
