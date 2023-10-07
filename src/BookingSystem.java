@@ -305,7 +305,7 @@ public class BookingSystem {
         return -999;
     }
 
-    // Display the Summary for Regular Tickets - Screen 5A
+    // Display the Summary for Regular Tickets - Screen 5A - to remove. start
     public void displaySummaryRegular(int movieId, int numSeats, double calculateAmount, double totalAmount) {
         System.out.println("***************SUMMARY*****************");
         System.out.println("*\t Movie Title:                         *"+movies.get(movieId).getMovieTitle()); // insert syntax to display movie title
@@ -329,7 +329,8 @@ public class BookingSystem {
         // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
         // 2 == return to previous page Screen3: the screen for reserving seats
         // 3 == reset / return to main page / welcome page
-    }
+    } 
+    // Display the Summary for Regular Tickets - Screen 5A - to remove. end
 
     public void displaySummaryPremier(int movieId, int numSeats, double  totalAmount) {
         System.out.println("****************SUMMARY**************");
@@ -348,6 +349,7 @@ public class BookingSystem {
         // 3 == reset / return to main page / welcome page
     }
 
+    //
     public void displayReceipt(int movieId, String hasCard, String calculateAmount, int numSeats, double totalAmount) {
         System.out.println("***************Cinema World***************");
         System.out.println("*\t Transaction Reference Number:                 *" + reserveTicketNum);
@@ -427,6 +429,8 @@ public class BookingSystem {
             }
         }
     }
+    
+    //Final method for Summary
     public void checkoutScreen(int seniorCount, double totalAmount, boolean isPremier) {
         // Display checkout options
         System.out.println("***************CHECKOUT***************");
