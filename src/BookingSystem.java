@@ -396,7 +396,7 @@ public class BookingSystem {
 
             // Proceed to checkout for senior citizens/PWDs
             System.out.println("[1] Proceed to Checkout>>> ");
-            System.out.println("PADAGDAG");
+            System.out.println("[2] Cancel Transaction<<<");
             System.out.println("----------------------------------------");
             int checkoutChoice = getIntInput();
             if (checkoutChoice == 1) {
@@ -404,13 +404,15 @@ public class BookingSystem {
                 // Implement checkout logic for senior citizens/PWDs here
                 // You have all the necessary information to complete the reservation
             } else {
-                System.out.println("Transaction canceled.");
+                System.out.println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
+                System.out.println();
+                System.exit(0);
                 return -999;
             }
         } else {
             // Proceed to checkout for regular customers
             System.out.println("[1] Proceed to Checkout>>> ");
-            System.out.println("PADAGDAG");
+            System.out.println("[2] Cancel Transaction<<<");
             System.out.println("----------------------------------------");
             int checkoutChoice = getIntInput();
             if (checkoutChoice == 1) {
@@ -418,12 +420,13 @@ public class BookingSystem {
                 // Implement checkout logic for regular customers here
                 // You have all the necessary information to complete the reservation
             } else {
-                System.out.println("Transaction canceled.");
+                System.out.println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
+                System.out.println();
+                System.exit(0);
                 return -999;
             }
         }
     }
-
     public void checkoutScreen(int seniorCount, double totalAmount, boolean isPremier) {
         // Display checkout options
         System.out.println("***************CHECKOUT***************");
@@ -437,7 +440,7 @@ public class BookingSystem {
                 System.out.println("Discount Amount: ");
             }
         System.out.println("*Total Amount: Php" + totalAmount);
-        System.out.println("\n[1] Confirm and Pay \t[2] Back\t[3] Cancel Transaction");
+        System.out.println("\n[1] Confirm and Pay>>> \t[2] Cancel Transaction<<<");
         System.out.println("***************************************");
         System.out.println();
 
@@ -453,9 +456,7 @@ public class BookingSystem {
                 System.out.println();
                 System.exit(0);
             break;
-            //case 2: 
-
-            case 3: 
+            case 2: 
                 System.out.println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
                 System.out.println();
                 System.exit(0);
