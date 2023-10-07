@@ -96,16 +96,15 @@ public class BookingSystem {
                         }
 
                         // Prompt for senior/PWD input and calculate totalAmount
-                        int sCount = 0;
+                        int seniorCount = 0;
                         if (!movie.isPremiere()) {
-                            sCount = scInput(seats.size());
+                            seniorCount = scInput(seats.size());
                         }
 
                         // if transaction not cancelled from senior count input
-                        if (sCount != -999) {
+                        if (seniorCount != -999) {
                             // double totalAmount = calculateAmount(seats.size(), movie.isPremiere());
-                            reserveSeat(seats, movieId, sCount);
-                            processCustomerCheckout(sCount, movieId, seats.size(), seats);
+                            processCustomerCheckout(seniorCount, movieId, seats.size(), seats);
                         }
                     }
 
@@ -302,69 +301,92 @@ public class BookingSystem {
     }
 
     // Display the Summary for Regular Tickets - Screen 5A - to remove. start
-    /* public void displaySummaryRegular(int movieId, int numSeats, double calculateAmount, double totalAmount) {
-        System.out.println("***************SUMMARY*****************");
-        System.out.println("*\t Movie Title:                         *" + movies.get(movieId).getMovieTitle()); // insert
-                                                                                                                // syntax
-                                                                                                                // to
-                                                                                                                // display
-                                                                                                                // movie
-                                                                                                                // title
-        System.out.println("*\t Cinema Number:                       *" + movies.get(movieId).getCinemaNum()); // insert
-                                                                                                               // cinema
-                                                                                                               // number
-        System.out.println("*\t Date:                                *" + movies.get(movieId).getShowingDate()); // insert
-                                                                                                                 // date
-        System.out.println("*\t Time of Screening:                   *"); // insert time
-        System.out.println("*\t Number of Seat/s:                   *" + numSeats); // insert number of tickets
-        System.out.println("*\t Seats Reserved:                      *" + numSeats); // insert what seats have been
-                                                                                     // reserved
-        System.out.println("*\t Subtotal                             *"); // insert subtotal: The Subtotal is the
-                                                                          // initial total without the discount
-        System.out.println("*\t Discount Total:                      *" + calculateAmount); // insert discount total:
-                                                                                            // The discountTotal is
-        // the amount deducted from the tickets as a
-        // discount
-        System.out.println("*\t Total Amount:                        *" + totalAmount); // insert insert total amount:
-                                                                                        // The TotalAmount
-        // is the final price (subtotal -
-        // discountTotal)
-        System.out.println("\n*\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); // insert scanner and syntax to receive
-                                                                                 // next instruction which is to select
-                                                                                  */// which screen to go next
-        // if choice is:
-        // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
-        // 2 == return to previous page Screen3: the screen for reserving seats
-        // 3 == reset / return to main page / welcome page
-    //}
-    // Display the Summary for Regular Tickets - Screen 5A - to remove. end
+    /*
+     * public void displaySummaryRegular(int movieId, int numSeats, double
+     * calculateAmount, double totalAmount) {
+     * System.out.println("***************SUMMARY*****************");
+     * System.out.println("*\t Movie Title:                         *" +
+     * movies.get(movieId).getMovieTitle()); // insert
+     * // syntax
+     * // to
+     * // display
+     * // movie
+     * // title
+     * System.out.println("*\t Cinema Number:                       *" +
+     * movies.get(movieId).getCinemaNum()); // insert
+     * // cinema
+     * // number
+     * System.out.println("*\t Date:                                *" +
+     * movies.get(movieId).getShowingDate()); // insert
+     * // date
+     * System.out.println("*\t Time of Screening:                   *"); // insert
+     * time
+     * System.out.println("*\t Number of Seat/s:                   *" + numSeats);
+     * // insert number of tickets
+     * System.out.println("*\t Seats Reserved:                      *" + numSeats);
+     * // insert what seats have been
+     * // reserved
+     * System.out.println("*\t Subtotal                             *"); // insert
+     * subtotal: The Subtotal is the
+     * // initial total without the discount
+     * System.out.println("*\t Discount Total:                      *" +
+     * calculateAmount); // insert discount total:
+     * // The discountTotal is
+     * // the amount deducted from the tickets as a
+     * // discount
+     * System.out.println("*\t Total Amount:                        *" +
+     * totalAmount); // insert insert total amount:
+     * // The TotalAmount
+     * // is the final price (subtotal -
+     * // discountTotal)
+     * System.out.println("\n*\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); //
+     * insert scanner and syntax to receive
+     * // next instruction which is to select
+     */// which screen to go next
+       // if choice is:
+       // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
+       // 2 == return to previous page Screen3: the screen for reserving seats
+       // 3 == reset / return to main page / welcome page
+       // }
+       // Display the Summary for Regular Tickets - Screen 5A - to remove. end
 
-    /*public void displaySummaryPremier(int movieId, int numSeats, double totalAmount) {
-        System.out.println("****************SUMMARY**************");
-        System.out.println("\\t Movie Title:                         *" + movies.get(movieId).getMovieTitle()); // insert
-                                                                                                                // syntax
-                                                                                                                // to
-                                                                                                                // display
-                                                                                                                // movie
-                                                                                                                // title
-        System.out.println("\\t Cinema Number:                       *" + movies.get(movieId).getCinemaNum()); // insert
-                                                                                                               // cinema
-                                                                                                               // number
-        System.out.println("\\t Date:                                *" + movies.get(movieId).getShowingDate()); // insert
-                                                                                                                 // date
-        System.out.println("\\t Time:                                *" + movies.get(movieId).getTimeStart()); // insert
-                                                                                                               // time
-        System.out.println("\\t Number of Seat/s:                  *" + numSeats); // insert number of tickets
-        System.out.println("\\t Seats Reserved:                      *" + numSeats); // insert what seats have been
-                                                                                     // reserved
-        System.out.println("\\t Total Amount:                        *" + totalAmount); // insert insert total amount:
-        System.out.println("\n*\\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); // insert scanner and syntax to
-                                                                                  // receive next instruction
-        // if choice is:
-        // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
-        // 2 == return to previous page Screen3: the screen for reserving seats
-        // 3 == reset / return to main page / welcome page
-    }*/
+    /*
+     * public void displaySummaryPremier(int movieId, int numSeats, double
+     * totalAmount) {
+     * System.out.println("****************SUMMARY**************");
+     * System.out.println("\\t Movie Title:                         *" +
+     * movies.get(movieId).getMovieTitle()); // insert
+     * // syntax
+     * // to
+     * // display
+     * // movie
+     * // title
+     * System.out.println("\\t Cinema Number:                       *" +
+     * movies.get(movieId).getCinemaNum()); // insert
+     * // cinema
+     * // number
+     * System.out.println("\\t Date:                                *" +
+     * movies.get(movieId).getShowingDate()); // insert
+     * // date
+     * System.out.println("\\t Time:                                *" +
+     * movies.get(movieId).getTimeStart()); // insert
+     * // time
+     * System.out.println("\\t Number of Seat/s:                  *" + numSeats); //
+     * insert number of tickets
+     * System.out.println("\\t Seats Reserved:                      *" + numSeats);
+     * // insert what seats have been
+     * // reserved
+     * System.out.println("\\t Total Amount:                        *" +
+     * totalAmount); // insert insert total amount:
+     * System.out.println("\n*\\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); //
+     * insert scanner and syntax to
+     * // receive next instruction
+     * // if choice is:
+     * // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
+     * // 2 == return to previous page Screen3: the screen for reserving seats
+     * // 3 == reset / return to main page / welcome page
+     * }
+     */
 
     //
     public void displayReceipt(int movieId, String hasCard, String calculateAmount, int numSeats, double totalAmount) {
@@ -453,7 +475,7 @@ public class BookingSystem {
     public void checkoutScreen(int seniorCount, double totalAmount, int movieId, int numSeats,
             ArrayList<String> seats, double discountAmount) {
         // Display checkout options
-        
+
         System.out.println("\n***************CHECKOUT***************");
         System.out.println("Movie Title: " + movies.get(movieId).getMovieTitle());
         System.out.println("Cinema Number: " + movies.get(movieId).getCinemaNum());
@@ -476,6 +498,8 @@ public class BookingSystem {
 
         switch (checkoutChoice) {
             case 1:
+                reserveSeat(seats, movieId, seniorCount);
+
                 // Implement receipt here
                 // You can add payment processing, receipt generation, etc.
                 System.out.println("Payment successful! Thank you for booking with us!"); // temporary. insert code for
