@@ -233,6 +233,7 @@ public class BookingSystem {
         double price = calculateAmount(seatNums.size(), movie.getIsPremiere());
 
         Reservation newRes = new Reservation(reserveTicketNum, date, cinemaNum, timeStart, seatNums, price, movieId);
+        reservations.add(newRes);
 
         // records reservation in csv
         fHandler.reservationFileWrite_toCSV(newRes);
@@ -418,7 +419,8 @@ public class BookingSystem {
      */
 
     //
-    public void displayReceipt(int movieId, String hasCard, String calculateAmount, int numSeats, double totalAmount) {
+    public void displayReceipt(int seniorCount, double totalAmount, int movieId, int numSeats,
+            ArrayList<String> seats, double discountAmount) {
         System.out.println("***************Cinema World***************");
         System.out.println("*\t Transaction Reference Number:                 *" + reserveTicketNum);
         System.out.println("*\t Movie Title:                                  *" + movies.get(movieId).getMovieTitle());
@@ -426,15 +428,18 @@ public class BookingSystem {
         System.out
                 .println("*\t Date:                                         *" + movies.get(movieId).getShowingDate());
         System.out.println("*\t Time:                                         *" + movies.get(movieId).getTimeStart());
-        System.out.println("*\t Number of Seat/s:                           *" + numSeats);
-        if (hasCard.equals("Yes")) {
-            System.out.println("*\t Discounted Amount:                     *" + calculateAmount);
-            // System.out.println("*\t Subtotal: *"+);
+        System.out.println("*\t Number of Seat/s:                             *" + numSeats);
+        System.out.println("*\t Seats Reserved:                               *" + seats);
+        if (movies.get(movieId).isPremiere() == false && seniorCount > 0) {
+            System.out.println("Subtotal: " + totalAmount);
+            System.out.println("Discount Amount: " + discountAmount);
         }
-        System.out.println("*\t Seats Reserved:                               *" + numSeats);
-        System.out.println("*\t Total Amount:                                 *" + totalAmount);
-        System.out.println("\n\n [1] Make Another Transaction?");
-        System.out.println("[2] Exit");
+        System.out.println("*\t Total Amount: Php                             *" + (totalAmount - discountAmount));
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+        // System.out.println("[2] Exit");
         // insert scanner to scan value for whether customer wants to make another
         // transaction or to exit the whole transaction.
     }
@@ -488,8 +493,6 @@ public class BookingSystem {
             int checkoutChoice = getIntInput();
             if (checkoutChoice == 1) {
                 return 0; // No senior citizens/PWDs
-                // Implement checkout logic for regular customers here
-                // You have all the necessary information to complete the reservation
             } else {
                 System.out
                         .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
@@ -516,8 +519,11 @@ public class BookingSystem {
             System.out.println("Subtotal: " + totalAmount);
             System.out.println("Discount Amount: " + discountAmount);
         }
+
         System.out.println("*Total Amount: Php" + (totalAmount - discountAmount));
-        System.out.println("\n[1] Confirm and Pay>>> \t[2] Cancel Transaction<<<");
+        System.out.println("\n[1] Confirm and Pay>>>\n [1] Make Another Transaction? \t[2] Cancel Transaction<<<");
+
+        System.out.println();
         System.out.println("***************************************");
         System.out.println();
 
@@ -528,13 +534,14 @@ public class BookingSystem {
         switch (checkoutChoice) {
             case 1:
                 reserveSeat(seats, movieId, seniorCount);
-
                 // Implement receipt here
                 // You can add payment processing, receipt generation, etc.
                 System.out.println("Payment successful! Thank you for booking with us!"); // temporary. insert code for
-                                                                                          // receipt
+                                                                                          // // receipt
                 System.out.println();
                 System.out.println();
+
+                displayReceipt(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);
 
                 // System.exit(0);
                 break;
