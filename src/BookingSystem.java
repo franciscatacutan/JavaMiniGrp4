@@ -98,16 +98,15 @@ public class BookingSystem {
                         }
 
                         // Prompt for senior/PWD input and calculate totalAmount
-                        int sCount = 0;
+                        int seniorCount = 0;
                         if (!movie.isPremiere()) {
-                            sCount = scInput(seats.size());
+                            seniorCount = scInput(seats.size());
                         }
 
                         // if transaction not cancelled from senior count input
-                        if (sCount != -999) {
+                        if (seniorCount != -999) {
                             // double totalAmount = calculateAmount(seats.size(), movie.isPremiere());
-                            reserveSeat(seats, movieId, sCount);
-                            processCustomerCheckout(sCount, movieId, seats.size(), seats);
+                            processCustomerCheckout(seniorCount, movieId, seats.size(), seats);
                         }
                     }
 
@@ -373,12 +372,12 @@ public class BookingSystem {
      * insert scanner and syntax to receive
      * // next instruction which is to select
      */// which screen to go next
-    // if choice is:
-    // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
-    // 2 == return to previous page Screen3: the screen for reserving seats
-    // 3 == reset / return to main page / welcome page
-    // }
-    // Display the Summary for Regular Tickets - Screen 5A - to remove. end
+       // if choice is:
+       // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
+       // 2 == return to previous page Screen3: the screen for reserving seats
+       // 3 == reset / return to main page / welcome page
+       // }
+       // Display the Summary for Regular Tickets - Screen 5A - to remove. end
 
     /*
      * public void displaySummaryPremier(int movieId, int numSeats, double
@@ -528,6 +527,8 @@ public class BookingSystem {
 
         switch (checkoutChoice) {
             case 1:
+                reserveSeat(seats, movieId, seniorCount);
+
                 // Implement receipt here
                 // You can add payment processing, receipt generation, etc.
                 System.out.println("Payment successful! Thank you for booking with us!"); // temporary. insert code for
