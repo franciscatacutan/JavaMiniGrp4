@@ -85,17 +85,16 @@ public class BookingSystem {
                     // if transaction not cancelled from time slot input
                     if (movieId != -999) {
                         // to insert loop here
-
                         Movie movie = movies.get(movieId);
-                        // System.out.println(movies.get(movieId).getMovieInfo());
-                        movie.displaySeatAvailability();
-                        String seatChoice = sc.nextLine();
-                        ArrayList<String> seats = checkSeats(seatChoice, movieId);
+                        ArrayList<String> seats;
 
-                        // seats are not available/ invalid seat code
-                        if (seats.size() == 0) {
-                            break;
-                        }
+                        do {
+
+                            // System.out.println(movies.get(movieId).getMovieInfo());
+                            movie.displaySeatAvailability();
+                            String seatChoice = sc.nextLine();
+                            seats = checkSeats(seatChoice, movieId);
+                        } while (seats.size() == 0);
 
                         // Prompt for senior/PWD input and calculate totalAmount
                         int seniorCount = 0;
