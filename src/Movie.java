@@ -43,7 +43,7 @@ public class Movie {
         String cinemaNumberLabel = "Cinema Number: " + cinemaNum;
         String dateAndTimeLabel = "Date and Time of Screening: " + showingDate + " " + timeStart;
         String screenLabel = "\t\t       SCREEN";
-        String entranceExitLabel = "Entrance/Exit";
+        String entranceExitLabel = "*Entrance/Exit*";
         String legendLabel = "Legend: [LN] = Available Seat  ,  [XX] = Seat Occupied";
 
         System.out.println(movieTitleDecoration);
