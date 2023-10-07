@@ -450,7 +450,7 @@ public class BookingSystem {
 
         switch (checkoutChoice) {
             case 1:
-                // Implement payment processing logic here
+                // Implement receipt here
                 // You can add payment processing, receipt generation, etc.
                 System.out.println("Payment successful! Thank you for booking with us!"); //temporary. insert code for receipt
                 System.out.println();
