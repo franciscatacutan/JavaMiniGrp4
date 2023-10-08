@@ -421,8 +421,9 @@ public class BookingSystem {
     //
     public void displayReceipt(int seniorCount, double totalAmount, int movieId, int numSeats,
             ArrayList<String> seats, double discountAmount) {
-        System.out.println("*************************************** Cinema World ***************************************");
-        System.out.println("*\t Transaction Reference Number:                 " + reserveTicketNum) ;
+        System.out.println(
+                "*************************************** Cinema World ***************************************");
+        System.out.println("*\t Transaction Reference Number:                 " + reserveTicketNum);
         System.out.println("*\t Movie Title:                                  " + movies.get(movieId).getMovieTitle());
         System.out.println("*\t Cinema Number:                                " + movies.get(movieId).getCinemaNum());
         System.out
@@ -446,111 +447,114 @@ public class BookingSystem {
 
     // inputting process for senior citizens
     public int scInput(int numSeats) {
-        System.out.print("\nDo you have a Senior Citizen or PWD Card? (Yes/No): ");
-        String hasCard = sc.nextLine().trim();
         int quantity = 0;
+        String hasCard;
 
-        if (hasCard.equalsIgnoreCase("yes")) {
-            // If they have a card, prompt for the quantity and card ID
+        do {
+            System.out.print("\nDo you have a Senior Citizen or PWD Card? (Yes/No): ");
+            hasCard = sc.nextLine().trim();
 
-            while (true) {
-                System.out.print("\nQuantity of Senior Citizens / PWDs: ");
-                quantity = getIntInput();
+            if (hasCard.equalsIgnoreCase("yes")) {
+                // If they have a card, prompt for the quantity and card ID
 
-                if (quantity > numSeats || quantity < 0) {
-                    System.out.println("\nInvalid input. Please input a number between 0 - " + numSeats + ".");
-                } else {
-                    break;
+                while (true) {
+                    System.out.print("\nQuantity of Senior Citizens / PWDs: ");
+                    quantity = getIntInput();
+
+                    if (quantity > numSeats || quantity < 0) {
+                        System.out.println("\nInvalid input. Please input a number between 0 - " + numSeats + ".");
+                    } else {
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < quantity; i++) {
+                    System.out.printf("%s (%d):", "\nPlease input Senior Citizen Card / PWD Card ID Number", i + 1);
+                    sc.nextLine().trim();
                 }
             }
+        } while (!hasCard.equalsIgnoreCase("yes") && !hasCard.equalsIgnoreCase("no"));
 
-            for (int i = 0; i < quantity; i++) {
-                System.out.printf("%s (%d):", "\nPlease input Senior Citizen Card / PWD Card ID Number", i + 1);
-                sc.nextLine().trim();
-            }
-
-            // Proceed to checkout for senior citizens/PWDs
-            System.out.println("\n[1] Proceed to Checkout>>> ");
-            System.out.println("[2] Cancel Transaction<<<");
-            System.out.println("----------------------------------------");
-            int checkoutChoice = getIntInput();
-            if (checkoutChoice == 1) {
-                return quantity;
-                // Implement checkout logic for senior citizens/PWDs here
-                // You have all the necessary information to complete the reservation
-            } else {
-                System.out
-                        .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
-                System.out.println();
-                //System.exit(0);
-                return -999;
-            }
+        // Proceed to checkout for regular customers
+        System.out.println("[1] Proceed to Checkout>>> ");
+        System.out.println("[2] Cancel Transaction<<<");
+        System.out.println("----------------------------------------");
+        int checkoutChoice = getIntInput();
+        if (checkoutChoice == 1) {
+            return 0; // No senior citizens/PWDs
         } else {
-            // Proceed to checkout for regular customers
-            System.out.println("[1] Proceed to Checkout>>> ");
-            System.out.println("[2] Cancel Transaction<<<");
-            System.out.println("----------------------------------------");
-            int checkoutChoice = getIntInput();
-            if (checkoutChoice == 1) {
-                return 0; // No senior citizens/PWDs
-            } else {
-                System.out
-                        .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
-                System.out.println();
-                //System.exit(0);
-                return -999;
-            }
+            System.out
+                    .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
+            System.out.println();
+            // System.exit(0);
+            return -999;
         }
+
     }
 
     // Final method for Summary
     public void checkoutScreen(int seniorCount, double totalAmount, int movieId, int numSeats,
             ArrayList<String> seats, double discountAmount) {
         // Display checkout options
+        int checkoutChoice;
 
-        System.out.println("\n*************************************** CHECKOUT ***************************************");
-        System.out.println("*\tMovie Title:                       " + movies.get(movieId).getMovieTitle());
-        System.out.println("*\tCinema Number:                     " + movies.get(movieId).getCinemaNum());
-        System.out
-                .println("*\tDate and Time:                     " + movies.get(movieId).getShowingDate() + movies.get(movieId).getTimeStart());
-        System.out.println("*\tNumber of Seats:                   " + numSeats);
-        System.out.println("*\tSeats Reserved:                    " + seats);
-        if (movies.get(movieId).isPremiere() == false && seniorCount > 0) {
-            System.out.println("*\tSubtotal:                          Php " + totalAmount);
-            System.out.println("*\tDiscount Amount:                   Php " + discountAmount);
-        }
+        do {
+            System.out
+                    .println(
+                            "\n*************************************** CHECKOUT ***************************************");
+            System.out.println("*\tMovie Title:                       " + movies.get(movieId).getMovieTitle());
+            System.out.println("*\tCinema Number:                     " + movies.get(movieId).getCinemaNum());
+            System.out
+                    .println("*\tDate and Time:                     " + movies.get(movieId).getShowingDate()
+                            + movies.get(movieId).getTimeStart());
+            System.out.println("*\tNumber of Seats:                   " + numSeats);
+            System.out.println("*\tSeats Reserved:                    " + seats);
+            if (movies.get(movieId).isPremiere() == false && seniorCount > 0) {
+                System.out.println("*\tSubtotal:                          Php " + totalAmount);
+                System.out.println("*\tDiscount Amount:                   Php " + discountAmount);
+            }
 
-        System.out.println("*\tTotal Amount:                      Php " + (totalAmount - discountAmount));
-        System.out.println("\n[1] Confirm and Pay>>> \n[2] Cancel Transaction<<<"); //\n[1] Make Another Transaction?
+            System.out.println("*\tTotal Amount:                      Php " + (totalAmount - discountAmount));
+            System.out.println("\n[1] Confirm and Pay>>> \n[2] Cancel Transaction<<<"); // \n[1] Make Another
+                                                                                        // Transaction?
 
-        System.out.println();
-        System.out.println("******************************************************************************");
-        System.out.println();
+            System.out.println();
+            System.out.println("******************************************************************************");
+            System.out.println();
 
-        // Prompt for checkout choice
-        System.out.print("Enter choice: ");
-        int checkoutChoice = getIntInput();
+            // Prompt for checkout choice
+            System.out.print("Enter choice: ");
+            checkoutChoice = getIntInput();
 
-        switch (checkoutChoice) {
-            case 1:
-                reserveSeat(seats, movieId, seniorCount);
-                // Implement receipt here
-                // You can add payment processing, receipt generation, etc.
-                System.out.println("\nPayment successful. Thank you for booking with us! Here's your receipt:"); // temporary. insert code for
-                                                                                          // // receipt
-                System.out.println();
+            switch (checkoutChoice) {
+                case 1:
+                    reserveSeat(seats, movieId, seniorCount);
+                    // Implement receipt here
+                    // You can add payment processing, receipt generation, etc.
+                    System.out.println("\nPayment successful. Thank you for booking with us! Here's your receipt:"); // temporary.
+                                                                                                                     // insert
+                                                                                                                     // code
+                                                                                                                     // for
+                    // // receipt
+                    System.out.println();
 
-                displayReceipt(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);
+                    displayReceipt(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);
 
-                // System.exit(0);
-                break;
-            case 2:
-                System.out
-                        .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
-                System.out.println();
-                // System.exit(0);
-                break;
-        }
+                    // System.exit(0);
+                    break;
+                case 2:
+                    System.out
+                            .println(
+                                    "\nYou have aborted your transaction. We look forward to transacting with you soon!");
+                    System.out.println();
+                    // System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("\nINVALID INPUT");
+                    System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
+            }
+        } while (checkoutChoice != 1 && checkoutChoice != 2);
     }
 
     public void processCustomerCheckout(int seniorCount, int movieId, int numSeats,
@@ -559,7 +563,7 @@ public class BookingSystem {
         double totalAmount = calculateAmount(seats.size(), movies.get(movieId).getIsPremiere());
         double discountAmount = (350 * DISCOUNT) * seniorCount;
 
-        //System.out.println(discountAmount);
+        // System.out.println(discountAmount);
 
         checkoutScreen(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);
 
