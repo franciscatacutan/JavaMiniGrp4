@@ -313,7 +313,8 @@ public class BookingSystem {
             System.out.println("[0] CANCEL TRANSACTION");
 
             // choose timeslot
-            System.out.print("\nChoose time: ");
+            System.out.println("\nNote: First TimeSlot of Screening is Premiere. No Discount will be Applied.");
+            System.out.print("Choose time: ");
             time_slot = getIntInput();
 
             if (time_slot > ids.size() || time_slot < 0) {
@@ -420,20 +421,20 @@ public class BookingSystem {
     //
     public void displayReceipt(int seniorCount, double totalAmount, int movieId, int numSeats,
             ArrayList<String> seats, double discountAmount) {
-        System.out.println("***************Cinema World***************");
-        System.out.println("*\t Transaction Reference Number:                 *" + reserveTicketNum);
-        System.out.println("*\t Movie Title:                                  *" + movies.get(movieId).getMovieTitle());
-        System.out.println("*\t Cinema Number:                                *" + movies.get(movieId).getCinemaNum());
+        System.out.println("*************************************** Cinema World ***************************************");
+        System.out.println("*\t Transaction Reference Number:                 " + reserveTicketNum) ;
+        System.out.println("*\t Movie Title:                                  " + movies.get(movieId).getMovieTitle());
+        System.out.println("*\t Cinema Number:                                " + movies.get(movieId).getCinemaNum());
         System.out
-                .println("*\t Date:                                         *" + movies.get(movieId).getShowingDate());
-        System.out.println("*\t Time:                                         *" + movies.get(movieId).getTimeStart());
-        System.out.println("*\t Number of Seat/s:                             *" + numSeats);
-        System.out.println("*\t Seats Reserved:                               *" + seats);
+                .println("*\t Date:                                         " + movies.get(movieId).getShowingDate());
+        System.out.println("*\t Time:                                         " + movies.get(movieId).getTimeStart());
+        System.out.println("*\t Number of Seat/s:                             " + numSeats);
+        System.out.println("*\t Seats Reserved:                               " + seats);
         if (movies.get(movieId).isPremiere() == false && seniorCount > 0) {
-            System.out.println("Subtotal: " + totalAmount);
-            System.out.println("Discount Amount: " + discountAmount);
+            System.out.println("*\t Subtotal:                                     Php " + totalAmount);
+            System.out.println("*\t Discount Amount:                              Php " + discountAmount);
         }
-        System.out.println("*\t Total Amount: Php                             *" + (totalAmount - discountAmount));
+        System.out.println("*\t Total Amount:                                 Php " + (totalAmount - discountAmount));
         System.out.println();
         System.out.println();
         System.out.println();
@@ -445,7 +446,7 @@ public class BookingSystem {
 
     // inputting process for senior citizens
     public int scInput(int numSeats) {
-        System.out.print("Do you have a Senior Citizen or PWD Card? (Yes/No): ");
+        System.out.print("\nDo you have a Senior Citizen or PWD Card? (Yes/No): ");
         String hasCard = sc.nextLine().trim();
         int quantity = 0;
 
@@ -453,23 +454,23 @@ public class BookingSystem {
             // If they have a card, prompt for the quantity and card ID
 
             while (true) {
-                System.out.print("Quantity of Senior Citizens / PWDs: ");
+                System.out.print("\nQuantity of Senior Citizens / PWDs: ");
                 quantity = getIntInput();
 
                 if (quantity > numSeats || quantity < 0) {
-                    System.out.println("Invalid input. Please input a number between 0 - " + numSeats + ".");
+                    System.out.println("\nInvalid input. Please input a number between 0 - " + numSeats + ".");
                 } else {
                     break;
                 }
             }
 
             for (int i = 0; i < quantity; i++) {
-                System.out.printf("%s (%d):", "Please input Senior Citizen Card / PWD Card ID Number", i + 1);
+                System.out.printf("%s (%d):", "\nPlease input Senior Citizen Card / PWD Card ID Number", i + 1);
                 sc.nextLine().trim();
             }
 
             // Proceed to checkout for senior citizens/PWDs
-            System.out.println("[1] Proceed to Checkout>>> ");
+            System.out.println("\n[1] Proceed to Checkout>>> ");
             System.out.println("[2] Cancel Transaction<<<");
             System.out.println("----------------------------------------");
             int checkoutChoice = getIntInput();
@@ -507,23 +508,23 @@ public class BookingSystem {
             ArrayList<String> seats, double discountAmount) {
         // Display checkout options
 
-        System.out.println("\n***************CHECKOUT***************");
-        System.out.println("Movie Title: " + movies.get(movieId).getMovieTitle());
-        System.out.println("Cinema Number: " + movies.get(movieId).getCinemaNum());
+        System.out.println("\n*************************************** CHECKOUT ***************************************");
+        System.out.println("*\tMovie Title:                       " + movies.get(movieId).getMovieTitle());
+        System.out.println("*\tCinema Number:                     " + movies.get(movieId).getCinemaNum());
         System.out
-                .println("Date and Time: " + movies.get(movieId).getShowingDate() + movies.get(movieId).getTimeStart());
-        System.out.println("Number of Seats: " + numSeats);
-        System.out.println("Seats Reserved: " + seats);
+                .println("*\tDate and Time:                     " + movies.get(movieId).getShowingDate() + movies.get(movieId).getTimeStart());
+        System.out.println("*\tNumber of Seats:                   " + numSeats);
+        System.out.println("*\tSeats Reserved:                    " + seats);
         if (movies.get(movieId).isPremiere() == false && seniorCount > 0) {
-            System.out.println("Subtotal: " + totalAmount);
-            System.out.println("Discount Amount: " + discountAmount);
+            System.out.println("*\tSubtotal:                          Php " + totalAmount);
+            System.out.println("*\tDiscount Amount:                   Php " + discountAmount);
         }
 
-        System.out.println("*Total Amount: Php" + (totalAmount - discountAmount));
-        System.out.println("\n[1] Confirm and Pay>>>\n [1] Make Another Transaction? \t[2] Cancel Transaction<<<");
+        System.out.println("*\tTotal Amount:                      Php " + (totalAmount - discountAmount));
+        System.out.println("\n[1] Confirm and Pay>>> \n[2] Cancel Transaction<<<"); //\n[1] Make Another Transaction?
 
         System.out.println();
-        System.out.println("***************************************");
+        System.out.println("******************************************************************************");
         System.out.println();
 
         // Prompt for checkout choice
@@ -535,9 +536,8 @@ public class BookingSystem {
                 reserveSeat(seats, movieId, seniorCount);
                 // Implement receipt here
                 // You can add payment processing, receipt generation, etc.
-                System.out.println("Payment successful! Thank you for booking with us!"); // temporary. insert code for
+                System.out.println("\nPayment successful. Thank you for booking with us! Here's your receipt:"); // temporary. insert code for
                                                                                           // // receipt
-                System.out.println();
                 System.out.println();
 
                 displayReceipt(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);

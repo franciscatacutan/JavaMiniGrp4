@@ -183,6 +183,8 @@ public class FileContentHandler {
         }
         if (isFound && tempFile.renameTo(inputFile)) {
             System.out.println("Reservation with ticket number " + ticketNumber + " deleted successfully.");
+            System.out.println();
+            System.out.println();
         } else {
             System.err.println(
                     "[ERROR] Unable to update tempReservations CSV file. Cannot rename to Reservations.csv file.");
