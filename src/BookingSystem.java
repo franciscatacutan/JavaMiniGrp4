@@ -482,7 +482,7 @@ public class BookingSystem {
                 System.out
                         .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
                 System.out.println();
-                System.exit(0);
+                //System.exit(0);
                 return -999;
             }
         } else {
@@ -497,7 +497,7 @@ public class BookingSystem {
                 System.out
                         .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
                 System.out.println();
-                System.exit(0);
+                //System.exit(0);
                 return -999;
             }
         }
