@@ -481,7 +481,7 @@ public class BookingSystem {
         System.out.println("----------------------------------------");
         int checkoutChoice = getIntInput();
         if (checkoutChoice == 1) {
-            return 0; // No senior citizens/PWDs
+            return quantity; // No senior citizens/PWDs
         } else {
             System.out
                     .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
