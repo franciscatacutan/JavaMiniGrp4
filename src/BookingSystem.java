@@ -559,7 +559,7 @@ public class BookingSystem {
         double totalAmount = calculateAmount(seats.size(), movies.get(movieId).getIsPremiere());
         double discountAmount = (350 * DISCOUNT) * seniorCount;
 
-       // System.out.println(discountAmount);
+        //System.out.println(discountAmount);
 
         checkoutScreen(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);
 
