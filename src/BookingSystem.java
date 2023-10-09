@@ -224,7 +224,7 @@ public class BookingSystem {
     }
 
     // create a new reservation
-    public boolean reserveSeat(ArrayList<String> seatNums, int movieId, int seniorCount) {
+    public void reserveSeat(ArrayList<String> seatNums, int movieId, int seniorCount) {
 
         Movie movie = movies.get(movieId);
 
@@ -244,7 +244,6 @@ public class BookingSystem {
         // records reservation in csv
         fHandler.reservationFileWrite_toCSV(newRes);
 
-        return true;
     }
 
     // cancel a reservation
