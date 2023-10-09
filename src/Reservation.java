@@ -33,8 +33,6 @@ public class Reservation {
 
     }
 
-
-    // for testing
     public Reservation(int ticketNum) {
         this.reserveTicketNum = ticketNum;
     }

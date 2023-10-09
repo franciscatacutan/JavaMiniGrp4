@@ -56,7 +56,6 @@ public class Movie {
         System.out.println();
 
         for (int i = 0; i < SEAT_ROWS; i++) {
-            char rowLetter = (char) ('A' + i);
             System.out.print("|");
             for (int j = 0; j < SEAT_COLS; j++) {
                 System.out.print("\t" + seats[i][j] + "\t");
@@ -68,14 +67,6 @@ public class Movie {
         System.out.println();
         System.out.println(legendLabel);
         System.out.println(chooseSeat);
-    }
-
-    private String repeatChar(char c, int count) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            sb.append(c);
-        }
-        return sb.toString();
     }
 
     public boolean isSeatOccupied(String seatCode) {

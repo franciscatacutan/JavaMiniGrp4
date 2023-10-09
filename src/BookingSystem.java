@@ -16,7 +16,7 @@ public class BookingSystem {
     private double DISCOUNT = 0.20;
     private ArrayList<Reservation> reservations;
     private FileContentHandler fHandler;
-    private LocalDate DATE_TODAY = LocalDate.of(2021, 6, 1);
+    private LocalDate DATE_TODAY = LocalDate.now();
     private int reserveTicketNum;
 
     public static void main(String[] args) {
@@ -33,9 +33,12 @@ public class BookingSystem {
 
     // Main method
     public void startProgram() throws FileNotFoundException, DataFormatException {
+
+        // File Reader
         fHandler = new FileContentHandler();
         reservations = fHandler.readReservationFile();
         movies = fHandler.readMovieFile();
+
         sc = new Scanner(System.in);
         int choice = 0;
 
@@ -105,7 +108,8 @@ public class BookingSystem {
                         // if transaction not cancelled from senior count input
                         if (seniorCount != -999) {
                             // double totalAmount = calculateAmount(seats.size(), movie.isPremiere());
-                            processCustomerCheckout(seniorCount, movieId, seats.size(), seats);
+                            checkoutScreen(seniorCount, movieId, seats.size(), seats);
+
                         }
                     }
 
@@ -117,10 +121,12 @@ public class BookingSystem {
                     cancelReservation(ticketNum);
                     break;
 
+                // Exit
                 case 0:
                     System.out.println("\nThank you come again!");
                     return;
 
+                // Invalid Input
                 default:
                     System.out.println("\nINVALID INPUT");
                     System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
@@ -131,6 +137,7 @@ public class BookingSystem {
 
     }
 
+    // ArrayList for movies in cinema
     public ArrayList<ArrayList<Integer>> getShowing() {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
         list.add(new ArrayList<>());
@@ -146,7 +153,6 @@ public class BookingSystem {
         }
 
         return list;
-
     }
 
     // set the movieId field of Reservation objects retrieved from the csv file
@@ -161,6 +167,7 @@ public class BookingSystem {
         }
     }
 
+    // Check if seat is occupied
     public ArrayList<String> checkSeats(String seats, int movieId) {
         ArrayList<String> seatNums = new ArrayList<>();
 
@@ -277,6 +284,7 @@ public class BookingSystem {
         return price;
     }
 
+    // Used for every Integer Input
     public int getIntInput() {
         int num;
 
@@ -330,97 +338,11 @@ public class BookingSystem {
         return -999;
     }
 
-    // Display the Summary for Regular Tickets - Screen 5A - to remove. start
-    /*
-     * public void displaySummaryRegular(int movieId, int numSeats, double
-     * calculateAmount, double totalAmount) {
-     * System.out.println("***************SUMMARY*****************");
-     * System.out.println("*\t Movie Title:                         *" +
-     * movies.get(movieId).getMovieTitle()); // insert
-     * // syntax
-     * // to
-     * // display
-     * // movie
-     * // title
-     * System.out.println("*\t Cinema Number:                       *" +
-     * movies.get(movieId).getCinemaNum()); // insert
-     * // cinema
-     * // number
-     * System.out.println("*\t Date:                                *" +
-     * movies.get(movieId).getShowingDate()); // insert
-     * // date
-     * System.out.println("*\t Time of Screening:                   *"); // insert
-     * time
-     * System.out.println("*\t Number of Seat/s:                   *" + numSeats);
-     * // insert number of tickets
-     * System.out.println("*\t Seats Reserved:                      *" + numSeats);
-     * // insert what seats have been
-     * // reserved
-     * System.out.println("*\t Subtotal                             *"); // insert
-     * subtotal: The Subtotal is the
-     * // initial total without the discount
-     * System.out.println("*\t Discount Total:                      *" +
-     * calculateAmount); // insert discount total:
-     * // The discountTotal is
-     * // the amount deducted from the tickets as a
-     * // discount
-     * System.out.println("*\t Total Amount:                        *" +
-     * totalAmount); // insert insert total amount:
-     * // The TotalAmount
-     * // is the final price (subtotal -
-     * // discountTotal)
-     * System.out.println("\n*\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); //
-     * insert scanner and syntax to receive
-     * // next instruction which is to select
-     */// which screen to go next
-       // if choice is:
-       // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
-       // 2 == return to previous page Screen3: the screen for reserving seats
-       // 3 == reset / return to main page / welcome page
-       // }
-       // Display the Summary for Regular Tickets - Screen 5A - to remove. end
-
-    /*
-     * public void displaySummaryPremier(int movieId, int numSeats, double
-     * totalAmount) {
-     * System.out.println("****************SUMMARY**************");
-     * System.out.println("\\t Movie Title:                         *" +
-     * movies.get(movieId).getMovieTitle()); // insert
-     * // syntax
-     * // to
-     * // display
-     * // movie
-     * // title
-     * System.out.println("\\t Cinema Number:                       *" +
-     * movies.get(movieId).getCinemaNum()); // insert
-     * // cinema
-     * // number
-     * System.out.println("\\t Date:                                *" +
-     * movies.get(movieId).getShowingDate()); // insert
-     * // date
-     * System.out.println("\\t Time:                                *" +
-     * movies.get(movieId).getTimeStart()); // insert
-     * // time
-     * System.out.println("\\t Number of Seat/s:                  *" + numSeats); //
-     * insert number of tickets
-     * System.out.println("\\t Seats Reserved:                      *" + numSeats);
-     * // insert what seats have been
-     * // reserved
-     * System.out.println("\\t Total Amount:                        *" +
-     * totalAmount); // insert insert total amount:
-     * System.out.println("\n*\\t [1] Confirm \t [2] Back \t [3] Cancel   \t*"); //
-     * insert scanner and syntax to
-     * // receive next instruction
-     * // if choice is:
-     * // 1 == proceed to Screen6A: the screen for Receipt of Regular Tickets
-     * // 2 == return to previous page Screen3: the screen for reserving seats
-     * // 3 == reset / return to main page / welcome page
-     * }
-     */
-
-    //
+    // Display Receipt of the transaction
     public void displayReceipt(int seniorCount, double totalAmount, int movieId, int numSeats,
             ArrayList<String> seats, double discountAmount) {
+
+        // Display of Receipt
         System.out.println(
                 "*************************************** Cinema World ***************************************");
         System.out.println("*\t Transaction Reference Number:                 " + reserveTicketNum);
@@ -440,9 +362,6 @@ public class BookingSystem {
         System.out.println();
         System.out.println();
 
-        // System.out.println("[2] Exit");
-        // insert scanner to scan value for whether customer wants to make another
-        // transaction or to exit the whole transaction.
     }
 
     // inputting process for senior citizens
@@ -492,9 +411,13 @@ public class BookingSystem {
 
     }
 
-    // Final method for Summary
-    public void checkoutScreen(int seniorCount, double totalAmount, int movieId, int numSeats,
-            ArrayList<String> seats, double discountAmount) {
+    // Checkout Screen where the transaction is summarized
+    public void checkoutScreen(int seniorCount, int movieId, int numSeats,
+            ArrayList<String> seats) {
+
+        double totalAmount = calculateAmount(seats.size(), movies.get(movieId).getIsPremiere());
+        double discountAmount = (350 * DISCOUNT) * seniorCount;
+
         // Display checkout options
         int checkoutChoice;
 
@@ -528,26 +451,22 @@ public class BookingSystem {
 
             switch (checkoutChoice) {
                 case 1:
+
+                    // Once the checkout is confirmed it reserve the seat using reserveSeat()
                     reserveSeat(seats, movieId, seniorCount);
-                    // Implement receipt here
-                    // You can add payment processing, receipt generation, etc.
-                    System.out.println("\nPayment successful. Thank you for booking with us! Here's your receipt:"); // temporary.
-                                                                                                                     // insert
-                                                                                                                     // code
-                                                                                                                     // for
-                    // // receipt
+
+                    // Confirmation of the Transaction
+                    System.out.println("\nPayment successful. Thank you for booking with us! Here's your receipt:");
                     System.out.println();
 
+                    // Displays the receipt
                     displayReceipt(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);
 
-                    // System.exit(0);
                     break;
                 case 2:
-                    System.out
-                            .println(
-                                    "\nYou have aborted your transaction. We look forward to transacting with you soon!");
+                    System.out.println(
+                            "\nYou have aborted your transaction. We look forward to transacting with you soon!");
                     System.out.println();
-                    // System.exit(0);
                     break;
 
                 default:
@@ -555,19 +474,6 @@ public class BookingSystem {
                     System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
             }
         } while (checkoutChoice != 1 && checkoutChoice != 2);
-    }
-
-    public void processCustomerCheckout(int seniorCount, int movieId, int numSeats,
-            ArrayList<String> seats) {
-
-        double totalAmount = calculateAmount(seats.size(), movies.get(movieId).getIsPremiere());
-        double discountAmount = (350 * DISCOUNT) * seniorCount;
-
-        // System.out.println(discountAmount);
-
-        checkoutScreen(seniorCount, totalAmount, movieId, numSeats, seats, discountAmount);
-
-        // You can add more logic here, such as updating reservation records, etc.
     }
 
 }
