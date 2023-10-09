@@ -96,8 +96,7 @@ public class FileContentHandler {
                 }
             } else{
                 if(!file.hasNextLine()){
-                    System.err.println("[ERROR] No Data within Reservation File.");
-                    System.exit(1);
+                    System.err.println("[WARNING] No Data within Reservation File.");
                 }
 
                 while (file.hasNextLine()) {
