@@ -202,7 +202,9 @@ public class BookingSystem {
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                return new ArrayList<String>();
+                errFlag = true;
+
+                // return new ArrayList<String>();
             }
         }
 
@@ -243,6 +245,7 @@ public class BookingSystem {
 
         // records reservation in csv
         fHandler.reservationFileWrite_toCSV(newRes);
+
     }
 
     // cancel a reservation
@@ -314,12 +317,12 @@ public class BookingSystem {
             // display timeslots
             System.out.println();
             for (int i = 0; i < ids.size(); i++) {
-                System.out.println("[" + (i + 1) + "] " + movies.get(ids.get(i)).getTimeStart());
+                System.out.println("[" + (i + 1) + "] " + movies.get(ids.get(i)).getTimeStart()
+                        + (movies.get(ids.get(i)).isPremiere() ? " - Premiere Showing" : ""));
             }
             System.out.println("[0] CANCEL TRANSACTION");
 
             // choose timeslot
-            System.out.println("\nNote: First TimeSlot of Screening is Premiere. No Discount will be Applied.");
             System.out.print("Choose time: ");
             time_slot = getIntInput();
 
@@ -372,8 +375,8 @@ public class BookingSystem {
             hasCard = sc.nextLine().trim();
 
             if (hasCard.equalsIgnoreCase("yes")) {
-                // If they have a card, prompt for the quantity and card ID
 
+                // If they have a card, prompt for the quantity and card ID
                 while (true) {
                     System.out.print("\nQuantity of Senior Citizens / PWDs: ");
                     quantity = getIntInput();
@@ -392,20 +395,30 @@ public class BookingSystem {
             }
         } while (!hasCard.equalsIgnoreCase("yes") && !hasCard.equalsIgnoreCase("no"));
 
-        // Proceed to checkout for regular customers
-        System.out.println("[1] Proceed to Checkout>>> ");
-        System.out.println("[2] Cancel Transaction<<<");
-        System.out.println("----------------------------------------");
-        int checkoutChoice = getIntInput();
-        if (checkoutChoice == 1) {
-            return quantity; // No senior citizens/PWDs
-        } else {
-            System.out
-                    .println("\nYou have aborted your transaction. We look forward to transacting with you soon!");
-            System.out.println();
-            // System.exit(0);
-            return -999;
-        }
+        int checkoutChoice;
+        do {
+            // Proceed to checkout for regular customers
+            System.out.println("[1] Proceed to Checkout>>> ");
+            System.out.println("[2] Cancel Transaction<<<");
+            System.out.println("----------------------------------------");
+            checkoutChoice = getIntInput();
+            switch (checkoutChoice) {
+                case 1:
+                    break;
+                case 2:
+                    System.out
+                            .println(
+                                    "\nYou have aborted your transaction. We look forward to transacting with you soon!");
+                    System.out.println();
+                    // System.exit(0);
+                    return -999;
+
+                default:
+                    System.out.println("\nINVALID INPUT");
+                    System.out.println("ENTERED INPUT MUST BE WITHIN THE CHOICES ONLY\n");
+            }
+        } while (checkoutChoice != 1 && checkoutChoice != 2);
+        return quantity; // No senior citizens/PWDs
 
     }
 
