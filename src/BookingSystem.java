@@ -316,7 +316,8 @@ public class BookingSystem {
             // display timeslots
             System.out.println();
             for (int i = 0; i < ids.size(); i++) {
-                System.out.println("[" + (i + 1) + "] " + movies.get(ids.get(i)).getTimeStart());
+                System.out.println("[" + (i + 1) + "] " + movies.get(ids.get(i)).getTimeStart()
+                        + (movies.get(ids.get(i)).isPremiere() ? " - Premiere Showing" : ""));
             }
             System.out.println("[0] CANCEL TRANSACTION");
 
