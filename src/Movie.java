@@ -25,6 +25,11 @@ public class Movie {
 
     }
 
+    /**
+     * Generates the seats in a 2D String Array.
+     *
+     * @return seatPlan
+     */
     private String[][] initializezSeats() {
         String[][] seatPlan = new String[SEAT_ROWS][SEAT_COLS];
         for (int i = 0; i < SEAT_ROWS; i++) {
@@ -37,6 +42,9 @@ public class Movie {
 
     }
 
+    /**
+     * Displays the available seats.
+     */
     public void displaySeatAvailability() {
         String chooseSeat = ("Input Seats to Reserve for this Transaction('A1, A2, ... H5'): ");
         String movieTitleDecoration = "\n******(" + movieTitle + ")******";
@@ -56,6 +64,7 @@ public class Movie {
         System.out.println();
 
         for (int i = 0; i < SEAT_ROWS; i++) {
+            char rowLetter = (char) ('A' + i);
             System.out.print("|");
             for (int j = 0; j < SEAT_COLS; j++) {
                 System.out.print("\t" + seats[i][j] + "\t");
@@ -69,6 +78,13 @@ public class Movie {
         System.out.println(chooseSeat);
     }
 
+
+    /**
+     * Determines if the seat chosen is occupied.
+     *
+     * @param seatCode the chosen seat for reservation.
+     * @return boolean
+     */
     public boolean isSeatOccupied(String seatCode) {
         int[] i = seatCodeToIndexes(seatCode);
 
@@ -92,6 +108,12 @@ public class Movie {
         }
     }
 
+    /**
+     * Converts valid String input to an integer array.
+     *
+     * @param s String input to be converted.
+     * @return a integer array.
+     */
     public int[] seatCodeToIndexes(String s) {
         if (s.length() != 2 || s.charAt(0) < 'A' || s.charAt(0) > 'H' || s.charAt(1) < '1' || s.charAt(1) > '5') {
             throw new IllegalArgumentException("Invalid seat code: " + s);
