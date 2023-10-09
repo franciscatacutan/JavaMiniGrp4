@@ -321,7 +321,6 @@ public class BookingSystem {
             System.out.println("[0] CANCEL TRANSACTION");
 
             // choose timeslot
-            System.out.println("\nNote: First TimeSlot of Screening is Premiere. No Discount will be Applied.");
             System.out.print("Choose time: ");
             time_slot = getIntInput();
 
