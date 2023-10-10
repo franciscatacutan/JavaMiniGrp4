@@ -31,7 +31,13 @@ public class BookingSystem {
         System.exit(0);
     }
 
-    // Main method
+    /**
+     * This class represents the main program for managing movie reservations.
+     * It allows users to choose movies, select time slots, and make reservations.
+     *
+     * @throws FileNotFoundException if the required files are not found.
+     * @throws DataFormatException if there is an issue with the data format in the files.
+     */
     public void startProgram() throws FileNotFoundException, DataFormatException {
 
         // File Reader
@@ -137,7 +143,12 @@ public class BookingSystem {
 
     }
 
-    // ArrayList for movies in cinema
+    /**
+     * Retrieves a list of movies currently showing in different cinemas for today's date.
+     *
+     * @return An ArrayList of ArrayLists where each inner ArrayList contains the movie IDs
+     *         of movies showing in a specific cinema. The outer ArrayList represents different cinemas.
+     */
     public ArrayList<ArrayList<Integer>> getShowing() {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
         list.add(new ArrayList<>());
@@ -155,8 +166,11 @@ public class BookingSystem {
         return list;
     }
 
-    // set the movieId field of Reservation objects retrieved from the csv file
-    // also set occupied seats on related Movie object
+    /**
+     * Prepares a reservation by associating it with a movie and marking the reserved seats as occupied.
+     *
+     * @param reservation The Reservation object to be prepared.
+     */
     public void prepareReservationsFromCSV(Reservation reservation) {
         for (Map.Entry<Integer, Movie> m : movies.entrySet()) {
             if (m.getValue().isMovie(reservation.getDate(), reservation.getTime(), reservation.getCinemaNum())) {
@@ -167,7 +181,14 @@ public class BookingSystem {
         }
     }
 
-    // Check if seat is occupied
+    /**
+     * Checks and validates a list of seat codes to ensure they are available and not duplicated.
+     *
+     * @param seats    A string containing comma-separated seat codes to be checked.
+     * @param movieId  The ID of the movie for which seats are being checked.
+     * @return An ArrayList of valid seat codes if all seats are available and non-duplicated,
+     *         or an empty ArrayList if there are errors (occupied seats or duplicate seat codes).
+     */
     public ArrayList<String> checkSeats(String seats, int movieId) {
         ArrayList<String> seatNums = new ArrayList<>();
 
@@ -225,7 +246,13 @@ public class BookingSystem {
 
     }
 
-    // create a new reservation
+    /**
+     * Reserves seats for a movie, updates seat occupancy, creates a new reservation, and records it in a CSV file.
+     *
+     * @param seatNums    An ArrayList containing the seat numbers to be reserved.
+     * @param movieId     The ID of the movie for which seats are being reserved.
+     * @param seniorCount The count of senior or PWD (Persons with Disabilities) tickets.
+     */
     public void reserveSeat(ArrayList<String> seatNums, int movieId, int seniorCount) {
 
         Movie movie = movies.get(movieId);
@@ -248,7 +275,11 @@ public class BookingSystem {
 
     }
 
-    // cancel a reservation
+    /**
+     * Cancels a reservation by its ticket number, making the reserved seats available again and updating records.
+     *
+     * @param ticketNum The ticket number of the reservation to be canceled.
+     */
     public void cancelReservation(int ticketNum) {
         boolean isExist = false;
         // create iterator to check reservations
@@ -271,6 +302,13 @@ public class BookingSystem {
         // update Reservations.csv
     }
 
+    /**
+     * Calculates the total amount to be paid for a reservation based on the number of seats and premiere status.
+     *
+     * @param seatNums  The number of seats being reserved.
+     * @param isPremier A boolean indicating whether the movie is a premiere (true) or not (false).
+     * @return The total price for the reservation.
+     */
     public double calculateAmount(int seatNums, boolean isPremier) {
         double price;
 
@@ -285,7 +323,11 @@ public class BookingSystem {
         return price;
     }
 
-    // Used for every Integer Input
+    /**
+     * Reads and validates an integer input from the user, continuously prompting until a valid integer is provided.
+     *
+     * @return The integer input provided by the user.
+     */
     public int getIntInput() {
         int num;
 
@@ -302,7 +344,12 @@ public class BookingSystem {
         return num;
     }
 
-    // 2nd screen for choosing time slots
+    /**
+     * Allows the user to select a time slot for a movie from a list of available time slots.
+     *
+     * @param ids An ArrayList of movie IDs representing available time slots.
+     * @return The selected movie ID corresponding to the chosen time slot or -999 if the transaction is canceled.
+     */
     public int selectTimeSlot(ArrayList<Integer> ids) {
         Movie mInfo = movies.get(ids.get(0));
         int time_slot;
@@ -339,7 +386,16 @@ public class BookingSystem {
         return -999;
     }
 
-    // Display Receipt of the transaction
+    /**
+     * Displays a receipt for a completed reservation transaction, including transaction details.
+     *
+     * @param seniorCount    The count of senior or PWD (Persons with Disabilities) tickets.
+     * @param totalAmount    The total amount to be paid for the reservation.
+     * @param movieId        The ID of the movie for which the reservation was made.
+     * @param numSeats       The number of seats reserved.
+     * @param seats          An ArrayList containing the reserved seat numbers.
+     * @param discountAmount The discount amount applied to the total if applicable.
+     */
     public void displayReceipt(int seniorCount, double totalAmount, int movieId, int numSeats,
             ArrayList<String> seats, double discountAmount) {
 
@@ -365,7 +421,12 @@ public class BookingSystem {
 
     }
 
-    // inputting process for senior citizens
+    /**
+     * Handles the input and validation for Senior Citizen or PWD (Persons with Disabilities) discounts and quantities.
+     *
+     * @param numSeats The total number of seats available for reservation.
+     * @return The quantity of Senior Citizens or PWDs for whom the discount is applied, or -999 if the transaction is canceled.
+     */
     public int scInput(int numSeats) {
         int quantity = 0;
         String hasCard;
@@ -422,7 +483,14 @@ public class BookingSystem {
 
     }
 
-    // Checkout Screen where the transaction is summarized
+    /**
+     * Displays the checkout screen with transaction details, handles payment confirmation, and reserves seats.
+     *
+     * @param seniorCount    The count of senior or PWD (Persons with Disabilities) tickets.
+     * @param movieId        The ID of the movie for which the reservation is being made.
+     * @param numSeats       The number of seats being reserved.
+     * @param seats          An ArrayList containing the reserved seat numbers.
+     */
     public void checkoutScreen(int seniorCount, int movieId, int numSeats,
             ArrayList<String> seats) {
 

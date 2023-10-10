@@ -25,6 +25,11 @@ public class Movie {
 
     }
 
+    /**
+     * Initializes the seat plan with seat codes for each seat and returns a 2D array representing seat availability.
+     *
+     * @return A 2D array representing the seat plan with seat codes.
+     */
     private String[][] initializezSeats() {
         String[][] seatPlan = new String[SEAT_ROWS][SEAT_COLS];
         for (int i = 0; i < SEAT_ROWS; i++) {
@@ -37,6 +42,9 @@ public class Movie {
 
     }
 
+    /**
+     * Displays the seat availability for the current movie, including a legend and seat occupancy status.
+     */
     public void displaySeatAvailability() {
         String chooseSeat = ("Input Seats to Reserve for this Transaction('A1, A2, ... H5'): ");
         String movieTitleDecoration = "\n******(" + movieTitle + ")******";
@@ -69,6 +77,12 @@ public class Movie {
         System.out.println(chooseSeat);
     }
 
+    /**
+     * Checks if a seat with the given seat code is occupied.
+     *
+     * @param seatCode The seat code to check for occupancy.
+     * @return True if the seat is occupied, false otherwise.
+     */
     public boolean isSeatOccupied(String seatCode) {
         int[] i = seatCodeToIndexes(seatCode);
 
@@ -78,6 +92,11 @@ public class Movie {
         return false;
     }
 
+    /**
+     * Marks the specified list of seats as occupied in the seat plan.
+     *
+     * @param list An ArrayList of seat codes to mark as occupied.
+     */
     public void setSeatsOccupied(ArrayList<String> list) {
         for (String s : list) {
             int[] i = seatCodeToIndexes(s);
@@ -92,6 +111,13 @@ public class Movie {
         }
     }
 
+    /**
+     * Converts a seat code into row and column indexes in the seat plan.
+     *
+     * @param s The seat code to convert.
+     * @return An array of two integers representing the row and column indexes.
+     * @throws IllegalArgumentException if the seat code is invalid.
+     */
     public int[] seatCodeToIndexes(String s) {
         if (s.length() != 2 || s.charAt(0) < 'A' || s.charAt(0) > 'H' || s.charAt(1) < '1' || s.charAt(1) > '5') {
             throw new IllegalArgumentException("Invalid seat code: " + s);
@@ -103,6 +129,14 @@ public class Movie {
         return new int[] { code - 'A', col - 1 };
     }
 
+    /**
+     * Checks if a movie matches the specified date, time, and cinema number.
+     *
+     * @param date      The date of the movie screening.
+     * @param time      The time of the movie screening.
+     * @param cinemaNum The cinema number.
+     * @return True if the movie matches the criteria, false otherwise.
+     */
     public boolean isMovie(LocalDate date, LocalTime time, int cinemaNum) {
 
         if (showingDate.equals(date) && timeStart.equals(time) && this.cinemaNum == cinemaNum) {
